@@ -1,11 +1,13 @@
 import { default } from '../i18n/locales/en-US';
 <template>
-  <v-btn :color="color" variant="tonal" :size="size" icon @click="emitAction(type)">
-    <v-icon> {{ icon }}</v-icon>
-    <v-tooltip activator="parent" location="start">
-      {{ computedBtnToolTip }}
-    </v-tooltip>
+  <div>
+    <v-btn :color="color" variant="tonal" :size="size" icon @click="emitAction(type)">
+      <v-icon> {{ icon }}</v-icon>
+      <v-tooltip activator="parent" location="start">
+        {{ computedBtnToolTip }}
+      </v-tooltip>
     </v-btn>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -35,7 +37,7 @@ const props = defineProps({
   color: {
     type: String,
     required: false,
-    default: "primary"
+    default: "secondary"
   },
   size: {
     type: String,

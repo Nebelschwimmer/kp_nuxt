@@ -1,14 +1,11 @@
 <template>
   <div>
-    People
+    Directors
   </div>
 </template>
 
 <script lang="ts" setup>
-  definePageMeta
-  ({
-    title: 'People',
-  })
+
 </script>
 
 <style>

@@ -1,4 +1,9 @@
 export default {
+  $vuetify: {
+    input:{
+      clear: "Effacer"
+    }
+  },
   welcome: "Bienvenue",
   nav: {
     title: "Navigation",
@@ -28,6 +33,7 @@ export default {
   },
   actions: {
     title: "Actions",
+    submit: "Soumettre",
     add: "Ajouter",
     edit: "Modifier",
     back: "Retour",

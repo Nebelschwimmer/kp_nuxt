@@ -21,7 +21,7 @@
 <script lang="ts" setup>
 defineProps({
   modelValue: {
-    type: Object,
+    type: Number || Object,
     required: true,
   },
   items: {

@@ -24,7 +24,7 @@ declare global {
 		name: String;
 		preview: String;
   }
-  interface ListResponse {
+  interface FilmListResponse {
     items: FilmListItem[]
   }
 }

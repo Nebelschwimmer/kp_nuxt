@@ -1,4 +1,16 @@
+import { clear } from "console";
+
 export default {
+  $vuetify: {
+    input:{
+      clear: "Clear"
+    },
+    rating: {
+      ariaLabel:{
+        item: "Rating"
+      }
+    }
+  },
   welcome: "Welcome",
   nav: {
     title: "Navigation",
@@ -29,6 +41,7 @@ export default {
   },
   actions: {
     title: "Actions",
+    submit: "Submit",
     add: "Add",
     edit: "Edit",
     back: "Back",

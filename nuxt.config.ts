@@ -16,12 +16,52 @@ export default defineNuxtConfig({
       name: 'page',
       mode: 'out-in' // default
     },
+    layoutTransition: { name: 'layout', mode: 'out-in' },
 		head: {
       title: 'Kinopoisk Lite',
 			charset: "utf-8",
 			viewport: "width=device-width, initial-scale=1",
 		},
 	},
+  vuetify:{
+    vuetifyOptions: {
+      locale:{
+        locale: 'ru',
+        fallback: 'en',
+        messages: {
+          ru: require('./i18n/locales/ru-RU'),
+          en: require('./i18n/locales/en-US'),
+          fr: require('./i18n/locales/fr-FR')
+        }
+      },
+      theme: {
+        themes: {
+          light: {
+            colors: {
+              primary: '#673ab7',
+              secondary: '#9c27b0',
+              accent: '#e91e63',
+              error: '#f44336',
+              warning: '#ffc107',
+              info: '#00bcd4',
+              success: '#4caf50'
+            }
+          },
+          dark:{
+            colors: {
+              primary: '#673ab7',
+              secondary: '#9c27b0',
+              accent: '#e91e63',
+              error: '#f44336',
+              warning: '#ffc107',
+              info: '#00bcd4',
+              success: '#4caf50'
+            }
+          }
+        }
+      }
+    }
+  },
 	imports: {
 		dirs: ["types/*.ts", "store/*.ts", "types/**/*.ts"],
 	},
@@ -55,6 +95,9 @@ export default defineNuxtConfig({
 	},
 
 	vite: {
+    build: {
+      sourcemap: true, // Убедитесь, что это значение true, если карты нужны
+    },
 		server: {
 			proxy: {
 				"/api": {

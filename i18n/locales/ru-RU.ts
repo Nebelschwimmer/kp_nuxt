@@ -1,4 +1,9 @@
 export default {
+  $vuetify: {
+    input:{
+      clear: "Очистить"
+    }
+  },
   welcome: "Добро пожаловать",
   nav: {
     title: "Навигация",
