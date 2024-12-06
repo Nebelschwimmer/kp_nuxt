@@ -2,13 +2,37 @@ export default {
   $vuetify: {
     input:{
       clear: "Effacer"
+    },
+    stepper: {
+      next: "Etape suivante",
+      prev: "Etape précédente"
     }
   },
   welcome: "Bienvenue",
+  general: {
+    total: "Total",
+    items_per_page: "Articles par page",
+    ordering: "Ordre",
+    search: "Rechercher",
+    sort: "Trier par",
+    page: "Page",
+    of: "de",
+    first: "Premier",
+    last: "Dernier",
+    next: "Suivant",
+    prev: "Précedent",
+    loading: "Chargement",
+    no_data: "Aucunes données",
+    no_results: "Aucun resultat",
+    no_data_found: "Aucunes données trouvées",
+    no_results_found: "Aucun resultat trouvé",
+  },
   nav: {
     title: "Navigation",
     home: "Accueil",
     films: "Films",
+    people: "Personnes",
+    genres: "Genres",
     actors: "Acteurs",
     directors: "Réalisateurs",
     language: "Langue"
@@ -34,6 +58,7 @@ export default {
   actions: {
     title: "Actions",
     submit: "Soumettre",
+    upload: "Télécharger",
     add: "Ajouter",
     edit: "Modifier",
     back: "Retour",
@@ -58,6 +83,8 @@ export default {
     remove_director: "Supprimer Réalisateur",
     add_film_actor: "Ajouter Acteur au Film",
     remove_film_actor: "Supprimer Acteur du Film",
+    pick_file: "Choisir un fichier",
+    skip: "Passer"
   },
   state: {
     all: "Toutes",
@@ -96,19 +123,23 @@ export default {
     }
   },
   pages: {
+    network_error: "Une erreur de connexion s'est produite",
     films: {
       title: "Films",
+      no_films: "Aucun film trouvé",
       back_to_list: "Retourner vers la liste",
       name: "Nom",
       release_year: "Année de sortie",
       director: "Réalisateur",
       actors: "Acteurs",
       description: "Description",
+      no_description: "Pas de description",
       duration: "Durée",
       genre: "Genre",
       preview: "Poster",
       no_preview: "Pas de poster",
       gallery: "Galerie",
+      no_gallery: "Gelerie vide",
       add: "Ajouter Film",
       edit: "Modifier Film",
       remove: "Supprimer Film",
@@ -122,6 +153,8 @@ export default {
       max_year: "Année maximale",
       type_num: "Entrez un nombre",
       required: "Requis",
+      preview_max_size: "La taille maximale du poster est de 2 Mo!",
+      preview_restrictions:"Formats autorisés: jpg, png, jpeg. Taille maximale - 2 Mo.",
     },
     film: {
       add: "Ajouter Film",
@@ -132,9 +165,22 @@ export default {
       actors: "Acteurs",
       description: "Description",
       duration: "Durée",
-      genre: "Genre",
+      genres: "Genres",
+      genres_hint: "Choisissez les genres",
+      actors_hint: "Choisissez les acteurs",
+      director_hint: "Choisissez le réalisateur",
       preview: "Poster",
       gallery: "Galerie",
+      stepper: {
+        first: "Informations principales",
+        second: "Ajouter acteurs",
+        third: "Ajouter réalisateur",
+        fourth: 'Télécharger poster',
+        fifth: 'Télécharge galerie',
+        required: 'Obligatoire',
+        optional: 'Facultatif',
+        error: 'Erreur',
+      }
     },
   },
 }

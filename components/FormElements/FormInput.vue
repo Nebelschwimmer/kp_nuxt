@@ -1,9 +1,9 @@
 <template>
   <v-text-field
     :model-value="modelValue"
-    :rules="rules as any"
+    color="primary"
     :label="label"
-    :variant="variant as any"
+    variant="outlined"
     :clearable="clearable"
     density="compact"
     :prepend-inner-icon="innerIcon"
@@ -15,33 +15,25 @@
 defineProps({
   modelValue: {
     type: String,
-    required: true
-  },
-  rules: {
-    type: Array,
-    required: false,
-    default: () => []
+    required: true,
   },
   label: {
     type: String,
-    required: false
-  },
-  variant: {
-    type: String,
-    required: false,
-    default: "outlined"
+    required: true,
   },
   clearable: {
     type: Boolean,
     required: false,
-    default: true
+    default: false,
   },
   innerIcon: {
-    type: String,
+    type: String, 
     required: false,
-    default:''
   }
 })
+
+defineEmits(["update:modelValue"]);
+
 </script>
 
 

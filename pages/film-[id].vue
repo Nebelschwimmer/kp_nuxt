@@ -1,34 +1,75 @@
 <template>
-  <v-container class="w-66">
-    <v-row>
-      <PageToolBar display-back-btn />
-    </v-row>
-    <v-row>
-      <FilmDetail :film="film || null" />
-    </v-row>
-  </v-container>
+	<v-container>
+		<v-row>
+			<PageToolBar display-back-btn />
+		</v-row>
+		<v-row>
+			<v-col>
+				<v-card elevation="2">
+					<v-container fluid>
+						<v-row dense>
+							<v-card-title>
+								<h1 class="font-bold text-h4">{{ film?.name }}</h1>
+							</v-card-title>
+						</v-row>
+						<v-row dense>
+							<v-rating
+								:length="5"
+								:model-value="film?.rating"
+								active-color="warning" />
+						</v-row>
+
+						<v-row dense>
+							<v-col>
+								<v-img :src="film?.preview || ''"></v-img>
+							</v-col>
+
+							<v-col>
+								<v-sheet>
+									<v-list>
+										<v-list-item>
+											<v-list-item-title
+												>{{ $t("forms.film.release_year") }}:
+												{{ film?.releaseYear }}</v-list-item-title
+											>
+											<template #prepend>
+												<v-icon icon="mdi-calendar" />
+											</template>
+										</v-list-item>
+										<v-divider></v-divider>
+										<v-list-item>
+											<v-list-item-title
+												>{{ $t("forms.film.genres") }}:
+												{{ film?.genres && film?.genres.length === 0 ? "-" : film?.genres }}</v-list-item-title
+											>
+											<template #prepend>
+												<v-icon icon="mdi-movie-filter" />
+											</template>
+										</v-list-item>
+									</v-list>
+								</v-sheet>
+							</v-col>
+						</v-row>
+					</v-container>
+				</v-card>
+			</v-col>
+		</v-row>
+	</v-container>
 </template>
 
 <script lang="ts" setup>
-const config = useRuntimeConfig();
+	import { useFilmStore } from "~/store/filmStore";
+	const { film } = storeToRefs(useFilmStore());
+	const { fetchFilmById } = useFilmStore();
 
-const film = ref<Film | null>();
-const fetchData = async (id : Number) => {
-  const { data, status, error, refresh, clear } = await useAsyncData(
-    'films',
-    () => $fetch<Film>(`${config.public.apiBase}/films/${id}`)
-  )
-  film.value = data.value || null;
+	const computedActorNames = computed(() => {
+		return film.value?.actorNames.join(", ");
+	});
 
-}
-
-
-(async function () {
-  const filmId = Number(useRoute().params.id);
-	await fetchData(filmId);
+	(async function () {
+		const filmId = Number(useRoute().params.id);
+		await fetchFilmById(filmId);
 	})();
-
-
 </script>
 
 <style></style>

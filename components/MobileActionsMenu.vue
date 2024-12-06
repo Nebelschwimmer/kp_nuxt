@@ -16,15 +16,6 @@
 				</template>
 			</v-list-item>
 			<v-list-subheader>{{ $t("menu.settings") }}</v-list-subheader>
-			<v-list-item>
-				<v-select
-					density="compact"
-					:label="$t('menu.theme.title')"
-					:items="themeOptions"
-					prepend-icon="mdi-theme-light-dark"
-					@update:model-value="$emit('change-theme')">
-				</v-select>
-			</v-list-item>
 			<v-divider />
 			<v-list-item>
 				<v-select
@@ -47,7 +38,6 @@ defineEmits<{
 	}>();
 	defineProps<{
 		languageOptions: { title: string; value: string }[];
-		themeOptions: { title: string; value: string; icon: string }[];
 	}>();
 </script>
 
