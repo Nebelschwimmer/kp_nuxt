@@ -1,18 +1,22 @@
 <template>
-  <div>
-    <v-list density="compact">
-      <v-list-subheader>{{ $t("nav.title") }}</v-list-subheader>
-      <v-list-item color="primary" to="/">
-        <v-list-item-title>{{ $t("nav.films") }}</v-list-item-title>
+  <v-list>
+    <v-list-item to="/" exact> {{ $t("pages.home.title") }} </v-list-item>
+    <v-list-item to="/films" exact> {{ $t("pages.films.title") }} </v-list-item>
+    <v-list-group value="persons">
+      <template v-slot:activator="{ props }">
+        <v-list-item v-bind="props"> {{ $t("nav.persons") }} </v-list-item>
+      </template>
+      <v-list-item to="/persons" exact>
+        {{ $t("nav.all") }}
       </v-list-item>
-      <v-list-item color="primary" to="/people">
-        <v-list-item-title>{{ $t("nav.people") }}</v-list-item-title>
+      <v-list-item to="/persons/actors" exact>
+        {{ $t("nav.actors") }}
       </v-list-item>
-      <v-list-item color="primary" to="/genres">
-        <v-list-item-title>{{ $t("nav.genres") }}</v-list-item-title>
+      <v-list-item to="/persons/directors" exact>
+        {{ $t("nav.directors") }}
       </v-list-item>
-    </v-list>
-  </div>
+    </v-list-group>
+  </v-list>
 </template>
 
 <script lang="ts" setup></script>

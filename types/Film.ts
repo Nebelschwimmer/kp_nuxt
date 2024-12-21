@@ -13,6 +13,13 @@ declare global {
     actorNames: string[]|[];
     description: string;
     rating: number;
+    age: number;
+    duration: string|number|Date|null;
+    producerId: number|null;
+    producerName: string | null;
+    writerId: number|null;
+    writerName: string|null;
+    assessments: number;
   }
   
   interface FilmListResponse {

@@ -1,22 +1,29 @@
 <template>
-  <v-responsive max-width="260">
-    <NuxtLink to="/profile">
-      <v-avatar color="surface-variant">
-        <v-img alt="John" src="https://cdn.vuetifyjs.com/images/john.jpg"></v-img>
-        <v-tooltip activator="parent" location="bottom">{{ $t('profile.title') }}</v-tooltip>
-      </v-avatar>
-    </NuxtLink>
-    <v-btn icon>
-      <v-icon icon="mdi-login"></v-icon>
-      <v-tooltip activator="parent" location="bottom">{{ $t('actions.login') }}</v-tooltip>
-    </v-btn>
-    <v-btn icon>
-      <v-icon icon="mdi-logout"></v-icon>
-      <v-tooltip activator="parent" location="bottom">{{ $t('profile.logout') }}</v-tooltip>
-    </v-btn>
-  </v-responsive>
+	<div class="border rounded-md m-1">
+		<NuxtLink to="/profile">
+			<v-avatar>
+				<v-img
+					v-if="avatarSrc"
+					:src="avatarSrc"></v-img>
+				<v-icon
+					v-else
+					icon="mdi-account-circle"></v-icon>
+			</v-avatar>
+		</NuxtLink>
+		<v-btn icon density="compact">
+			<v-icon icon="mdi-login"></v-icon>
+		</v-btn>
+    <v-btn icon density="compact">
+			<v-icon icon="mdi-logout"></v-icon>
+		</v-btn>
+	</div>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+	defineProps<{
+		name?: string;
+		avatarSrc: string;
+	}>();
+</script>
 
 <style></style>

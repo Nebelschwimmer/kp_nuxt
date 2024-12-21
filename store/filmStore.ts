@@ -1,19 +1,21 @@
 export const useFilmStore = defineStore("films", () => {
 	const config = useRuntimeConfig();
-	const film = ref<Film|null>(null);
+	const film = ref<Film | null>(null);
 	const films = ref<Film[]>([]);
-	const genres = ref<GenreListItem[]>([]);
+	const genres = ref<Genre[]>([]);
 	const loading = ref(false);
 	const total = ref(0);
 	const networkError = ref<Error | null>(null);
-	const directors = ref<PersonListItem[]>([]);
-	const actors = ref<PersonListItem[]>([]);
+	const directors = ref<Person[]>([]);
+	const actors = ref<Person[]>([]);
 	const filmForm = ref<Partial<Film>>({
 		id: null,
 		name: "",
 		genreIds: [],
 		releaseYear: null,
 		directorId: null,
+		producerId: null,
+		writerId: null,
 		actorIds: [],
 		description: "",
 	});
@@ -21,7 +23,7 @@ export const useFilmStore = defineStore("films", () => {
 		try {
 			loading.value = true;
 			const response = await $fetch<FilmListResponse>(
-				`${config.public.apiBase}/films/filter`
+				`${config.public.apiBase}/films/list`
 			);
 			films.value = response.items || [];
 			total.value = response.total || 0;
@@ -49,8 +51,8 @@ export const useFilmStore = defineStore("films", () => {
 	const fetchGenres = async (locale: string) => {
 		try {
 			loading.value = true;
-			const response = await $fetch<Array<GenreListItem>>(
-				`${config.public.apiBase}/genres/enum/${locale}`
+			const response = await $fetch<Array<Genre>>(
+				`${config.public.apiBase}/genres/translations/${locale}`
 			);
 			genres.value = response || [];
 		} catch (error: any) {
@@ -58,6 +60,12 @@ export const useFilmStore = defineStore("films", () => {
 		} finally {
 			loading.value = false;
 		}
+	};
+
+	const matchGenreIdsWithNames = (ids: number[], genres: Genre[]) => {
+		return ids.map((id) => {
+			return genres.find((genre) => genre.value === id)?.name || "";
+		});
 	};
 
 	const fetchDirectors = async () => {
@@ -91,13 +99,10 @@ export const useFilmStore = defineStore("films", () => {
 	const addFilm = async (): Promise<boolean> => {
 		try {
 			loading.value = true;
-			const response = await $fetch<Film>(
-				`${config.public.apiBase}/films`,
-				{
-					method: "POST",
-					body: filmForm.value,
-				}
-			);
+			const response = await $fetch<Film>(`${config.public.apiBase}/films`, {
+				method: "POST",
+				body: filmForm.value,
+			});
 			film.value = response;
 			return true;
 		} catch (error: any) {
@@ -114,6 +119,29 @@ export const useFilmStore = defineStore("films", () => {
 			const formData = new FormData();
 			formData.append("preview", file);
 			await $fetch(`${config.public.apiBase}/films/${id}/preview`, {
+				method: "POST",
+				body: formData,
+			});
+			return true;
+		} catch (error: any) {
+			networkError.value = error;
+			return false;
+		} finally {
+			loading.value = false;
+		}
+	};
+
+	const uploadGallery = async (
+		gallery: File[],
+		id: number
+	): Promise<boolean> => {
+		try {
+			loading.value = true;
+			const formData = new FormData();
+			gallery.forEach((file) => {
+				formData.append("gallery[]", file);
+			});
+			await $fetch(`${config.public.apiBase}/films/${id}/gallery`, {
 				method: "POST",
 				body: formData,
 			});
@@ -143,5 +171,7 @@ export const useFilmStore = defineStore("films", () => {
 		fetchDirectors,
 		addFilm,
 		fetchFilmById,
+		matchGenreIdsWithNames,
+		uploadGallery,
 	};
 });

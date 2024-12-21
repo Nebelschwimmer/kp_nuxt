@@ -2,6 +2,7 @@
 	<v-btn
 		:color="color"
 		:size="size"
+		variant="tonal"
 		@click="emitAction(type)">
 		<v-icon> {{ icon }}</v-icon>
 		{{ computedBtnTitle }}
@@ -35,7 +36,7 @@
 		color: {
 			type: String,
 			required: false,
-			default: "secondary",
+			default: "accent",
 		},
 		size: {
 			type: String,
@@ -63,4 +64,25 @@
 	});
 </script>
 
-<style></style>
+<style lang="scss">
+.custom-btn{
+  color: #fff !important;
+  background-image: linear-gradient(
+    45deg,
+    rgba(135, 135, 135, 0.5) 0%,
+    rgba(223, 106, 238, 0.5) 50%,
+    rgba(255, 0, 170, 0.5) 100%
+  ) !important;
+  border-radius: 10px !important;
+  transition: all 0.2s ease-in-out;
+  &:hover{
+    color: #fff !important;
+    background-image: linear-gradient(
+      45deg,
+      rgba(135, 135, 135, 0.1) 0%,
+      rgba(223, 106, 238, 0.1) 50%,
+      rgba(255, 0, 170, 0.1) 100%
+    ) !important;
+  }
+}
+</style>

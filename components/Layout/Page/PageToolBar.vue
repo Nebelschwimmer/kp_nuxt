@@ -1,7 +1,13 @@
 import { default } from '../i18n/locales/en-US';
 <template>
-	<v-toolbar>
-		<NuxtLink :to="backLink" v-if="displayBackBtn">
+	<v-toolbar color="transparent">
+		<template #image>
+			<v-img
+				gradient="to right, rgba(80, 32, 84, .9), rgba(0, 0, 0, .3)" ></v-img>
+		</template>
+		<NuxtLink
+			:to="backLink"
+			v-if="displayBackBtn">
 			<v-btn
 				icon
 				flat>
@@ -15,15 +21,16 @@ import { default } from '../i18n/locales/en-US';
 		</NuxtLink>
 		<v-toolbar-title
 			v-if="title"
-			class="font-bold d-flex items-center gap-2">
+			class="font-bold d-flex items-center gap-2 text-accent text-h5">
 			<span>{{ $t(title) }}</span>
 		</v-toolbar-title>
-    <v-spacer></v-spacer>
-    <v-spacer></v-spacer>
-    <template v-if="displayActionBtns">
-      <v-pagination :length="totalPages"></v-pagination>
-      <slot name="actions"></slot>
-    </template>
+		<v-spacer></v-spacer>
+		<template
+			#append
+			v-if="displayActionBtns">
+			<v-pagination :length="totalPages"></v-pagination>
+			<slot name="actions"></slot>
+		</template>
 	</v-toolbar>
 </template>
 
@@ -47,11 +54,11 @@ import { default } from '../i18n/locales/en-US';
 			type: Boolean,
 			required: false,
 			default: false,
-    },
-    totalPages: {
-      type: Number,
-      required: false,
-      default: 1
-    }
+		},
+		totalPages: {
+			type: Number,
+			required: false,
+			default: 1,
+		},
 	});
 </script>

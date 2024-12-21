@@ -1,6 +1,6 @@
 <template>
   <div>
-    Directors
+    
   </div>
 </template>
 
