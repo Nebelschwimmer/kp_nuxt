@@ -1,16 +1,11 @@
 <template>
 	<v-card
-		variant="text"
-		class="base-card">
-		<v-card-title class="text-h4 text-accent font-bold">
-			<div class="text-h4 text-accent font-bold"> {{ title || "" }}</div>
-			<slot name="rating"></slot>
-		</v-card-title>
+		class=""
+		variant="text">
+		<template #title>
+			<span class="text-h4 font-weight-bold"> {{ title }}</span>
+		</template>
 		<v-divider></v-divider>
-		<v-card-subtitle>
-			<span> {{ subtitle || "" }}</span>
-		</v-card-subtitle>
-
 		<v-container>
 			<template v-if="$vuetify.display.mdAndUp">
 				<v-row>
@@ -18,15 +13,9 @@
 						<v-container>
 							<v-row>
 								<v-col>
-									<v-img
-										:src="imgSrc || ''"
-										cover>
-										<template #placeholder>
-											<v-sheet class="d-flex align-center justify-center">
-												<span>{{ noImgLabel }}</span>
-											</v-sheet>
-										</template>
-									</v-img>
+									<BaseImg
+										:img-src="imgSrc"
+										:img-options="imgOptions" />
 								</v-col>
 							</v-row>
 							<v-row
@@ -36,13 +25,13 @@
 					</v-col>
 					<v-col>
 						<v-container>
-							<v-row class="text-h5 text-primary font-bold">
+							<v-row class="text-h5 text-primary font-weight-bold">
 								<v-col>{{ $t("pages.general_info") }}</v-col>
 							</v-row>
 							<v-row
 								v-for="detail in details"
 								:key="detail.name"
-								class="text-body-2">
+								class="text-body-1">
 								<v-col>
 									<span class="font-bold"> {{ $t(detail.name) }}: </span>
 									<NuxtLink
@@ -75,16 +64,14 @@
 									>
 								</v-row>
 								<v-row>
-									<v-col>
+									<v-col class="text-body-1">
 										{{ description }}
 									</v-col>
 								</v-row>
 							</template>
 						</v-container>
 					</v-col>
-					<v-col
-						class="border rounded-md"
-						cols="auto">
+					<v-col cols="3">
 						<v-container>
 							<slot name="rating_starring"> </slot>
 						</v-container>
@@ -97,7 +84,7 @@
 						<slot name="gallery"></slot>
 					</v-col>
 				</v-row>
-				<v-row class="text-h5 text-primary font-bold">
+				<v-row class="text-h6 text-primary font-bold">
 					<v-col>{{ $t("pages.general_info") }}</v-col>
 				</v-row>
 				<v-row
@@ -131,11 +118,11 @@
 				</v-row>
 				<template v-if="description">
 					<v-row>
-						<v-col class="font-bold text-h5 text-primary"
+						<v-col class="font-bold text-h6 text-primary"
 							>{{ $t("pages.films.description") }}:</v-col
 						>
 					</v-row>
-					<v-row>
+					<v-row class="text-body-2">
 						<v-col>
 							{{ description }}
 						</v-col>
@@ -143,22 +130,28 @@
 				</template>
 			</template>
 		</v-container>
-		<v-card-actions>
-			<slot name="actions"></slot>
-		</v-card-actions>
 	</v-card>
 </template>
 
 <script lang="ts" setup>
-	defineProps<{
-		title: string;
-		subtitle: string | number | null;
-		rating: number;
+	import BaseImg from "../Img/BaseImg.vue";
+	const props = defineProps<{
+		title?: string;
 		imgSrc: string;
 		noImgLabel?: string;
 		details: CardDetails[];
 		description: string;
 	}>();
+	const imgOptions = {
+		shaded: false,
+		height: 500,
+		cover: true,
+		clickable: true,
+		placeholderOptions: {
+			displayTitle: true,
+			title: props.noImgLabel,
+		},
+	} as ImgOptions;
 </script>
 
 <style></style>

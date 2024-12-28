@@ -2,6 +2,8 @@ export default {
 	welcome: "Добро пожаловать",
 	general: {
 		total: "Всего",
+		data_transfer: "Передача данных",
+		preview: "Предпросмотр",
 		items_per_page: "Элементов на странице",
 		ordering: "Сортировка",
 		search: "Поиск",
@@ -18,6 +20,26 @@ export default {
 		no_data_found: "Нет данных",
 		no_results_found: "Нет результатов",
 		no_img: "Нет изображения",
+		uploaded: "Файл загружен",
+		available_for_upload: "Доступно для загрузки",
+		img: "Изображение",
+		uploaded_img: "Загруженное изображение",
+		drag_and_drop: "Перетащите файл изображения сюда",
+	},
+	auth: {
+		not_auth: "Вы не авторизованы",
+		login_to_continue: "Войдите чтобы продолжить",
+		error: "Ошибка",
+		invalid_credentials: "Неправильные учетные данные",
+		check_credentials: "Проверьте правильность ввода логина и пароля",
+		forgot_password: "Забыли пароль?",
+		remember_me: "Запомнить меня",
+		sign_in: "Войти",
+		sign_up: "Зарегистрироваться",
+		sign_out: "Выход",
+		password: "Пароль",
+		email: "Электронная почта",
+		login: "Логин",
 	},
 	nav: {
 		title: "Навигация",
@@ -31,6 +53,16 @@ export default {
 		all: "Все",
 		directors: "Режиссеры",
 		language: "Язык",
+		edit: "Редактирование",
+		pagination: {
+			page: "Страница",
+			of: "из",
+			total: "Всего",
+			first: "Первая",
+			last: "Последняя",
+			next: "Следующая",
+			prev: "Предыдущая",
+		},
 	},
 	dialogs: {
 		confirm: {
@@ -150,7 +182,7 @@ export default {
 		},
 		films: {
 			title: "Фильмы",
-			details: "Подробности",
+			details: "подробности",
 			name: "Название",
 			release_year: "Год выпуска",
 			director: "Режиссер",
@@ -171,9 +203,11 @@ export default {
 			producer: "Продюсер",
 			writer: "Сценарист",
 			age: "Возрастное ограничение",
-			no_actors_data: "Нет данных о актерах",
+			no_actors_data: "Нет данных об актерах",
+			assess: "Оценить",
 		},
 		persons: {
+			title: "Персоны",
 			firstname: "Имя",
 			lastname: "Фамилия",
 			birthday: "День рождения",
@@ -198,6 +232,7 @@ export default {
 			max_birthday: "Максимальный год рождения",
 		},
 		film: {
+			slogan: "Слоган",
 			add: "Добавить Фильм",
 			edit: "Изменить Фильм",
 			name: "Название",
@@ -208,10 +243,16 @@ export default {
 			duration: "Продолжительность",
 			genres: "Жанры",
 			preview: "Постер",
+			new_preview: "Новый постер",
 			gallery: "Галерея",
+			new_gallery: "Новая галерея",
 			producer: "Продюсер",
+			composer: "Композитор",
 			writer: "Сценарист",
 			age: "Возрастное ограничение",
+			update_poster: "Обновить постер",
+			update_gallery: "Обновить галерею",
+			gallery_actual: "Актуальная Галерея",
 			stepper: {
 				first: "Основные данные",
 				second: "Загрузить постер",
@@ -222,14 +263,17 @@ export default {
 			},
 			preview_max_size: "Размер постера не должен превышать 2 МБ!",
 			preview_restrictions:
-				"Загрузите файл в формате jpg, png, jpeg. Максимальный размер - 2 MB.",
+				"Загрузите файл в формате jpg, png, webp, jpeg. Максимальный размер - 2 MB.",
 			gallery_max_count: "Максимальное количество картинок - 6",
 			gallery_restrictions:
-				"Загрузите файлы в количество не более 5. Допустимые форматы: jpg, png, jpeg. Максимальный общий размер - 4 MB.",
+				"Загрузите файлы в количество не более 6. Допустимые форматы: jpg, png, jpeg, webp. Максимальный общий размер - 4 MB.",
 			preview_empty_warning:
 				"Вы не загрузили постер, но вы сможете сделать это позже. Завершить?",
 			gallery_empty_warning:
 				"Вы не загрузили файлы для галереи, но вы сможете сделать это позже. Завершить?",
+			preview_delete_confirm:
+				"Вы уверены, что хотите удалить постер?",
+				preview_replace_warning: "Текущий постер будет заменен. Продолжить?",
 		},
 		person: {
 			add: "Добавить персону",
@@ -251,7 +295,7 @@ export default {
 			photo: "Фото",
 			no_photo: "Нет фото",
 			photo_restrictions:
-				"Загрузите файл в формате jpg, png, jpeg. Максимальный размер - 2 MB.",
+				"Загрузите файл в формате jpg, png, webp, jpeg. Максимальный размер - 2 MB.",
 			no_photo_warning:
 				"Вы не загрузили фото, но вы сможете сделать это позже. Завершить?",
 			gender_hint: "Выберите пол",

@@ -2,6 +2,8 @@ export default {
 	welcome: "Welcome",
 	general: {
 		total: "Total",
+		data_transfer: "Transferring data",
+		preview: "Preview",
 		items_per_page: "Items per page",
 		ordering: "Ordering",
 		search: "Search",
@@ -18,6 +20,25 @@ export default {
 		no_data_found: "No data found",
 		no_results_found: "No results found",
 		no_img: "No image",
+		uploaded: "File uploaded",
+		available_for_upload: "Available for upload",
+		img: "Image",
+		uploaded_img: "Uploaded image",
+	},
+	auth: {
+		not_auth: "You are not authenticated",
+		login_to_continue: "Login to continue",
+		error: "Error",
+		invalid_credentials: "Invalid credentials",
+		check_credentials: "Please check your credentials",
+		forgot_password: "Forgot password?",
+		remember_me: "Remember me",
+		sign_in: "Sign in",
+		sign_up: "Sign up",
+		sign_out: "Sign out",
+		password: "Password",
+		email: "Email",
+		login: "Login",
 	},
 	nav: {
 		title: "Navigation",
@@ -27,12 +48,22 @@ export default {
 		films_add: "Add film",
 		people: "People",
 		genres: "Genres",
+		edit: "Edit",
 		actors: "Actors",
 		persons: "Persons",
 		persons_add: "Add person",
 		all: "All",
 		directors: "Directors",
 		language: "Language",
+		pagination: {
+			page: "Page",
+			total: "Total",
+			of: "of",
+			first: "First",
+			last: "Last",
+			next: "Next",
+			prev: "Previous",
+		},
 	},
 	dialogs: {
 		confirm: {
@@ -152,7 +183,7 @@ export default {
 		},
 		films: {
 			title: "Films",
-			details: "Details",
+			details: "details",
 			no_films: "No films added yet",
 			back_to_list: "Back to films list",
 			name: "Name",
@@ -178,6 +209,7 @@ export default {
 			writer: "Writer",
 			age: "Age restriction",
 			no_actors_data: "No actors data",
+			assess: "Assess",
 		},
 		persons: {
 			firstname: "Firstname",
@@ -204,6 +236,7 @@ export default {
 			max_birthday: "Maximum date of birth",
 		},
 		film: {
+			slogan: "Slogan",
 			add: "Add Film",
 			edit: "Edit Film",
 			name: "Name",
@@ -215,12 +248,18 @@ export default {
 			genres: "Genres",
 			producer: "Producer",
 			writer: "Writer",
+			composer: "Composer",
 			age: "Age restriction",
 			genres_hint: "Pick genres",
 			actors_hint: "Pick actors",
 			director_hint: "Pick director",
-			preview: "Preview",
+			preview: "Poster",
+			new_preview: "New poster",
 			gallery: "Gallery",
+			new_gallery: "New gallery",
+			update_poster: "Update poster",
+			update_gallery: "Update gallery",
+			gallery_actual: "Actual gallery",
 			stepper: {
 				first: "General Info",
 				second: "Upload poster",
@@ -231,16 +270,20 @@ export default {
 			},
 			preview_max_size: "Preview size should be less than 2 MB!",
 			preview_restrictions:
-				"Allowed formats: jpg, png, jpeg. Maximum size - 2 MB.",
-			gallery_max_count: "Gallery count should be not more than 5",
+				"Allowed formats: jpg, png, webp, jpeg. Maximum size - 2 MB.",
+			gallery_max_count: "Gallery count should be not more than 6",
 			gallery_restrictions:
-				"Allowed formats: jpg, png, jpeg. Maximum size - 4 MB.",
+				"Allowed formats: jpg, png, webp, jpeg. Maximum size - 4 MB.",
 			preview_empty_warning:
 				"You didn't upload a preview, but you can do it later. Continue?",
 			gallerY_empty_warning:
-				" You didn't upload any images for gallery, but you can do it later. Continue?",
+				"You didn't upload any images for gallery, but you can do it later. Continue?",
+			preview_delete_confirm:
+				"Are you sure you want to delete the preview?",
+			preview_replace_warning: "The current preview will be replaced. Continue?",
 		},
-		person: {
+		persons: {
+			title: "Persons",
 			add: "Add person",
 			edit: "Edit person",
 			add_specialty: "Add specialty",
@@ -260,7 +303,7 @@ export default {
 			photo: "Photo",
 			no_photo: "No photo",
 			photo_restrictions:
-				"Upload a file in the jpg, png, jpeg format. Maximum size - 2 MB.",
+				"Upload a file in the jpg, webp, png, jpeg format. Maximum size - 2 MB.",
 			no_photo_warning:
 				"You didn't upload a photo, but you can do it later. Continue?",
 			gender_hint: "Choose gender",

@@ -26,7 +26,7 @@
 
 <script lang="ts" setup>
 	import ImgPlaceholder from "~/components/Placeholders/ImgPlaceholder.vue";
-	const props = defineProps<{
+	defineProps<{
 		id?: number;
 		to?: string;
 		imageSrc?: string;

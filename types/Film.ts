@@ -4,6 +4,7 @@ declare global {
     name: string;
     genres: string[] | [];
     genreIds: number[] | [];
+    genreNames: string[] | [];
     releaseYear: number | null;
     actorIds: number[]|[];
     directorId: number|null;
@@ -18,13 +19,29 @@ declare global {
     producerId: number|null;
     producerName: string | null;
     writerId: number|null;
-    writerName: string|null;
+    writerName: string | null;
+    composerId: number|null;
+    composerName: string | null;
     assessments: number;
+    slogan: string|null;
   }
-  
-  interface FilmListResponse {
-    items: Film[];
-    total: number;
+
+  interface FilmForm {
+    id: number | null;
+    name: string;
+    slogan: string|null;
+    genreIds: number[] | [];
+    releaseYear: number | null;
+    actorIds: number[]|[];
+    directorId: number | null;
+    producerId: number | null;
+    composerId: number | null;
+    writerId: number | null;
+    description: string;
+    age: number;
+    duration: string | number | Date | null;
+    preview: string | null;
+    gallery: string[] | [];
   }
 }
 export {};

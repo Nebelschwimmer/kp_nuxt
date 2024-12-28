@@ -1,17 +1,9 @@
-import { VTextField } from "vuetify/components";
-import { de } from "vuetify/locale";
-
 export default defineNuxtConfig({
 	modules: [
-		"@nuxt/ui",
-		"nuxt-svgo",
-		"nuxt-svgo-loader",
-		"nuxt-proxy",
 		"@nuxtjs/i18n",
 		"@pinia/nuxt",
 		"@nuxt/eslint",
 		"@nuxt/image",
-		"@nuxt/icon",
 		"vuetify-nuxt-module",
 	],
 	app: {
@@ -24,10 +16,29 @@ export default defineNuxtConfig({
 			title: "Kinopoisk Lite",
 			charset: "utf-8",
 			viewport: "width=device-width, initial-scale=1",
+			meta: [
+				{
+					hid: "description",
+					name: "description",
+					content: "Kinopoisk Lite",
+				},
+				{
+					hid: "og:title",
+					name: "og:title",
+					content: "Kinopoisk Lite",
+				},
+				{
+					hid: "og:description",
+					name: "og:description",
+					content: "Kinopoisk Lite",
+				},
+				{},
+			],
 		},
 	},
 	vuetify: {
 		vuetifyOptions: {
+			labComponents: true,
 			defaults: {
 				VTextField: {
 					variant: "outlined",
@@ -36,19 +47,18 @@ export default defineNuxtConfig({
 				VSelect: {
 					variant: "outlined",
 					density: "comfortable",
-				}
+				},
 			},
 			theme: {
-				defaultTheme: "dark",
+				defaultTheme: "light",
 				themes: {
-					dark: {
-						dark: true,
+					light: {
 						colors: {
-							background: "#000000",
-							surface: "#201120",
-							primary: "#e82384",
-							secondary: "#6A1E55",
-							accent:"#FF6363",
+							background: "#ffffff",
+							surface: "#e4e4e4",
+							primary: "#607262",
+							secondary: "#e0974a",
+							accent: "#ed7b49",
 							error: "#f44336",
 							info: "#FFBD69",
 							success: "#4caf50",
@@ -63,7 +73,7 @@ export default defineNuxtConfig({
 		dirs: ["types/*.ts", "store/*.ts", "types/**/*.ts"],
 	},
 	i18n: {
-		vueI18n: "./i18n.config.ts"
+		vueI18n: "./i18n.config.ts",
 	},
 
 	postcss: {

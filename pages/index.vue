@@ -1,104 +1,108 @@
 <template>
 	<BasePage
-		:loading="loading"
 		:error="networkError"
-		:total="total"
+		:loading="loading"
 		@alert:close="networkError = null">
 		<template #content>
-			<v-data-iterator
-				:items="films"
-				:loading="loading"
-				:items-per-page="2">
-				<template #header>
-					<div class="text-h4 text-accent font-bold">
-						{{ $t("pages.home.newest") }}
-					</div>
-				</template>
-				<template v-slot:default="props">
-					<v-row
-						v-for="(film, i) in films"
-						:key="i"
-						class="my-2">
-						<v-col>
-							<v-list-item
-								:to="`/films/${film.id}`"
-								variant="tonal"
-								color="primary"
-								class="base-card">
-								<v-container>
-									<v-row>
-										<v-col>
-											<v-list-item-media>
-												<v-img
-													:src="film.preview || ''"
-													height="300"
-													cover>
-													<template #placeholder>
-														<ImgPlaceholder />
-													</template>
-												</v-img>
-											</v-list-item-media>
-										</v-col>
-										<v-col>
-											<v-row>
-												<v-col>
-													<v-list-item-title
-														class="font-bold text-primary text-h4"
-														>{{ film.name }} ({{
-															film.releaseYear
-														}})</v-list-item-title
-													>
-												</v-col>
-											</v-row>
-											<v-row>
-												<v-col>
-													<v-rating
-														:model-value="film.rating || 0"
-														active-color="warning"
-														readonly
-														size="small"
-														density="compact"></v-rating>
-												</v-col>
-											</v-row>
-											<v-row>
-												<v-col>
-													<v-list-item-subtitle class="text-body-1">
-														{{ film.description }}
-													</v-list-item-subtitle>
-												</v-col>
-											</v-row>
-											<v-row>
-												<v-col>
-													<v-list-item-subtitle class="text-body-1">
-														{{ film.directorName }}
-													</v-list-item-subtitle>
-												</v-col>
-											</v-row>
-											<v-row>
-												<FilmGallery
-													v-if="film.gallery?.length"
-													:gallery="film.gallery" />
-											</v-row>
-										</v-col>
-									</v-row>
-								</v-container>
-							</v-list-item>
-						</v-col>
-					</v-row>
-				</template>
-				<template v-slot:loader>
-					<v-row
-						v-for="(_, k) in [0, 1, 2, 3]"
-						:key="k">
-						<v-col>
-							<v-skeleton-loader
-								class="border"
-								height="300"
-								type="card"></v-skeleton-loader>
-						</v-col>
-					</v-row>
-				</template>
-			</v-data-iterator>
+			<v-container>
+				<v-row justify="center">
+					<v-col
+						cols="12"
+						xl="10"
+						lg="10"
+						md="12"
+						sm="12">
+						<v-card variant="text">
+							<template #title>
+								<div class="">
+									<span class="mr-2 text-h4">#</span>
+									<a
+										href="/#newest"
+										class="font-bold text-h4"
+										>{{ $t("pages.home.newest") }}
+										</a>
+								</div>
+								<v-divider></v-divider>
+							</template>
+							<template #text>
+								<v-carousel
+									v-model="activeFilm"
+									:height="CAROUSEL_HEIGHT"
+									cycle
+									hide-delimiter-background>
+									<v-carousel-item
+										v-for="(film, index) in latestFilms"
+										v-if="!loading"
+										:key="index"
+										:value="index">
+										<v-card
+											variant="text"
+											height="100%"
+											@click="navigateTo('/films/' + film.id)">
+											<template #text>
+												<BaseImg
+													:img-src="film.preview || ''"
+													:img-options="cardImgOptions">
+												</BaseImg>
+											</template>
+
+											<template #image>
+												<BaseImg
+													:img-src="film.preview || ''"
+													:img-options="bgImgOptions"></BaseImg>
+											</template>
+											<template #title>
+												<div
+													class="font-bold text-white text-h4 text-center p-0 text-truncate">
+													{{ film.name || "" }}
+												</div>
+											</template>
+										</v-card>
+									</v-carousel-item>
+									<v-skeleton-loader
+										v-else
+										:height="CAROUSEL_HEIGHT"
+										type="image">
+									</v-skeleton-loader>
+								</v-carousel>
+								<v-list>
+									<v-list-item
+										v-for="(film, index) in latestFilms"
+										v-if="!loading"
+										:key="film.id || 0"
+										:active="index === activeFilm"
+										:title="film.name || ''"
+										:subtitle="film.description || ''"
+										:value="film.id || 0"
+										variant="elevated"
+										lines="three"
+										class="list-bg"
+										@click="navigateTo('/films/' + film.id)">
+										<template #prepend>
+											<v-avatar rounded="0">
+												<BaseImg
+													:img-src="film.preview || ''"
+													:img-options="avatarImgOptions">
+												</BaseImg>
+											</v-avatar>
+										</template>
+									</v-list-item>
+									<v-skeleton-loader
+										v-else
+										v-for="k in 5"
+										:key="k"
+										height="100"
+										type="list-item-avatar-three-line">
+									</v-skeleton-loader>
+								</v-list>
+							</template>
+						</v-card>
+					</v-col>
+				</v-row>
+				<v-row>
+					<v-col> </v-col>
+				</v-row>
+			</v-container>
 		</template>
 	</BasePage>
 </template>
@@ -106,17 +110,48 @@
 <script lang="ts" setup>
 	import { useFilmStore } from "~/store/filmStore";
 	import BasePage from "~/components/Layout/Page/BasePage.vue";
-	import ImgPlaceholder from "~/components/Placeholders/ImgPlaceholder.vue";
-	import FilmGallery from "~/components/Gallery/FilmGallery.vue";
-	const { films, loading, networkError, total } = storeToRefs(useFilmStore());
-	const { fetchFilms } = useFilmStore();
+	import BaseImg from "~/components/Containment/Img/BaseImg.vue";
+	const { latestFilms, loading, networkError } = storeToRefs(useFilmStore());
+	const { fetchLatestFilms } = useFilmStore();
+	const activeFilm = ref(0);
+	onMounted(async () => {
+		await fetchLatestFilms();
+	});
+const { t } = useI18n()
+	const CAROUSEL_HEIGHT = 400;
 
-	onMounted(() => {
-		fetchFilms();
-	});
-	(async function () {
-		await fetchFilms();
-	});
+	const cardImgOptions = {
+		shaded: false,
+		cover: false,
+		height: CAROUSEL_HEIGHT - 100,
+		placeholderOptions: {
+			displayTitle: true,
+			title: t("pages.films.no_preview"),
+		},
+	} as ImgOptions;
+
+	const avatarImgOptions = {
+		shaded: false,
+		height: 50,
+		cover: true,
+		placeholderOptions: {
+			displayTitle: false,
+		},
+	};
+
+	const bgImgOptions = {
+		shaded: true,
+		height: "100%",
+		cover: true,
+		class: "img-blur",
+		placeholderOptions: {
+			displayTitle: false,
+		},
+	};
 </script>
 
-<style></style>
+<style lang="scss">
+	.img-blur {
+		filter: blur(12px);
+	}
+</style>

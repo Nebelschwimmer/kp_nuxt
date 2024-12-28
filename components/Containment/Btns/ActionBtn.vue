@@ -2,10 +2,13 @@
 	<v-btn
 		:color="color"
 		:size="size"
-		variant="tonal"
+		density="comfortable"
+		icon
+		rounded="0"
+		:to="to"
 		@click="emitAction(type)">
-		<v-icon> {{ icon }}</v-icon>
-		{{ computedBtnTitle }}
+		<v-icon> {{ computedIcon }}</v-icon>
+		<template v-if="showLabel">{{ computedBtnTitle }}</template>
 	</v-btn>
 </template>
 
@@ -28,27 +31,16 @@
 				break;
 		}
 	};
-	const props = defineProps({
-		type: {
-			type: String,
-			required: true,
-		},
-		color: {
-			type: String,
-			required: false,
-			default: "accent",
-		},
-		size: {
-			type: String,
-			required: false,
-			default: "small",
-		},
-		icon: {
-			type: String,
-			required: false,
-			default: "mdi-plus",
-		},
-	});
+	const props = defineProps<{
+		type: string;
+		color?: string;
+		size?: string;
+		icon?: string;
+		disabled?: boolean;
+		to?: string;
+		showLabel?: boolean;
+	}>();
+	
 
 	const computedBtnTitle = computed(() => {
 		switch (props.type) {
@@ -62,6 +54,19 @@
 				return t("actions.add");
 		}
 	});
+
+	const computedIcon = computed(() => {
+		switch (props.type) {
+			case "add":
+				return "mdi-plus";
+			case "edit":
+				return "mdi-pencil";
+			case "delete":
+				return "mdi-delete";
+			default:
+				return "mdi-plus";
+		}
+	})
 </script>
 
 <style lang="scss">

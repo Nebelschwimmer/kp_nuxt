@@ -2,6 +2,8 @@ export default {
 	welcome: "Bienvenue",
 	general: {
 		total: "Total",
+		data_transfer: "Transfert de données",
+		preview: "Aperçu",
 		items_per_page: "Articles par page",
 		ordering: "Ordre",
 		search: "Rechercher",
@@ -18,6 +20,25 @@ export default {
 		no_data_found: "Aucune données trouvées",
 		no_results_found: "Aucun resultat trouvé",
 		no_img: "Aucune image",
+		uploaded: "Fichier téléchargé",
+		available_for_upload: "Disponible pour le telechargement",
+		img: "Image",
+		uploaded_img: "Image telechargée",
+	},
+	auth: {
+		not_auth: "Vous n'êtes pas authentifié",
+		login_to_continue: "Connectez-vous pour continuer",
+		error: "Erreur",
+		invalid_credentials: "Identifiants invalides",
+		check_credentials: "Veuillez verifier vos identifiants",
+		forgot_password: "Mot de passe oublie?",
+		remember_me: "Se souvenir de moi",
+		sign_in: "Connexion",
+		sign_up: "Inscription",
+		sign_out: "Deconnexion",
+		password: "Mot de passe",
+		email: "Email",
+		login: "Login",
 	},
 	nav: {
 		title: "Navigation",
@@ -30,7 +51,17 @@ export default {
 		actors: "Acteurs",
 		all: "Toutes",
 		directors: "Réalisateurs",
+		edit: "Modifier",
 		language: "Langue",
+		pagination: {
+			page: "Page",
+			of: "de",
+			total: "Total",
+			first: "Premier",
+			last: "Dernier",
+			next: "Suivante",
+			prev: "Précedente",
+		},
 	},
 	dialogs: {
 		confirm: {
@@ -150,7 +181,7 @@ export default {
 		},
 		films: {
 			title: "Films",
-			details: "Details",
+			details: "details",
 			back_to_list: "Retourner vers la liste",
 			name: "Nom",
 			release_year: "Année de sortie",
@@ -174,8 +205,10 @@ export default {
 			writer: "Auteur",
 			age: "Restriction d'âge",
 			no_actors_data: "Aucune information sur les acteurs",
+			assess: "Evaluer",
 		},
 		persons: {
+			title: "Personnes",
 			firstname: "Prénom",
 			lastname: "Nom",
 			birthday: "Anniversaire",
@@ -200,6 +233,7 @@ export default {
 			max_birthday: "Date de naissance maximale",
 		},
 		film: {
+			slogan: "Slogan",
 			add: "Ajouter Film",
 			edit: "Modifier Film",
 			name: "Nom",
@@ -210,10 +244,16 @@ export default {
 			duration: "Durée",
 			genres: "Genres",
 			preview: "Poster",
+			new_preview: "Nouveau poster",
 			gallery: "Galerie",
+			new_gallery: "Nouvelle galerie",
 			producer: "Producteur",
+			composer: "Compositeur",
 			writer: "Auteur",
 			age: "Restriction d'âge",
+			update_poster: "Mettre à jour le poster",
+			update_gallery: "Mettre à jour la galerie",
+			gallery_actual: "Galerie actuelle",
 		},
 		stepper: {
 			first: "Informations principales",
@@ -223,16 +263,19 @@ export default {
 			optional: "Optional",
 			error: "Error",
 		},
-		preview_max_size: "La taille du poster ne doit pas depasser 2 MB!",
+		preview_max_size: "La taille du poster ne doit pas dépasser 2 MB!",
 		preview_restrictions:
-			"Formats acceptés: jpg, png, jpeg. Taille maximale - 2 MB.",
-		gallery_max_count: "Le nombre de fichiers ne doit pas depasser 6.",
+			"Formats acceptés: jpg, png, jpeg, webp. Taille maximale - 2 MB.",
+		gallery_max_count: "Le nombre de fichiers ne doit pas dépasser 6.",
 		gallery_restrictions:
-			"Formats acceptés: jpg, png, jpeg. Taille maximale - 4 MB.",
+			"Formats acceptés: jpg, png, jpeg, webp. Taille maximale - 4 MB.",
 		preview_empty_warning:
 			"Vous n'avez pas chargé de poster, mais vous pouvez le faire plus tard. Continuer?",
 		gallery_empty_warning:
 			"Vous n'avez pas chargé de fichier pour la galerie, mais vous pouvez le faire plus tard. Continuer?",
+		preview_delete_confirm:
+			"Voulez-vous vraiment supprimer le poster?",
+		preview_replace_warning: "Le poster actuel sera remplacé par le nouveau. Continuer?",
 	},
 	person: {
 		add: "Ajouter personne",

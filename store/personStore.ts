@@ -3,6 +3,8 @@ export const usePersonStore = defineStore("persons", () => {
 	const persons = ref<Person[]>([]);
 	const person = ref<Person | null>(null);
 	const loading = ref(false);
+	const currentPage = ref(1);
+	const totalPages = ref(0);
 	const networkError = ref<Error | null>();
 	const genders = ref<Gender[]>([]);
 	const specialties = ref<Specialty[]>([]);
@@ -19,12 +21,14 @@ export const usePersonStore = defineStore("persons", () => {
 		writtenFilms: [],
 	});
 
-	const fetchPersons = async () => {
+	const fetchFilteredPersons = async (limit: number, offset: number, search: string, locale: string) => {
 		try {
 			loading.value = true;
 			const response = await $fetch<PersonListResponse>(
-				`${config.public.apiBase}/persons/filter`
+				`${config.public.apiBase}/persons/filter?limit=${limit}&offset=${offset}&search=${search}&locale=${locale}`
 			);
+			currentPage.value = response.currentPage || 1;
+			totalPages.value = response.totalPages || 0;
 			persons.value = response.items || [];
 		} catch (error: any) {
 			networkError.value = error;
@@ -92,6 +96,28 @@ export const usePersonStore = defineStore("persons", () => {
 		}
 	};
 
+	const uploadPhoto = async (file: File, id	: number): Promise<boolean> => {
+		try {
+			loading.value = true;
+			const formData = new FormData();
+			formData.append("photo", file);
+			await $fetch<Partial<Person>>(
+				`${config.public.apiBase}/persons/${id}/photo`,
+				{
+					method: "POST",
+					body: formData,
+				}
+			);
+			return true;
+		} catch (error: any) {
+			networkError.value = error;
+			return false;
+		} finally {
+			loading.value = false;
+		}
+	};
+				
+
 	return {
 		persons,
 		person,
@@ -100,10 +126,13 @@ export const usePersonStore = defineStore("persons", () => {
 		networkError,
 		genders,
 		specialties,
-		fetchPersons,
+		totalPages,
+		currentPage,
+		fetchFilteredPersons,
 		fetchPersonById,
 		fetchGenders,
 		fetchSpecialties,
-		addPerson
+		addPerson,
+		uploadPhoto
 	};
 });

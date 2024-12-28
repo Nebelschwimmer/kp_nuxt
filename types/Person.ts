@@ -19,9 +19,6 @@ declare global {
     photo: string;
     specialtyNames: string[];
   }
-  interface PersonListResponse {
-    items: Person[]
-  }
 
   interface Gender {
     name: string;

@@ -1,5 +1,5 @@
 <template>
-	<v-card variant="flat">
+	<v-card v-if="gallery.length">
 		<v-container>
 			<v-row>
 				<v-col>
@@ -29,10 +29,13 @@
 					<v-img
 						:src="img"
 						height="100"
+						:border="activeImg === gallery.indexOf(img) ? 'accent' : ''"
 						cover
 						:class="[
 							'cursor-pointer rounded-md',
-							{ 'border-2 border-primary': activeImg === gallery.indexOf(img) },
+							{
+								' border-info': activeImg === gallery.indexOf(img),
+							},
 						]"
 						@click="setActiveImage(gallery.indexOf(img))">
 						<template #placeholder>
@@ -42,34 +45,26 @@
 				</v-col>
 			</v-row>
 		</v-container>
-		<v-dialog
-			v-model="showExpandedPic"
-			max-width="1200">
-			<v-card>
-				<v-container>
-					<v-row>
-							<v-spacer></v-spacer>
-							<CloseBtn @click="showExpandedPic = false" />
-					</v-row>
-					<v-row>
-						<v-col>
-							<v-img
-								:src="gallery[activeImg]"
-								contain
-								></v-img>
-						</v-col>
-					</v-row>
-				</v-container>
-			</v-card>
-		</v-dialog>
+		<LightBox
+			:model-value="showExpandedPic"
+			:img-src="gallery[activeImg]"
+			@close="showExpandedPic = false" />
 	</v-card>
+	<v-sheet
+		v-else
+		height="300">
+		<ImgPlaceholder
+			display-title
+			:title="noContentLabel" />
+	</v-sheet>
 </template>
 
 <script lang="ts" setup>
+	import LightBox from "../Dialogs/LightBox.vue";
 	import ImgPlaceholder from "~/components/Placeholders/ImgPlaceholder.vue";
-	import CloseBtn from "../Containment/Btns/CloseBtn.vue";
-	const props = defineProps<{
+	defineProps<{
 		gallery: string[];
+		noContentLabel?: string;
 	}>();
 
 	const activeImg = ref(0);

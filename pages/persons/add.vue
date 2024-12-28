@@ -37,6 +37,8 @@
 					</v-stepper-window-item>
 					<v-stepper-window-item value="2"
 						><PhotoUpload :disabled="step !== 1"
+							@skip="navigateTo('/persons')"
+							@submit="handlePhotoUploadSubmit"
 					/></v-stepper-window-item>
 				</v-stepper-window>
 			</v-stepper>
@@ -45,13 +47,14 @@
 </template>
 
 <script lang="ts" setup>
-	import PersonForm from "~/components/AddPersonStepperContent/PersonForm.vue";
-	import PhotoUpload from "~/components/AddPersonStepperContent/PhotoUpload.vue";
+	import PersonForm from "~/components/PersonStorageComponents/PersonForm.vue";
+	import PhotoUpload from "~/components/PersonStorageComponents/PhotoUpload.vue";
 	import AddBasePage from "~/components/Layout/Page/AddPageBase.vue";
 	import { usePersonStore } from "~/store/personStore";
-	const { networkError, personForm, genders, specialties, loading } =
+	const { networkError, personForm, genders, specialties, loading, person } =
 		storeToRefs(usePersonStore());
-	const { fetchGenders, fetchSpecialties, addPerson } = usePersonStore();
+	const { fetchGenders, fetchSpecialties, addPerson, uploadPhoto } = usePersonStore();
+	const step = ref(1);
 
 	const nextStep = () => {
 		step.value++;
@@ -63,11 +66,17 @@
 		}
 	};
 
+const handlePhotoUploadSubmit = async (file: File) => {
+		const id = person.value?.id || 0;
+		if (await uploadPhoto(file, id)) {
+			navigateTo('/persons');
+		}	
+	}
+
 	const getData = async () => {
 		const { locale } = useI18n();
 		await Promise.allSettled([fetchGenders(locale.value), fetchSpecialties(locale.value)]);
 	};
-	const step = ref(0);
 
 	(async function () {
 		await getData();

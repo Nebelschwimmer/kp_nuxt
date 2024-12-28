@@ -1,10 +1,12 @@
 <template>
 	<v-sheet
 		height="100%"
+		rounded="lg"
+		min-height="100%"
 		color="transparent"
-		class="d-flex align-center justify-center flex-column base-card">
+		class="d-flex align-center justify-center flex-column w-100 base-card text-caption">
 		<v-icon icon="mdi-image-off"></v-icon>
-    <span v-if="displayTitle">{{ title || $t("general.no_img") }}</span>
+    <span v-if="displayTitle">{{ title ? title : $t("general.no_img") }}</span>
 	</v-sheet>
 </template>
 

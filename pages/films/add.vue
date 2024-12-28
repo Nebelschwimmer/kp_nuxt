@@ -1,7 +1,9 @@
 <template>
 	<AddBasePage
-		:toolbar-title="$t('forms.film.add')"
-		:network-error="networkError ?? null">
+		:toolbar-title="'forms.film.add'"
+		:network-error="networkError ?? null"
+		@alert:close="networkError = null"
+		>
 		<template #stepper>
 			<v-stepper
 				v-model="step"
@@ -41,13 +43,18 @@
 							:genres="genres"
 							:actors="actors"
 							:directors="directors"
+							:producers="producers"
+							:writers="writers"
 							:loading="loading"
+							:composers="composers"
 							:network-error="Boolean(networkError)"
 							@submit="handleGeneralInfoSubmit" />
 					</v-stepper-window-item>
 					<v-stepper-window-item value="2"
 						><PosterUpload
 							:disabled="step !== 1"
+							:loading="loading"
+							dislaySkipBtn
 							@skip="nextStep"
 							@submit="handlePosterUploadSubmit"
 					/></v-stepper-window-item>
@@ -62,19 +69,23 @@
 
 <script lang="ts" setup>
 	import { useFilmStore } from "~/store/filmStore";
-	import FilmForm from "~/components/AddFilmStepperContent/FilmForm.vue";
-	import PosterUpload from "~/components/AddFilmStepperContent/PosterUpload.vue";
-	import GalleryUpload from "~/components/AddFilmStepperContent/GalleryUpload.vue";
+	import FilmForm from "~/components/FilmStorageComponents/FilmForm.vue";
+	import PosterUpload from "~/components/FilmStorageComponents/PosterUpload.vue";
+	import GalleryUpload from "~/components/FilmStorageComponents/GalleryUpload.vue";
 	import AddBasePage from "~/components/Layout/Page/AddPageBase.vue";
-	const { genres, filmForm, film, actors, directors, loading, networkError } =
+	const { genres, filmForm, film, actors, composers, producers, writers, directors, loading, networkError } =
 		storeToRefs(useFilmStore());
 	const {
+		addFilm,
 		fetchGenres,
 		fetchActors,
 		fetchDirectors,
-		addFilm,
+		fetchProducers,
+		fetchWriters,
+		fetchComposers,
 		uploadPreview,
 		uploadGallery,
+		clearFilmForm,
 	} = useFilmStore();
 
 	const step = ref(0);
@@ -87,6 +98,9 @@
 			fetchGenres(locale.value),
 			fetchActors(),
 			fetchDirectors(),
+			fetchProducers(),
+			fetchWriters(),
+			fetchComposers(),
 		]);
 		dataLoading.value = false;
 	}
@@ -115,9 +129,10 @@
 		step.value++;
 	};
 
-	(async function () {
+	onMounted(async () => {
+		clearFilmForm();
 		await getData();
-	})();
+	})
 </script>
 
 <style></style>

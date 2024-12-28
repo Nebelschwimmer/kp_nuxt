@@ -1,36 +1,42 @@
 <template>
-	<v-card variant="text">
-		<v-container>
-			<v-row>
-				<v-col>
-					<PageLoader :showing="loading" />
-				</v-col>
-			</v-row>
-			<v-row>
-				<v-col>
-					<slot name="form"></slot>
-				</v-col>
-			</v-row>
-		</v-container>
+	<v-card
+		color=""
+		density="compact"
+		variant="text">
+		<v-card-text>
+			<slot name="form"></slot>
+		</v-card-text>
 		<v-card-actions>
 			<v-spacer></v-spacer>
 			<v-btn
 				@click="$emit('validate')"
-				:disabled="disabled"
-				color="primary">
-				{{ $t("actions.submit") }}</v-btn
+				:disabled="loading || disabled"
+				:loading="Boolean(loading)"
+				color="secondary"
+				variant="elevated">
+				{{
+					!loading ? $t("actions.submit") : $t("general.data_transfer")
+				}}</v-btn
 			>
 		</v-card-actions>
+		<v-snackbar v-model="snackbar">
+			{{ $t("toast.messages.succes.add") }}
+
+			<template v-slot:actions>
+				<CloseBtn @close="snackbar = false" />
+			</template>
+		</v-snackbar>
 	</v-card>
 </template>
 
 <script lang="ts" setup>
-import PageLoader from '~/components/Loaders/PageLoader.vue';
-defineEmits(["validate"]);
+import CloseBtn from '~/components/Containment/Btns/CloseBtn.vue';
+	defineEmits(["validate"]);
 	defineProps<{
-		loading: boolean;
+		loading?: boolean;
 		disabled?: boolean;
 	}>();
+	const snackbar = ref(false);
 </script>
 
 <style></style>
