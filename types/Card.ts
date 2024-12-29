@@ -18,12 +18,5 @@ declare global {
     color?: string;
   }
 
-  interface ToolbarOptions {
-    title: string;
-    to?: string;
-    color?: string;
-    displayBackButton?: boolean;
-    prependIcon?: string;
-  }
 }
 

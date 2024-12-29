@@ -83,7 +83,7 @@ export default defineNuxtConfig({
 		},
 	},
 	image: {
-		domains: ["kinopoisk.light"],
+		domains: ["surland.ru"],
 		providers: {
 			myProvider: {
 				name: "myProvider",

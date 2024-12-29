@@ -1,92 +1,113 @@
 <template>
-	<BasePage
-		:toolbar="false"
-		:loading="loading"
-		:error="networkError"
-		@alert:close="networkError = null">
-		<template #content>
-			<v-container>
-				<v-row>
-					<v-col>
-						<BaseDataIterator
-							:items="filmItems"
+  <BasePage
+    :toolbar="false"
+    :loading="loading"
+    :error="networkError"
+    @alert:close="networkError = null"
+  >
+    <template #content>
+      <v-container>
+        <v-row>
+          <v-col>
+            <BaseDataIterator
+              :items="filmItems"
               :offset="offset"
               :search="search"
-							:loading="loading"
-              :total-pages="totalPages"	
-							:items-per-page="limit"
-							:page="currentPage"
-							:toolbar-options="toolbarOptions"
+              :loading="loading"
+              :total-pages="totalPages"
+              :items-per-page="limit"
+              :page="currentPage"
+              :toolbar-options="toolbarOptions"
               :img-options="imgOptions"
-							footer
-							@update:page="updateQueryParams"
-							>
-						</BaseDataIterator>
-					</v-col>
-				</v-row>
-			</v-container>
-		</template>
-	</BasePage>
+              footer
+              @update:page="updateQueryParams"
+            >
+            </BaseDataIterator>
+          </v-col>
+        </v-row>
+      </v-container>
+    </template>
+  </BasePage>
 </template>
 
 <script lang="ts" setup>
-	import { useFilmStore } from "~/store/filmStore";
-	import BasePage from "~/components/Layout/Page/BasePage.vue";
-	import BaseDataIterator from "~/components/Layout/Page/BaseDataIterator.vue";
-	const { films, loading, totalPages, currentPage, networkError } = storeToRefs(useFilmStore());
-	const { fetchFilteredFilms } = useFilmStore();
-	const { locale } = useI18n();
-	const limit = ref(5);
-  const offset = ref(0);
-  const search  = ref("");
+import { useFilmStore } from "~/store/filmStore";
+import BasePage from "~/components/Layout/Page/BasePage.vue";
+import BaseDataIterator from "~/components/Layout/Page/BaseDataIterator.vue";
+const { films, loading, totalPages, currentPage, networkError } =
+  storeToRefs(useFilmStore());
+const { fetchFilteredFilms } = useFilmStore();
+const { locale, t } = useI18n();
+const limit = ref(5);
+const offset = ref(0);
+const search = ref("");
 
 onMounted(async () => {
-		await fetchFilteredFilms(limit.value, offset.value, search.value, locale.value);
-	});
+  await fetchFilteredFilms(
+    limit.value,
+    offset.value,
+    search.value,
+    locale.value
+  );
+});
 
-	const filmItems = computed(() => {
-		return films.value.map((film): CardItem => { 
-			return {
-				title: film.name +  " (" + (film.releaseYear ? film.releaseYear.toString() : "") + ")",
-				subtitle: film.description || "",
-				imageSrc: film.preview || "",
-				to: '/films/' + film.id,
-				variant: "text",
-				color: "primary",
-			};
-		});
-	})
+const filmItems = computed(() => {
+  return films.value.map((film): CardItem => {
+    return {
+      title:
+        film.name +
+        " (" +
+        (film.releaseYear ? film.releaseYear.toString() : "") +
+        ")",
+      subtitle: film.description || "",
+      imageSrc: film.preview || "",
+      to: "/films/" + film.id,
+      variant: "text",
+      color: "primary",
+    };
+  });
+});
+
+const breadcrumbs = ref<Breadcrumb[]>([
+  {
+    title: t("nav.home"),
+    href: "/",
+  },
+  {
+    title: t("nav.films"),
+    href: "/films",
+  },
+]);
 
 const toolbarOptions = {
-	title: "pages.films.title",
-	displayBackBtn: false,
-	prependIcon: "mdi-filmstrip",
-	color: "surface",
+  displayBackBtn: false,
+  prependIcon: "mdi-filmstrip",
+  breadcrumbs: breadcrumbs.value,
+  color: "surface",
 } as ToolbarOptions;
 
 const imgOptions = {
-		shaded: false,
-		height: 100,
-		placeholderOptions: {
-			displayTitle: true,
-			title: "pages.films.no_preview",
-		},
+  shaded: false,
+  height: 100,
+  placeholderOptions: {
+    displayTitle: true,
+    title: t("pages.films.no_preview"),
+  },
 } as ImgOptions;
 
-	const updateQueryParams = (page: number) => {
-		offset.value = (page - 1) * limit.value;
-	}
+const updateQueryParams = (page: number) => {
+  offset.value = (page - 1) * limit.value;
+};
 
-	watch(
-		[offset, limit, search, locale],
-		async ([newOffset, newLimit, newSearch, newLocale]) => {
-			await fetchFilteredFilms(newLimit, newOffset, newSearch, newLocale);
-		},
-		{
-			immediate: true,
-		}
-	);
-
+watch(
+  [offset, limit, search, locale],
+  async ([newOffset, newLimit, newSearch, newLocale]) => {
+    await fetchFilteredFilms(newLimit, newOffset, newSearch, newLocale);
+  },
+  {
+    immediate: true,
+  }
+);
 </script>
 
 <style></style>

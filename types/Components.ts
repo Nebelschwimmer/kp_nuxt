@@ -38,4 +38,9 @@ declare global {
 		title: string;
 		disabled?: boolean;
 	}
+
+  interface galleryContent {
+    poster: string;
+    gallery: string[];
+  }
 }

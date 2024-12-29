@@ -129,6 +129,10 @@ export default {
 		pick_file: "Выбрать файл",
 		skip: "Пропустить",
 		finish: "Готово",
+    close: "Закрыть",
+    add_img: "Добавить изображения",
+    download: "Скачать",
+    share: "Поделиться",
 	},
 	state: {
 		all: "Все",
@@ -183,6 +187,7 @@ export default {
 		films: {
 			title: "Фильмы",
 			details: "подробности",
+      details_film: "Подробности о фильме",
 			name: "Название",
 			release_year: "Год выпуска",
 			director: "Режиссер",

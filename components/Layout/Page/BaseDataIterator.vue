@@ -3,10 +3,10 @@
 		:items="items"
 		:loading="loading">
 		<template #header>
-			<PageToolBar
-				v-bind="toolbarOptions"
-				display-actions>
-				<template #actions>
+			<v-toolbar
+				
+				>
+			
 					<v-pagination
 						v-model="currentPage"
 						variant="tonal"
@@ -15,8 +15,8 @@
 						rounded="lg"
 						:total-visible="6"
 						@update:model-value="handlePageChange"></v-pagination>
-				</template>
-			</PageToolBar>
+			
+			</v-toolbar>
 		</template>
 		<template v-slot:default="{ items }">
 			<v-list-item

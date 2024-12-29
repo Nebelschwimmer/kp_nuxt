@@ -1,10 +1,11 @@
 <template>
-	<AddBasePage
-		:toolbar-title="'forms.film.add'"
-		:network-error="networkError ?? null"
-		@alert:close="networkError = null"
+	<BasePage
+    :loading="loading"
+    :error="networkError"
+    :toolbar="false"
+    @alert:close="networkError = null"
 		>
-		<template #stepper>
+		<template #content>
 			<v-stepper
 				v-model="step"
 				class="border p-2 bg-transparent">
@@ -64,7 +65,7 @@
 				</v-stepper-window>
 			</v-stepper>
 		</template>
-	</AddBasePage>
+	</BasePage>
 </template>
 
 <script lang="ts" setup>
@@ -72,7 +73,7 @@
 	import FilmForm from "~/components/FilmStorageComponents/FilmForm.vue";
 	import PosterUpload from "~/components/FilmStorageComponents/PosterUpload.vue";
 	import GalleryUpload from "~/components/FilmStorageComponents/GalleryUpload.vue";
-	import AddBasePage from "~/components/Layout/Page/AddPageBase.vue";
+  import BasePage from "~/components/Layout/Page/BasePage.vue";
 	const { genres, filmForm, film, actors, composers, producers, writers, directors, loading, networkError } =
 		storeToRefs(useFilmStore());
 	const {

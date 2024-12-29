@@ -130,6 +130,10 @@ export default {
 		pick_file: "Pick a file",
 		skip: "Skip",
 		finish: "Finish",
+    close: "Fermer",
+    add_img: "Add images",
+    download: "Download",
+    share: "Share",
 	},
 	state: {
 		all: "All",
@@ -184,6 +188,7 @@ export default {
 		films: {
 			title: "Films",
 			details: "details",
+      details_film: "Film details",
 			no_films: "No films added yet",
 			back_to_list: "Back to films list",
 			name: "Name",

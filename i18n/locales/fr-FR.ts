@@ -128,6 +128,10 @@ export default {
 		pick_file: "Choisir un fichier",
 		skip: "Passer",
 		finish: "Finir",
+    close: "Fermer",
+    add_img: "Ajouter images",
+    download: "Télécharger",
+    share: "Partager",
 	},
 	state: {
 		all: "Toutes",
@@ -182,6 +186,7 @@ export default {
 		films: {
 			title: "Films",
 			details: "details",
+      details_film: "Details du film",
 			back_to_list: "Retourner vers la liste",
 			name: "Nom",
 			release_year: "Année de sortie",
