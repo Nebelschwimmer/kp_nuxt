@@ -1,8 +1,16 @@
 <template>
-  <div>
+  <v-container>
     <PageLoader v-if="overlay" :showing="Boolean(loading)" />
-    <PageToolBar v-if="toolbar" v-bind="toolbarOptions" />
-    <slot name="content"></slot>
+    <v-row>
+      <v-col>
+        <PageToolBar v-if="toolbar" v-bind="toolbarOptions" />
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col>
+        <slot name="content"></slot>
+      </v-col>
+    </v-row>
     <PageAlert
       :show="Boolean(error)"
       type="error"
@@ -10,7 +18,7 @@
       :title="$t('pages.network_error')"
       @close="$emit('alert:close')"
     />
-  </div>
+  </v-container>
 </template>
 
 <script lang="ts" setup>

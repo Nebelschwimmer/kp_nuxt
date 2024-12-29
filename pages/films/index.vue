@@ -1,8 +1,9 @@
 <template>
   <BasePage
-    :toolbar="false"
     :loading="loading"
     :error="networkError"
+    :toolbar-options="toolbarOptions"
+    toolbar
     @alert:close="networkError = null"
   >
     <template #content>
@@ -72,18 +73,30 @@ const breadcrumbs = ref<Breadcrumb[]>([
   {
     title: t("nav.home"),
     href: "/",
+    icon: "mdi-home",
   },
   {
     title: t("nav.films"),
     href: "/films",
+    icon: "mdi-filmstrip",
   },
 ]);
 
+const toolbarActions = [{
+  type: "add",
+  icon: "mdi-plus",
+  title: t("forms.film.add"),
+  disabled: false,
+  to: `/films/add`,
+},
+
+] as ToolbarAction[];
+
 const toolbarOptions = {
   displayBackBtn: false,
-  prependIcon: "mdi-filmstrip",
   breadcrumbs: breadcrumbs.value,
-  color: "surface",
+  color: "secondary",
+  actions: toolbarActions,
 } as ToolbarOptions;
 
 const imgOptions = {

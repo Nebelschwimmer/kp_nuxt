@@ -1,10 +1,20 @@
 declare global {
+  interface ToolbarAction {
+    type: string;
+    title: string;
+    icon: string;
+    disabled?: boolean;
+    to?: string;
+  }
+  
+  
   interface ToolbarOptions {
     displayBackButton?: boolean;
     prependIcon?: string;
     color?: string;
     appendIcon?: string;
     breadcrumbs?: Breadcrumb[];
+    actions?: ToolbarAction[];
   }
   interface ImgPlaceholderOptions {
     displayTitle: boolean;
@@ -36,6 +46,7 @@ declare global {
   interface Breadcrumb {
 		href: string;
 		title: string;
+    icon?: string;
 		disabled?: boolean;
 	}
 

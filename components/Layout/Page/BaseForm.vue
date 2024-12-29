@@ -1,7 +1,6 @@
 <template>
 	<v-card
 		color=""
-		density="compact"
 		variant="text">
 		<v-card-text>
 			<slot name="form"></slot>

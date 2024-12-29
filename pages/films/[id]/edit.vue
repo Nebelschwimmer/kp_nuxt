@@ -1,12 +1,11 @@
 <template>
   <BasePage
   toolbar
+  :loading="loading"
+  :toolbar-options="toolbarOptions"
   :error="networkError ?? null"
   @alert:close="networkError = null"
   >
-  <template #toolbar>
-    <PageToolBar v-bind="toolbarOptions" />
-  </template>
   <template #content>
       <v-row no-gutters>
         <v-col xl="3" lg="3" md="3" sm="12">
@@ -195,18 +194,22 @@ const breadcrumbs = ref<Breadcrumb[]>([
   {
     title: t("nav.home"),
     href: "/",
+    icon: "mdi-home",
   },
   {
     title: t("nav.films"),
     href: "/films",
+    icon: "mdi-filmstrip",
   },
   {
     title: `${filmForm.value?.name}: ${t("pages.films.details")} `,
     href: `/films/${filmForm.value?.id}`,
+    icon: "mdi-filmstrip",
   },
   {
     title: t("nav.edit"),
     href: "/films",
+    icon: "mdi-pencil",
   },
 ]);
 

@@ -25,6 +25,15 @@ export default {
 		img: "Image",
 		uploaded_img: "Image telechargée",
 	},
+  empty_states: {
+    title: "Aucune données trouvées",
+    subtitle: "Aucune données trouvées",
+    films: "Aucuns films trouvés",
+    actors: "Aucuns acteurs trouvés",
+    directors: "Aucuns directeurs trouvés",
+    persons: "Aucunes personnes trouvées",
+    countries: "Aucunes pays trouvés",
+  },
 	auth: {
 		not_auth: "Vous n'êtes pas authentifié",
 		login_to_continue: "Connectez-vous pour continuer",
@@ -185,6 +194,7 @@ export default {
 		},
 		films: {
 			title: "Films",
+      list: "Liste des films",
 			details: "details",
       details_film: "Details du film",
 			back_to_list: "Retourner vers la liste",
@@ -214,6 +224,7 @@ export default {
 		},
 		persons: {
 			title: "Personnes",
+      list: "Liste des personnes",
 			firstname: "Prénom",
 			lastname: "Nom",
 			birthday: "Anniversaire",

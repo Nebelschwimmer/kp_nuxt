@@ -1,10 +1,10 @@
 <template>
-
-    <v-btn
-      icon="mdi-close"
-      @click="$emit('close')"
-      flat
-    ></v-btn>
+  <v-btn icon  @click="$emit('close')" variant="plain">
+    <v-icon icon="mdi-close"></v-icon>
+    <v-tooltip activator="parent" location="bottom">
+      {{ $t("actions.close") }}
+    </v-tooltip>
+  </v-btn>
 </template>
 
 <script lang="ts" setup>

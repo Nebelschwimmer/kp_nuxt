@@ -25,6 +25,15 @@ export default {
 		img: "Image",
 		uploaded_img: "Uploaded image",
 	},
+  empty_states: {
+    title: "No data found",
+    subtitle: "No data found",
+    films: "No films added yet",
+    actors: "No actors added yet",
+    directors: "No directors added yet",
+    persons: "No persons added yet",
+    countries: "No countries added yet",
+  },
 	auth: {
 		not_auth: "You are not authenticated",
 		login_to_continue: "Login to continue",
@@ -187,6 +196,7 @@ export default {
 		},
 		films: {
 			title: "Films",
+      list: "Films list",
 			details: "details",
       details_film: "Film details",
 			no_films: "No films added yet",
@@ -218,6 +228,8 @@ export default {
 		},
 		persons: {
 			firstname: "Firstname",
+      title: "Persons",
+      list: "Persons list",
 			lastname: "Lastname",
 			birthday: "Birthday",
 			specialties: "Specialties",
@@ -289,6 +301,7 @@ export default {
 		},
 		persons: {
 			title: "Persons",
+
 			add: "Add person",
 			edit: "Edit person",
 			add_specialty: "Add specialty",

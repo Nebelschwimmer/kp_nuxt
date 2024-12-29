@@ -2,7 +2,9 @@
 	<BasePage
     :loading="loading"
     :error="networkError"
-    :toolbar="false"
+    toolbar
+    overlay
+    :toolbar-options="toolbarOptions"
     @alert:close="networkError = null"
 		>
 		<template #content>
@@ -129,6 +131,33 @@
 	const nextStep = () => {
 		step.value++;
 	};
+
+  const { t } = useI18n();
+
+  const breadcrumbs = [
+  {
+    title: t("nav.home"),
+    href: "/",
+    icon: "mdi-home",
+  },
+  {
+    title: t("nav.films"),
+    href: "/films",
+    icon: "mdi-filmstrip",
+  },
+  {
+    title: t("pages.films.add"),
+    href: "/films/add",
+    icon: "mdi-filmstrip",
+  },
+  ] as Breadcrumb[];
+
+  const toolbarOptions = reactive({
+  displayBackBtn: true,
+  prependIcon: "",
+  color: "secondary",
+  breadcrumbs: breadcrumbs,
+});
 
 	onMounted(async () => {
 		clearFilmForm();

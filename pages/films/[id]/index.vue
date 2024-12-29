@@ -184,22 +184,41 @@ const breadcrumbs = ref<Breadcrumb[]>([
   {
     title: t("nav.home"),
     href: "/",
+    icon: "mdi-home",
   },
   {
     title: t("nav.films"),
     href: "/films",
+    icon: "mdi-filmstrip",
   },
   {
     title: `${film.value?.name}: ${t("pages.films.details")} `,
     href: "/films",
+    icon: "mdi-filmstrip",
   },
 ]);
+
+const toolbarActions = [{
+  type: "edit",
+  icon: "mdi-pencil",
+  title: t("forms.film.edit"),
+  disabled: false,
+  to: `/films/${film.value?.id}/edit`,
+},
+{
+  type: "delete",
+  icon: "mdi-delete",
+  title: t("pages.films.remove"),
+  disabled: false,
+}
+] as ToolbarAction[];
 
 const toolbarOptions = reactive({
   displayBackBtn: true,
   prependIcon: "",
   color: "secondary",
   breadcrumbs: breadcrumbs.value,
+  actions: toolbarActions
 });
 
 onMounted(async () => {

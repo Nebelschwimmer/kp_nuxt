@@ -134,6 +134,15 @@ export default {
     download: "Скачать",
     share: "Поделиться",
 	},
+  empty_states: {
+    title: "Ничего не найдено",
+    subtitle: "По вашему запросу ничего не найдено",
+    films: "Фильмs еще не добавлены",
+    actors: "Актеры еще не добавлены",
+    directors: "Режиссеры еще не добавлены",
+    persons: "Персоны еще не добавлены",
+    countries: "Страны еще не добавлены",
+  },
 	state: {
 		all: "Все",
 		active: "Активные",
@@ -186,6 +195,7 @@ export default {
 		},
 		films: {
 			title: "Фильмы",
+      List: "Список фильмов",
 			details: "подробности",
       details_film: "Подробности о фильме",
 			name: "Название",
@@ -212,6 +222,7 @@ export default {
 			assess: "Оценить",
 		},
 		persons: {
+      list: "Список персон",
 			title: "Персоны",
 			firstname: "Имя",
 			lastname: "Фамилия",
@@ -238,8 +249,8 @@ export default {
 		},
 		film: {
 			slogan: "Слоган",
-			add: "Добавить Фильм",
-			edit: "Изменить Фильм",
+			add: "Добавить фильм",
+			edit: "Изменить фильм",
 			name: "Название",
 			release_year: "Год выпуска",
 			director: "Режиссер",

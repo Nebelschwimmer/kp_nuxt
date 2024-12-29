@@ -5,13 +5,13 @@
     @click="showGalleryDialogOnClick"
   />
   <v-dialog v-model="showGalleryDialog" max-width="1024">
-    <v-card class="base-card" rounded="lg" height="800">
+    <v-card rounded="lg">
       <v-toolbar>
         <v-toolbar-title class="text-body-1"
           ><v-chip>{{
             $t("general.img") +
             " #" +
-            (activeImg + 1) +
+            (galleryContent.length > 0 ? activeImg + 1 : 0) +
             " " +
             $t("general.of") +
             " " +
@@ -20,21 +20,30 @@
         >
 
         <div class="d-flex ga-2 mr-5">
-          <v-btn prepend-icon="mdi-download" variant="outlined">{{
-            $t("actions.download")
-          }}</v-btn>
-          <v-btn prepend-icon="mdi-share" variant="outlined">{{
-            $t("actions.share")
-          }}</v-btn>
-          <v-btn prepend-icon="mdi-delete" color="error" variant="outlined">{{
-            $t("actions.remove")
-          }}</v-btn>
+          <v-btn icon :disabled="!galleryContent.length">
+            <v-icon icon="mdi-download"></v-icon>
+            <v-tooltip activator="parent" location="bottom">
+              {{ $t("actions.download") }}
+            </v-tooltip>
+          </v-btn>
+          <v-btn icon :disabled="!galleryContent.length">
+            <v-icon icon="mdi-share"></v-icon>
+            <v-tooltip activator="parent" location="bottom">
+              {{ $t("actions.share") }}
+            </v-tooltip>
+          </v-btn>
+          <v-btn icon :disabled="!galleryContent.length">
+            <v-icon icon="mdi-delete" color="error"></v-icon>
+            <v-tooltip activator="parent" location="bottom">
+              {{ $t("actions.remove") }}
+            </v-tooltip>
+          </v-btn>
         </div>
         <CloseBtn @click="showGalleryDialog = false" />
       </v-toolbar>
 
       <v-card-text>
-        <v-window v-model="activeImg" v-if="galleryContent.length">
+        <v-window v-model="activeImg" v-if="galleryContent.length" show-arrows>
           <v-window-item
             v-for="(item, i) in galleryContent"
             :key="i"
@@ -63,11 +72,7 @@
           >
         </v-sheet>
       </v-card-text>
-      <v-card-actions
-        class="justify-space-between"
-        v-if="galleryContent.length"
-      >
-        <v-btn icon="mdi-chevron-left" variant="plain" @click="prev"></v-btn>
+      <v-card-actions class="justify-center" v-if="galleryContent.length">
         <v-item-group v-model="activeImg" class="text-center" mandatory>
           <v-item
             v-for="n in galleryContent.length"
@@ -84,7 +89,6 @@
             ></v-btn>
           </v-item>
         </v-item-group>
-        <v-btn icon="mdi-chevron-right" variant="plain" @click="next"></v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>

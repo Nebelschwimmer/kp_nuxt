@@ -1,10 +1,13 @@
 <template>
-	<AddBasePage
-		:toolbar-title="$t('forms.person.add')"
-		:network-error="networkError ?? null"
+	<BasePage
+    :loading="loading"
+		:error="networkError ?? null"
 		@alert:close="networkError = null"
+    toolbar
+    :toolbar-options="toolbarOptions"
+    overlay
 		>
-		<template #stepper>
+		<template #content>
 			<v-stepper
 				v-model="step"
 				class="border p-2 bg-transparent">
@@ -43,13 +46,13 @@
 				</v-stepper-window>
 			</v-stepper>
 		</template>
-	</AddBasePage>
+	</BasePage>
 </template>
 
 <script lang="ts" setup>
+import BasePage from "~/components/Layout/Page/BasePage.vue";
 	import PersonForm from "~/components/PersonStorageComponents/PersonForm.vue";
 	import PhotoUpload from "~/components/PersonStorageComponents/PhotoUpload.vue";
-	import AddBasePage from "~/components/Layout/Page/AddPageBase.vue";
 	import { usePersonStore } from "~/store/personStore";
 	const { networkError, personForm, genders, specialties, loading, person } =
 		storeToRefs(usePersonStore());
@@ -81,6 +84,34 @@ const handlePhotoUploadSubmit = async (file: File) => {
 	(async function () {
 		await getData();
 	})();
+
+  
+  const { t } = useI18n();
+
+  const breadcrumbs = [
+  {
+    title: t("nav.home"),
+    href: "/",
+    icon: "mdi-home",
+  },
+  {
+    title: t("nav.persons"),
+    href: "/persons",
+    icon: "mdi-account-group",
+  },
+  {
+    title: t("forms.person.add"),
+    href: "/persons/add",
+    icon: "mdi-account-group",
+  },
+  ] as Breadcrumb[];
+
+  const toolbarOptions = reactive({
+  displayBackBtn: true,
+  prependIcon: "",
+  color: "secondary",
+  breadcrumbs: breadcrumbs,
+});
 </script>
 
 <style></style>
