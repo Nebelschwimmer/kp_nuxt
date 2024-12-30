@@ -1,8 +1,5 @@
 <template>
 	<v-card variant="outlined">
-		<PageLoader
-			overlay
-			:showing="Boolean(loading)" />
 		<v-banner
 			icon="mdi-image"
 			:color="poster ? 'success' : 'warning'"
@@ -138,7 +135,6 @@
 <script lang="ts" setup>
 	import BaseImg from "../Containment/Img/BaseImg.vue";
 	import ConfirmDialog from "../Dialogs/ConfirmDialog.vue";
-	import PageLoader from "../Loaders/PageLoader.vue";
 	import DragAndDrop from "../Misc/DragAndDrop.vue";
 	const emit = defineEmits([
 		"submit",

@@ -24,7 +24,7 @@
               show-arrows-on-hover
             >
               <v-carousel-item
-                v-for="(film, index) in latestFilms"
+                v-for="(film, index) in films"
                 v-if="!loading"
                 :key="index"
                 :value="index"
@@ -64,7 +64,7 @@
     
           <v-list>
             <v-list-item
-              v-for="(film, index) in latestFilms"
+              v-for="(film, index) in films"
               v-if="!loading"
               :key="film.id || 0"
               :active="index === activeFilm"
@@ -104,16 +104,15 @@
 import { useFilmStore } from "~/store/filmStore";
 import BasePage from "~/components/Layout/Page/BasePage.vue";
 import BaseImg from "~/components/Containment/Img/BaseImg.vue";
-const { latestFilms, loading, networkError } = storeToRefs(useFilmStore());
-const { fetchLatestFilms } = useFilmStore();
+const { latestFilms, films, loading, networkError } = storeToRefs(useFilmStore());
+const { fetchFilteredFilms } = useFilmStore();
 const activeFilm = ref(0);
 
 onMounted(async () => {
-  await fetchLatestFilms();
+  await fetchFilteredFilms(5, 0, "", "ru");
 });
 const { t } = useI18n();
 const CAROUSEL_HEIGHT = 400;
-const currentImage = computed(()=>{})
 const cardImgOptions = {
   shaded: false,
   cover: false,

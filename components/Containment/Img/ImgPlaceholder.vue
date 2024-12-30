@@ -4,7 +4,7 @@
     width="100%"
     min-height="100%"
     elevation="2"
-    color="surface-variant"
+    color="grey-darken-3"
     image="https://cdn.vuetifyjs.com/docs/images/parallax/stars.jpg"
     class="d-flex align-center justify-center flex-column w-100"
   >
