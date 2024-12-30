@@ -24,6 +24,9 @@ export default {
 		available_for_upload: "Disponible pour le telechargement",
 		img: "Image",
 		uploaded_img: "Image telechargée",
+    drag_and_drop: "Déposez vos fichiers d'images ici",
+    browse_files: "Parcourir les fichiers",
+    or: "ou",
 	},
   empty_states: {
     title: "Aucune données trouvées",
@@ -53,6 +56,7 @@ export default {
 		title: "Navigation",
 		home: "Accueil",
 		films: "Films",
+    menu: "Menu",
 		films_list: "Liste des films",
 		films_add: "Ajouter un film",
 		persons: "Personnes",

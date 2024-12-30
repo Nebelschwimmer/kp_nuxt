@@ -5,18 +5,10 @@
     @click="showGalleryDialogOnClick"
   />
   <v-dialog v-model="showGalleryDialog" max-width="1024">
-    <v-card rounded="lg">
-      <v-toolbar>
-        <v-toolbar-title class="text-body-1"
-          ><v-chip>{{
-            $t("general.img") +
-            " #" +
-            (galleryContent.length > 0 ? activeImg + 1 : 0) +
-            " " +
-            $t("general.of") +
-            " " +
-            galleryContent.length
-          }}</v-chip></v-toolbar-title
+    <v-card rounded="lg" variant="elevated">
+      <v-toolbar class="px-2">
+        <v-toolbar-title class="text-body-1">
+          {{ $t("pages.film.gallery") }}</v-toolbar-title
         >
 
         <div class="d-flex ga-2 mr-5">
@@ -30,6 +22,12 @@
             <v-icon icon="mdi-share"></v-icon>
             <v-tooltip activator="parent" location="bottom">
               {{ $t("actions.share") }}
+            </v-tooltip>
+          </v-btn>
+          <v-btn icon :disabled="!galleryContent.length">
+            <v-icon icon="mdi-pencil"></v-icon>
+            <v-tooltip activator="parent" location="bottom">
+              {{ $t("actions.edit") }}
             </v-tooltip>
           </v-btn>
           <v-btn icon :disabled="!galleryContent.length">
@@ -66,15 +64,35 @@
           <v-btn
             prepend-icon="mdi-plus"
             color="accent"
-            density="comfortable"
             :to="`/films/${id}/edit#gallery_upload`"
             >{{ $t("actions.add_img") }}</v-btn
           >
         </v-sheet>
       </v-card-text>
-      <v-card-actions class="justify-center" v-if="galleryContent.length">
+      <div class="d-flex align-center justify-center">
+        <v-label class="text-caption">{{
+          $t("general.img") +
+          " #" +
+          (galleryContent.length > 0 ? activeImg + 1 : 0) +
+          " " +
+          $t("general.of") +
+          " " +
+          galleryContent.length
+        }}</v-label>
+      </div>
+      <v-card-actions
+        class="d-flex align-center justify-space-between"
+        v-if="galleryContent.length"
+      >
+        <v-btn
+          icon
+          :disabled="!galleryContent.length || activeImg === 0"
+          @click="prev"
+          ><v-icon icon="mdi-chevron-left"></v-icon
+        ></v-btn>
         <v-item-group v-model="activeImg" class="text-center" mandatory>
           <v-item
+            v-if="galleryContent.length"
             v-for="n in galleryContent.length"
             :key="`btn-${n}`"
             v-slot="{ isSelected, toggle }"
@@ -82,6 +100,7 @@
           >
             <v-btn
               density="compact"
+              size="small"
               :color="isSelected ? 'accent' : 'grey-darken-3'"
               :variant="isSelected ? 'outlined' : 'text'"
               icon="mdi-record"
@@ -89,6 +108,14 @@
             ></v-btn>
           </v-item>
         </v-item-group>
+        <v-btn
+          :disabled="
+            !galleryContent.length || activeImg === galleryContent.length - 1
+          "
+          icon
+          @click="next"
+          ><v-icon icon="mdi-chevron-right"></v-icon
+        ></v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -117,8 +144,14 @@ const prev = () => {
   }
 };
 const next = () => {
-  activeImg.value =
-    activeImg.value < props.galleryContent.length - 1 ? activeImg.value + 1 : 0;
+  if (activeImg.value < props.galleryContent.length - 1) {
+    activeImg.value =
+      activeImg.value < props.galleryContent.length - 1
+        ? activeImg.value + 1
+        : 0;
+  } else {
+    activeImg.value = 0;
+  }
 };
 
 const posterOptions = {

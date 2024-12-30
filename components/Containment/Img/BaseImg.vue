@@ -1,7 +1,6 @@
 <template>
   <v-hover :disabled="!imgSrc || !imgOptions.removable">
     <template #default="{ props, isHovering }">
-
         <v-img
           :src="imgSrc || ''"
           rounded="lg"
@@ -46,14 +45,14 @@
 
 <script lang="ts" setup>
 defineEmits(["remove", "click"]);
-import ImgPlaceholder from "~/components/Placeholders/ImgPlaceholder.vue";
+import ImgPlaceholder from './ImgPlaceholder.vue';
 defineProps<{
   imgSrc: string;
   imgOptions: ImgOptions;
 }>();
 
-const FIRST_COLOR = "rgba(148, 148, 148, 0.2)";
-const SECOND_COLOR = "rgba(165, 165, 165, 0.8)";
+const FIRST_COLOR = "rgba(0, 0, 0, 0.2)";
+const SECOND_COLOR = "rgb(55, 70, 85)";
 const gradientStr = `to top right, ${FIRST_COLOR}, ${SECOND_COLOR}`;
 </script>
 

@@ -6,6 +6,13 @@ declare global {
     disabled?: boolean;
     to?: string;
   }
+
+  interface Breadcrumb {
+		to: string;
+		title: string;
+    icon?: string;
+		disabled?: boolean;
+	}
   
   
   interface ToolbarOptions {
@@ -43,12 +50,7 @@ declare global {
     to?: string;
   }
   
-  interface Breadcrumb {
-		href: string;
-		title: string;
-    icon?: string;
-		disabled?: boolean;
-	}
+
 
   interface galleryContent {
     poster: string;

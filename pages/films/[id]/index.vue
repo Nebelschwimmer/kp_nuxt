@@ -4,7 +4,6 @@
     :error="networkError"
     :toolbar-options="toolbarOptions"
     toolbar
-    overlay
     @alert:close="networkError = null"
   >
     <template #content>
@@ -96,8 +95,7 @@ import BasePage from "~/components/Layout/Page/BasePage.vue";
 import DetailCard from "~/components/Containment/Cards/DetailCard.vue";
 import { useFilmStore } from "~/store/filmStore";
 import { storeToRefs } from "pinia";
-import FilmGallery from "~/components/Gallery/FilmGallery.vue";
-import ActionBtn from "~/components/Containment/Btns/ActionBtn.vue";
+import FilmGallery from "~/components/Gallery/FilmGallery.vue";;
 
 const { film, loading, networkError } = storeToRefs(useFilmStore());
 const { fetchFilmById } = useFilmStore();
@@ -156,19 +154,19 @@ const computedFilmDetails = computed(() => {
       name: "forms.film.director",
       value: film.value?.directorName || "",
       type: "link",
-      to: `/persons/${film.value?.directorId}`,
+      to: film.value?.directorId ? `/persons/${film.value?.directorId}` : "",
     },
     {
       name: "forms.film.producer",
       value: film.value?.producerName || "",
       type: "link",
-      to: `/persons/${film.value?.producerId}`,
+      to: film.value?.producerId ? `/persons/${film.value?.producerId}` : "",
     },
     {
       name: "forms.film.writer",
       value: film.value?.writerName || "",
       type: "link",
-      to: `/persons/${film.value?.writerId}`,
+      to: film.value?.writerId ? `/persons/${film.value?.writerId}` : "",
     },
   ];
 }) as ComputedRef<Array<CardDetails>>;
@@ -183,17 +181,17 @@ const actionBtnProps = reactive({
 const breadcrumbs = ref<Breadcrumb[]>([
   {
     title: t("nav.home"),
-    href: "/",
+    to: "/",
     icon: "mdi-home",
   },
   {
     title: t("nav.films"),
-    href: "/films",
+    to: "/films",
     icon: "mdi-filmstrip",
   },
   {
     title: `${film.value?.name}: ${t("pages.films.details")} `,
-    href: "/films",
+    to: "/films",
     icon: "mdi-filmstrip",
   },
 ]);
@@ -242,7 +240,7 @@ watch(
     actionBtnProps.to = `/films/${newVal?.id}/edit`;
     breadcrumbs.value[2] = {
       title: `${newVal?.name}: ${t("pages.films.details")} `,
-      href: "/films",
+      to: "/films",
     };
   },
   { immediate: true }

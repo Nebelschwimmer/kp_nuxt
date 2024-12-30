@@ -64,12 +64,12 @@ const { t } = useI18n();
 const breadcrumbs = ref<Breadcrumb[]>([
   {
     title: t("nav.home"),
-    href: "/",
+    to: "/",
     icon: "mdi-home",
   },
   {
     title: t("nav.persons"),
-    href: "/persons",
+    to: "/persons",
     icon: "mdi-account",
   },
 ]);

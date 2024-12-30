@@ -50,14 +50,13 @@ export default defineNuxtConfig({
 				},
 			},
 			theme: {
-				defaultTheme: "light",
+				defaultTheme: "dark",
 				themes: {
-					light: {
+					dark: {
+            dark: true,
 						colors: {
-							background: "#ffffff",
-							surface: "#e4e4e4",
-							primary: "#607262",
-							secondary: "#e0974a",
+							primary: "#e0974a",
+							secondary: "#6999c9",
 							accent: "#ed7b49",
 							error: "#f44336",
 							info: "#FFBD69",

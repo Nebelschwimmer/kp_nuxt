@@ -6,102 +6,96 @@
     @alert:close="networkError = null"
   >
     <template #content>
-
-            <v-card variant="text">
-              <template #title>
-                <div class="text-grey-darken-2">
-                  <span class="mr-2 text-h4">#</span>
-                  <a href="/#newest" class="font-bold text-h4"
-                    >{{ $t("pages.home.newest") }}
-                  </a>
-                </div>
-                <v-divider></v-divider>
-              </template>
-              <template #text>
-                <v-carousel
-                  v-model="activeFilm"
-                  :height="CAROUSEL_HEIGHT"
-                  cycle
-                  hide-delimiter-background
+      <section>
+        <h4
+          class="text-h6 text-md-h5 text-lg-h4 font-weight-bold mb-4"
+          id="newest"
+        >
+          #{{ $t("pages.home.newest") }}
+        </h4>
+        <v-divider></v-divider>
+        <v-card variant="text">
+          <template #text>
+            <v-carousel
+              v-model="activeFilm"
+              :height="CAROUSEL_HEIGHT"
+              cycle
+              width="100%"
+              show-arrows-on-hover
+            >
+              <v-carousel-item
+                v-for="(film, index) in latestFilms"
+                v-if="!loading"
+                :key="index"
+                :value="index"
+              >
+                <v-card
+                  variant="text"
+                  height="100%"
+                  @click="navigateTo('/films/' + film.id)"
                 >
-                  <v-carousel-item
-                    v-for="(film, index) in latestFilms"
-                    v-if="!loading"
-                    :key="index"
-                    :value="index"
-                  >
-                    <v-card
-                      variant="text"
-                      height="100%"
-                      @click="navigateTo('/films/' + film.id)"
+                  <template #text>
+                    <BaseImg
+                      :img-src="film.preview || ''"
+                      :img-options="cardImgOptions"
                     >
-                      <template #text>
-                        <BaseImg
-                          :img-src="film.preview || ''"
-                          :img-options="cardImgOptions"
-                        >
-                        </BaseImg>
-                      </template>
-
-                      <template #image>
-                        <BaseImg
-                          :img-src="film.preview || ''"
-                          :img-options="bgImgOptions"
-                        ></BaseImg>
-                      </template>
-                      <template #title>
-                        <div
-                          class="font-bold text-white text-h4 text-center p-0 text-truncate"
-                        >
-                          {{ film.name || "" }}
-                        </div>
-                      </template>
-                    </v-card>
-                  </v-carousel-item>
-                  <v-skeleton-loader
-                    v-else
-                    :height="CAROUSEL_HEIGHT"
-                    type="image"
+                    </BaseImg>
+                  </template>
+                  <template #image>
+                    <BaseImg
+                      :img-src="film.preview || ''"
+                      :img-options="bgImgOptions"
+                    ></BaseImg>
+                  </template>
+                  <template #title>
+                    <div
+                      class="font-bold text-white text-h4 text-center p-0 text-truncate"
+                    >
+                      {{ film.name || "" }}
+                    </div>
+                  </template>
+                </v-card>
+              </v-carousel-item>
+              <v-skeleton-loader v-else :height="CAROUSEL_HEIGHT" type="image">
+              </v-skeleton-loader>
+            </v-carousel>
+          </template>
+        </v-card>
+    
+          <v-list>
+            <v-list-item
+              v-for="(film, index) in latestFilms"
+              v-if="!loading"
+              :key="film.id || 0"
+              :active="index === activeFilm"
+              :title="film.name || ''"
+              :subtitle="film.description || ''"
+              :value="film.id || 0"
+              variant="elevated"
+              lines="three"
+              :color="index === activeFilm ? 'secondary' : 'transparent'"
+              @click="navigateTo('/films/' + film.id)"
+            >
+              <template #prepend>
+                <v-avatar rounded="0">
+                  <BaseImg
+                    :img-src="film.preview || ''"
+                    :img-options="avatarImgOptions"
                   >
-                  </v-skeleton-loader>
-                </v-carousel>
-                <v-list>
-                  <v-list-item
-                    v-for="(film, index) in latestFilms"
-                    v-if="!loading"
-                    :key="film.id || 0"
-                    :active="index === activeFilm"
-                    :title="film.name || ''"
-                    :subtitle="film.description || ''"
-                    :value="film.id || 0"
-                    variant="elevated"
-                    lines="three"
-                    active-color="primary"
-                    class="list-bg"
-                    @click="navigateTo('/films/' + film.id)"
-                  >
-                    <template #prepend>
-                      <v-avatar rounded="0">
-                        <BaseImg
-                          :img-src="film.preview || ''"
-                          :img-options="avatarImgOptions"
-                        >
-                        </BaseImg>
-                      </v-avatar>
-                    </template>
-                  </v-list-item>
-                  <v-skeleton-loader
-                    v-else
-                    v-for="k in 5"
-                    :key="k"
-                    height="100"
-                    type="list-item-avatar-three-line"
-                  >
-                  </v-skeleton-loader>
-                </v-list>
+                  </BaseImg>
+                </v-avatar>
               </template>
-            </v-card>
-
+            </v-list-item>
+            <v-skeleton-loader
+              v-else
+              v-for="k in 5"
+              :key="k"
+              height="100"
+              type="list-item-avatar-three-line"
+            >
+            </v-skeleton-loader>
+          </v-list>
+      </section>
     </template>
   </BasePage>
 </template>
@@ -113,12 +107,13 @@ import BaseImg from "~/components/Containment/Img/BaseImg.vue";
 const { latestFilms, loading, networkError } = storeToRefs(useFilmStore());
 const { fetchLatestFilms } = useFilmStore();
 const activeFilm = ref(0);
+
 onMounted(async () => {
   await fetchLatestFilms();
 });
 const { t } = useI18n();
 const CAROUSEL_HEIGHT = 400;
-
+const currentImage = computed(()=>{})
 const cardImgOptions = {
   shaded: false,
   cover: false,

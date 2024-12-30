@@ -69,32 +69,32 @@ const filmItems = computed(() => {
   });
 });
 
-const breadcrumbs = ref<Breadcrumb[]>([
+const breadcrumbs = [
   {
     title: t("nav.home"),
-    href: "/",
+    to: "/",
     icon: "mdi-home",
   },
   {
     title: t("nav.films"),
-    href: "/films",
+    to: "/films",
     icon: "mdi-filmstrip",
   },
-]);
+] as Breadcrumb[];
 
-const toolbarActions = [{
-  type: "add",
-  icon: "mdi-plus",
-  title: t("forms.film.add"),
-  disabled: false,
-  to: `/films/add`,
-},
-
+const toolbarActions = [
+  {
+    type: "add",
+    icon: "mdi-plus",
+    title: t("forms.film.add"),
+    disabled: false,
+    to: `/films/add`,
+  },
 ] as ToolbarAction[];
 
 const toolbarOptions = {
   displayBackBtn: false,
-  breadcrumbs: breadcrumbs.value,
+  breadcrumbs: breadcrumbs,
   color: "secondary",
   actions: toolbarActions,
 } as ToolbarOptions;

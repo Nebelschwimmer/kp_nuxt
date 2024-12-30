@@ -24,6 +24,9 @@ export default {
 		available_for_upload: "Available for upload",
 		img: "Image",
 		uploaded_img: "Uploaded image",
+    drag_and_drop: "Drag and drop files here",
+    browse_files: "Browse files",
+    or: "or",
 	},
   empty_states: {
     title: "No data found",
@@ -52,6 +55,7 @@ export default {
 	nav: {
 		title: "Navigation",
 		home: "Home",
+    menu: "Menu",
 		films: "Films",
 		films_list: "Films list",
 		films_add: "Add film",

@@ -1,7 +1,8 @@
 <template>
 	<v-card
-		color=""
-		variant="text">
+    :loading="loading"
+    :disabled="disabled"
+    >
 		<v-card-text>
 			<slot name="form"></slot>
 		</v-card-text>
@@ -10,9 +11,10 @@
 			<v-btn
 				@click="$emit('validate')"
 				:disabled="loading || disabled"
+        :prepend-icon="loading ? 'mdi-loading' : ' mdi-check'"
 				:loading="Boolean(loading)"
-				color="secondary"
-				variant="elevated">
+				color="primary"
+				>
 				{{
 					!loading ? $t("actions.submit") : $t("general.data_transfer")
 				}}</v-btn

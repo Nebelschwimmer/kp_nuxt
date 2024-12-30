@@ -1,10 +1,10 @@
 <template>
   <BaseForm @validate="validate" :loading="loading">
     <template #form>
-      <v-form ref="formRef" class="d-flex flex-column">
+      <v-form ref="formRef">
         <v-container>
           <v-row>
-            <v-col>
+            <v-col cols="12" sm="12" md="6" lg="6" xl="6">
               <v-text-field
                 v-model="filmForm.name"
                 name="name"
@@ -61,65 +61,64 @@
                 prepend-inner-icon="mdi-account"
               />
             </v-col>
-              <v-col>
-                <v-select
-                  v-model.number="filmForm.producerId"
-                  name="producerId"
-                  item-value="id"
-                  item-title="name"
-                  :items="directors"
-                  :rules="selectRules"
-                  :label="$t('forms.film.producer')"
-                  prepend-inner-icon="mdi-account"
-                />
-                <v-select
-                  v-model.number="filmForm.writerId"
-                  name="writerId"
-                  item-value="id"
-                  item-title="name"
-                  :items="writers"
-                  :rules="selectRules"
-                  :label="$t('forms.film.writer')"
-                  prepend-inner-icon="mdi-account"
-                />
-                <v-select
-                  v-model.number="filmForm.composerId"
-                  name="composerId"
-                  item-value="id"
-                  item-title="name"
-                  :items="composers"
-                  :rules="selectRules"
-                  :label="$t('forms.film.composer')"
-                  prepend-inner-icon="mdi-account"
-                />
-                <v-select
-                  v-model.number="filmForm.age"
-                  name="age"
-                  :rules="ageRules"
-                  prepend-inner-icon="mdi-cake-variant"
-                  :label="$t('forms.film.age')"
-                  :items="ageItems"
-                />
-                <v-text-field
-                  v-model="filmForm.duration"
-                  :label="$t('forms.film.duration')"
-                  type="time"
-                  name="duration"
-                  prepend-inner-icon="mdi-timer"
-                  :rules="durationRules"
-                />
-                <v-textarea
-                  :label="$t('forms.film.description')"
-                  name="description"
-                  density="comfortable"
-                  prepend-inner-icon="mdi-pencil"
-                  v-model="filmForm.description"
-                  variant="outlined"
-                  auto-grow
-                  no-resize
-                />
-              </v-col>
-         
+            <v-col cols="12" sm="12" md="6" lg="6" xl="6">
+              <v-select
+                v-model.number="filmForm.producerId"
+                name="producerId"
+                item-value="id"
+                item-title="name"
+                :items="directors"
+                :rules="selectRules"
+                :label="$t('forms.film.producer')"
+                prepend-inner-icon="mdi-account"
+              />
+              <v-select
+                v-model.number="filmForm.writerId"
+                name="writerId"
+                item-value="id"
+                item-title="name"
+                :items="writers"
+                :rules="selectRules"
+                :label="$t('forms.film.writer')"
+                prepend-inner-icon="mdi-account"
+              />
+              <v-select
+                v-model.number="filmForm.composerId"
+                name="composerId"
+                item-value="id"
+                item-title="name"
+                :items="composers"
+                :rules="selectRules"
+                :label="$t('forms.film.composer')"
+                prepend-inner-icon="mdi-account"
+              />
+              <v-select
+                v-model.number="filmForm.age"
+                name="age"
+                :rules="ageRules"
+                prepend-inner-icon="mdi-cake-variant"
+                :label="$t('forms.film.age')"
+                :items="ageItems"
+              />
+              <v-text-field
+                v-model="filmForm.duration"
+                :label="$t('forms.film.duration')"
+                type="time"
+                name="duration"
+                prepend-inner-icon="mdi-timer"
+                :rules="durationRules"
+              />
+              <v-textarea
+                :label="$t('forms.film.description')"
+                name="description"
+                density="comfortable"
+                prepend-inner-icon="mdi-pencil"
+                v-model="filmForm.description"
+                variant="outlined"
+                auto-grow
+                no-resize
+              />
+            </v-col>
           </v-row>
         </v-container>
       </v-form>

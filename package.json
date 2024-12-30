@@ -38,7 +38,7 @@
     "vite-plugin-eslint2": "^5.0.3",
     "vite-plugin-vuetify": "^2.0.4",
     "vue-i18n": "^10.0.5",
-    "vuetify": "^3.7.4",
+    "vuetify": "^3.7.6",
     "vuetify-nuxt-module": "^0.18.3"
   },
   "overrides": {

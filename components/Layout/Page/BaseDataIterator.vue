@@ -3,13 +3,14 @@
     <v-data-iterator :items="items" :loading="loading">
       <template #header>
         <v-toolbar class="px-2">
+          <v-spacer></v-spacer>
           <v-text-field
             :model-value="search"
             density="comfortable"
             :placeholder="$t('actions.search')"
             prepend-inner-icon="mdi-magnify"
-            style="max-width: 300px;"
-            variant="solo"
+            style="max-width: 300px"
+            variant="solo-filled"
             clearable
             hide-details
           ></v-text-field>
@@ -21,6 +22,11 @@
           lines="two"
           v-bind="item.raw"
           :key="i"
+          variant="elevated"
+          elevation="4"
+          class="my-3"
+          rounded="lg"
+          :to="item.raw.to"
           :title="item.raw.title"
           :subtitle="item.raw.subtitle"
           :value="item"
@@ -35,14 +41,15 @@
       <template v-if="footer" #footer>
         <v-footer
           class="justify-space-between text-body-2 mt-4"
-          color="surface-variant"
+          
         >
           {{ $t("nav.pagination.total") }}: {{ items.length }}
           <v-pagination
             v-model="currentPage"
             :length="totalPages"
-            density="compact"
+            density="comfortable"
             rounded="lg"
+            color="accent"
             :total-visible="items.length"
             @update:model-value="handlePageChange"
           ></v-pagination>

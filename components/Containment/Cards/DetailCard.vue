@@ -1,56 +1,55 @@
 <template>
-  <v-card variant="text">
+  <v-card rounded="lg" variant="elevated" elevation="10" class="mx-auto" height="100%">
     <template #title>
-      <span class=" text-h4 font-weight-bold"> {{ title }}</span>
+      <span class="text-h4 font-weight-bold"> {{ title }}</span>
     </template>
     <v-divider></v-divider>
     <v-container fluid>
       <v-row>
-        <v-col>
+        <v-col cols="12" sm="12" md="4" lg="6" xl="5" xxl="5">
           <slot name="gallery"></slot>
         </v-col>
-        <v-col>
-          <v-container>
-            <v-row class="text-h5 text-primary font-weight-bold">
-              <v-col>{{ $t("pages.general_info") }}</v-col>
-            </v-row>
-            <v-row
+        <v-col cols="12" sm="12" md="8" lg="4" xl="4" xxl="3">
+          <v-list>
+            <span class="text-subtitle-1 text-primary font-weight-bold">{{
+              $t("pages.general_info")
+            }}</span>
+            <v-list-item
               v-for="detail in details"
               :key="detail.name"
-              class="text-body-1"
+              density="compact"
+              variant="elevated"
+              elevation="2"
+              class="text-body-2 my-1"
+              :to="detail.type === 'link' ? detail.to : ''"
             >
-              <v-col>
-                <span class="font-bold"> {{ $t(detail.name) }}: </span>
-                <NuxtLink v-if="detail.type == 'link'" :to="detail.to">
-                  <span v-if="detail.value" class="text-accent">{{
-                    detail.value
-                  }}</span>
-                  <span v-else class="text-disabled">{{
-                    $t("general.no_data")
-                  }}</span>
-                </NuxtLink>
-                <span v-else-if="detail.value">{{ detail.value }}</span>
+              <v-list-item-title class="text-subtitle-2">
+                <span> {{ $t(detail.name) }}: </span>
+                <span
+                  v-if="detail.value"
+                  :class="[
+                    'font-weight-bold',
+                    { 'text-accent': detail.type === 'link' },
+                  ]"
+                  >{{ detail.value }}</span
+                >
                 <span v-else class="text-disabled">{{
                   $t("general.no_data")
                 }}</span>
-              </v-col>
-              <v-divider></v-divider>
-            </v-row>
+              </v-list-item-title>
+            </v-list-item>
             <template v-if="description">
-              <v-row>
-                <v-col class="font-bold text-h5 text-primary"
-                  >{{ $t("pages.films.description") }}:</v-col
+              <v-list-item :lines="false">
+                <v-list-item-title
+                  class="font-weight-bold text-subtitle-1 text-primary"
+                  >{{ $t("pages.films.description") }}:</v-list-item-title
                 >
-              </v-row>
-              <v-row>
-                <v-col class="text-body-1">
-                  {{ description }}
-                </v-col>
-              </v-row>
+                <v-list-item-subtitle>{{ description }}</v-list-item-subtitle>
+              </v-list-item>
             </template>
-          </v-container>
+          </v-list>
         </v-col>
-        <v-col cols="3">
+        <v-col cols="12" sm="12" md="3" lg="3" xl="3" xxl="2">
           <v-container>
             <slot name="rating_starring"> </slot>
           </v-container>

@@ -1,8 +1,8 @@
 <template>
   <v-layout class="rounded-md">
-    <Header order="0" @toggle-drawer="drawer = !drawer" />
-    <v-main class="bg-gradient">
-      <NuxtLoadingIndicator color="#ff4d00"/>
+    <Header />
+    <v-main :class="[{ 'bg-gradient': theme.global.current.value.dark }]">
+      <NuxtLoadingIndicator color="#ff4d00" />
       <v-container fluid>
         <v-row justify="center">
           <v-col
@@ -12,7 +12,7 @@
             lg="9"
             xl="7"
             xxl="5"
-            class="content"
+            class="content border rounded-md"
           >
             <slot />
           </v-col>
@@ -25,14 +25,19 @@
 <script lang="ts" setup>
 import Header from "~/components/Layout/Header/Header.vue";
 const drawer = ref(false);
+const theme = useTheme();
 </script>
 
 <style lang="scss">
-$background: #faf9f4;
-$surface: #e4e4e4;
-$primary: #60726283;
-$secondary: #e0974a2c;
-$accent: #ff4d00;
+$background: #000000;
+$surface: #313131;
+$primary: rgb(105, 153, 201);
+$secondary: #e0974aa8;
+$accent: #ed7b49;
+$error: #f44336;
+$info: #ffbd69;
+$success: #4caf50;
+$warning: #fb8c00;
 
 .page-enter-active,
 .page-leave-active {
@@ -53,60 +58,25 @@ $accent: #ff4d00;
 }
 
 .bg-gradient {
-  background-image: radial-gradient(
-      circle at 69% 86%,
-      rgba(165, 165, 165, 0.06) 0%,
-      rgba(165, 165, 165, 0.06) 25%,
-      rgba(193, 193, 193, 0.06) 25%,
-      rgba(193, 193, 193, 0.06) 50%,
-      rgba(221, 221, 221, 0.06) 50%,
-      rgba(221, 221, 221, 0.06) 75%,
-      rgba(249, 249, 249, 0.06) 75%,
-      rgba(249, 249, 249, 0.06) 100%
-    ),
-    radial-gradient(
-      circle at 49% 76%,
-      rgba(129, 129, 129, 0.06) 0%,
-      rgba(129, 129, 129, 0.06) 25%,
-      rgba(164, 164, 164, 0.06) 25%,
-      rgba(164, 164, 164, 0.06) 50%,
-      rgba(200, 200, 200, 0.06) 50%,
-      rgba(200, 200, 200, 0.06) 75%,
-      rgba(235, 235, 235, 0.06) 75%,
-      rgba(235, 235, 235, 0.06) 100%
-    ),
-    radial-gradient(
-      circle at 22% 64%,
-      rgba(173, 173, 173, 0.06) 0%,
-      rgba(173, 173, 173, 0.06) 25%,
-      rgba(119, 119, 119, 0.06) 25%,
-      rgba(119, 119, 119, 0.06) 50%,
-      rgba(64, 64, 64, 0.06) 50%,
-      rgba(64, 64, 64, 0.06) 75%,
-      rgba(10, 10, 10, 0.06) 75%,
-      rgba(10, 10, 10, 0.06) 100%
-    ),
-    linear-gradient(307deg, $primary, white) !important;
-  background-attachment: fixed;
+  background-image: linear-gradient(
+    68deg,
+    rgba(105, 153, 201, 0.1) 0%,
+    rgb(237, 123, 73, 0.06) 50%,
+    rgb(237, 123, 73, 0.1) 100%
+  ) !important;
 }
 
 .base-card {
-  background-image: linear-gradient(
-    to right,
-    rgba(151, 151, 151, 0.2) 0%,
-    rgba(151, 151, 151, 0.01) 75%,
-    rgba(255, 255, 255, 0.1) 100%
-  ) !important;
   backdrop-filter: blur(10px) !important;
+  background-color: rgba($color: #000000, $alpha: 0.3) !important;
 }
 .card-title {
-  background-color: rgba(0, 0, 0, 0.246) !important;
   backdrop-filter: blur(10px) !important;
 }
 .content {
-  backdrop-filter: blur(4px);
-  background-color: rgba($color: #ffffff, $alpha: 0.5);
   min-height: calc(100vh - 64px);
+  backdrop-filter: blur(4px);
+  background-color: rgba($color: #000000, $alpha: 0.3) !important;
 }
 a {
   text-decoration: none;

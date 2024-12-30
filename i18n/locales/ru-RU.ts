@@ -24,7 +24,9 @@ export default {
 		available_for_upload: "Доступно для загрузки",
 		img: "Изображение",
 		uploaded_img: "Загруженное изображение",
-		drag_and_drop: "Перетащите файл изображения сюда",
+		drag_and_drop: "Перетащите файл(ы) изображения сюда",
+    browse_files: "Просмотреть файлы",
+    or: "или",
 	},
 	auth: {
 		not_auth: "Вы не авторизованы",
@@ -45,6 +47,7 @@ export default {
 		title: "Навигация",
 		home: "Главная",
 		films: "Фильмы",
+    menu: "Меню",
 		films_list: "Список фильмов",
 		films_add: "Добавить фильм",
 		actors: "Актеры",
@@ -290,6 +293,7 @@ export default {
 			preview_delete_confirm:
 				"Вы уверены, что хотите удалить постер?",
 				preview_replace_warning: "Текущий постер будет заменен. Продолжить?",
+        gallery_item_delete_confirm: "Вы уверены, что хотите удалить этот файл?",
 		},
 		person: {
 			add: "Добавить персону",
