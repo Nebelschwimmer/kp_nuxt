@@ -21,7 +21,7 @@
 }
 
 .progress {
-  width: 148px;
+  width: 48px;
   height: 48px;
   border: 5px solid #5e5e5e17;
   border-bottom-color: #ff4d00;

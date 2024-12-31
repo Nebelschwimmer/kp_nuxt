@@ -64,18 +64,6 @@ export default defineNuxtConfig({
 							warning: "#fb8c00",
 						},
 					},
-          light: {
-            dark: true,
-						colors: {
-							primary: "#ffffff",
-							secondary: "#6999c9",
-							accent: "#ed7b49",
-							error: "#f44336",
-							info: "#FFBD69",
-							success: "#4caf50",
-							warning: "#fb8c00",
-						},
-					},
 				},
 			},
 		},
