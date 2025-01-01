@@ -1,13 +1,15 @@
 <template>
-  <BaseImg
-    v-if="galleryContent.length"
-    :img-src="galleryContent[0] || ''"
-    :img-options="posterOptions"
-    @click="showGalleryDialogOnClick"
-  />
+  <v-avatar v-if="galleryContent.length" :size="130" variant="tonal" rounded="lg" class="ma-3">
+    <BaseImg
+      
+      :img-src="galleryContent[0] || ''"
+      :img-options="posterOptions"
+      @click="showGalleryDialogOnClick"
+    />
+  </v-avatar>
   <v-sheet
     v-else
-    height="400"
+    :height="600"
     class="d-flex flex-column ga-2 align-center justify-center"
   >
     <v-chip color="secondary" prepend-icon="mdi-image-off">
@@ -22,32 +24,32 @@
     >
   </v-sheet>
   <v-dialog v-model="showGalleryDialog" max-width="1024">
-    <v-card rounded="lg" class="base-card">
-      <v-toolbar color="grey-darken-4">
+    <v-card rounded="lg" variant="elevated" elevation="10">
+      <v-toolbar>
         <v-toolbar-title>
           {{ name }}:
           <span class="text-lowercase">{{ $t("pages.films.gallery") }}</span>
         </v-toolbar-title>
         <div class="d-flex ga-2 mr-5">
-          <v-btn icon :disabled="!galleryContent.length">
+          <v-btn icon :disabled="!galleryContent.length" @click="$emit('img:download', galleryContent[activeImg])">
             <v-icon icon="mdi-download"></v-icon>
             <v-tooltip activator="parent" location="bottom">
               {{ $t("actions.download") }}
             </v-tooltip>
           </v-btn>
-          <v-btn icon :disabled="!galleryContent.length">
+          <v-btn icon :disabled="!galleryContent.length" @click="$emit('img:share', galleryContent[activeImg])">
             <v-icon icon="mdi-share"></v-icon>
             <v-tooltip activator="parent" location="bottom">
               {{ $t("actions.share") }}
             </v-tooltip>
           </v-btn>
-          <v-btn icon :disabled="!galleryContent.length">
+          <v-btn icon :disabled="!galleryContent.length" @click="$emit('img:edit', galleryContent[activeImg])">
             <v-icon icon="mdi-pencil"></v-icon>
             <v-tooltip activator="parent" location="bottom">
               {{ $t("actions.edit") }}
             </v-tooltip>
           </v-btn>
-          <v-btn icon :disabled="!galleryContent.length">
+          <v-btn icon :disabled="!galleryContent.length" @click="$emit('img:delete', galleryContent[activeImg])">
             <v-icon icon="mdi-delete" color="error"></v-icon>
             <v-tooltip activator="parent" location="bottom">
               {{ $t("actions.remove") }}
@@ -127,6 +129,7 @@
 <script lang="ts" setup>
 import BaseImg from "../Containment/Img/BaseImg.vue";
 import CloseBtn from "../Containment/Btns/CloseBtn.vue";
+defineEmits(["img:download", "img:share", "img:edit", "img:delete"]);
 const props = defineProps<{
   galleryContent: string[];
   noContentLabel?: string;

@@ -157,6 +157,7 @@ export default {
 		error: "Ошибка",
 		warning: "Предупреждение",
 		info: "Информация",
+    link_copied: "Ссылка скопирована",
 		messages: {
 			success: {
 				add: "Добавлено успешно",
@@ -292,8 +293,8 @@ export default {
 				"Вы не загрузили файлы для галереи, но вы сможете сделать это позже. Завершить?",
 			preview_delete_confirm:
 				"Вы уверены, что хотите удалить постер?",
-				preview_replace_warning: "Текущий постер будет заменен. Продолжить?",
-        gallery_item_delete_confirm: "Вы уверены, что хотите удалить этот файл?",
+			preview_replace_warning: "Текущий постер будет заменен. Продолжить?",
+      gallery_item_delete_confirm: "Вы уверены, что хотите удалить этот файл?",
 		},
 		person: {
 			add: "Добавить персону",

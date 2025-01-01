@@ -73,7 +73,7 @@
               active-color="secondary"
               :title="file.name"
               :subtitle="$t('general.preview')"
-              @click-once="openPickerOnClick(galleryPreviews.indexOf(file))"
+              :value="file"
             >
               <template #prepend>
                 <v-avatar size="100" rounded></v-avatar>

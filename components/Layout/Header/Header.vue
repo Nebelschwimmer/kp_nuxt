@@ -4,10 +4,11 @@
     :hide-on-scroll="$vuetify.display.smAndDown"
     :collapse="$vuetify.display.smAndDown"
     :collapse-on-scroll="$vuetify.display.smAndDown"
+    class="card-title"
   >
     <template #image>
       <v-img
-      v-if="theme.global.current.value.dark && !$vuetify.display.smAndDown"
+        v-if="theme.global.current.value.dark && !$vuetify.display.smAndDown"
         gradient="45deg, rgba(105, 153, 201, 0.3) 0%, rgb(237, 123, 73, 0.06) 50%, rgb(237, 123, 73, 0.2) 100%"
       ></v-img>
     </template>
@@ -27,7 +28,7 @@
     <v-app-bar-title v-if="$vuetify.display.lgAndUp">
       <nuxt-link to="/">
         <h3
-          class=" text-h5 text-md-h6 text-lg-h6 text-xl-h5 text-sm-h6 font-weight-bold"
+          class="text-h5 text-md-h6 text-lg-h6 text-xl-h5 text-sm-h6 font-weight-bold"
         >
           Kinopoisk Lite
         </h3>
@@ -38,7 +39,7 @@
         <v-btn
           variant="tonal"
           density="comfortable"
-              slim
+          slim
           :active="$route.name === 'index'"
           :color="$route.name === 'index' ? 'accent' : ''"
           to="/"
@@ -140,14 +141,7 @@
         </v-text-field>
       </v-responsive>
       <v-spacer></v-spacer>
-      <div class="d-flex flex-wrap ga-2">
-        <v-btn
-          icon="mdi-weather-sunny"
-          variant="tonal"
-          slim
-          rounded="0"
-          @click="toggleTheme"
-        ></v-btn>
+
         <v-menu open-on-hover>
           <template v-slot:activator="{ props }">
             <v-btn icon v-bind="props" variant="tonal" slim rounded="0">
@@ -160,7 +154,6 @@
               v-for="(item, index) in languageOptions"
               :key="index"
               rounded="lg"
-            
               :value="item"
             >
               <v-list-item-title
@@ -171,7 +164,7 @@
             </v-list-item>
           </v-list>
         </v-menu>
-      </div>
+  
       <v-spacer></v-spacer>
       <v-responsive max-width="120">
         <ProfileNav :avatar-src="''" />
@@ -184,9 +177,7 @@
 import MobileActionsMenu from "./MobileActionsMenu.vue";
 import ProfileNav from "~/components/Navigation/ProfileNav.vue";
 const theme = useTheme();
-const toggleTheme = () => {
-  theme.global.name.value = theme.global.current.value.dark ? "light" : "dark";
-};
+
 const changeLanguage = (lang: string) => {
   setLocale(lang);
 };

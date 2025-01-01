@@ -2,8 +2,9 @@
 declare global {
   interface CardDetails {
     name: string;
-    value?: string | number;
+    value: string | number;
     type?: string;
+    icon?: string;
     to?: string;
   }
 

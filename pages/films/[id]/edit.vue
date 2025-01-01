@@ -103,32 +103,6 @@ const handleGeneralInfoSubmit = async () => {
   }
 };
 
-const handlePosterUploadSubmit = async (file: File) => {
-  const id = filmForm.value?.id || 0;
-  poster.value = null;
-  if (await uploadPreview(file, id)) {
-    posterUploaded.value = true;
-    posterError.value = false;
-    poster.value = filmForm.value?.preview;
-  }
-};
-
-const handlePosterDelete = async () => {
-  const id = filmForm.value?.id || 0;
-  await deletePreview(id);
-  poster.value = null;
-};
-
-const handlePosterReplace = async (file: File) => {
-  const id = filmForm.value?.id || 0;
-  poster.value = null;
-  await deletePreview(id);
-  if (await uploadPreview(file, id)) {
-    posterUploaded.value = true;
-    posterError.value = false;
-    poster.value = filmForm.value?.preview;
-  }
-};
 
 const handleGalleryUploadSubmit = async (files: File[]) => {
   const id = filmForm.value?.id || 0;
@@ -192,6 +166,7 @@ const toolbarOptions = reactive({
 
 onMounted(async () => {
   await getData();
+  await nextTick();
   formEditComplete.value = false;
   posterUploaded.value = false;
   activeTab.value = "general_info";
@@ -199,7 +174,6 @@ onMounted(async () => {
   formError.value = false;
   let hash = useRoute().hash || "";
   if (hash) {
-    console.log(Number(hash.slice(1)));
     activeTab.value = hash.replace("#", "");
   }
 });
@@ -207,7 +181,6 @@ onMounted(async () => {
 watch(
   filmForm as Ref<Film>,
   (newVal) => {
-    poster.value = newVal?.preview;
     breadcrumbs.value[2].title = `${newVal?.name}: ${t("pages.films.details")} `;
   },
   {

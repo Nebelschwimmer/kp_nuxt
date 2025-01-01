@@ -63,7 +63,7 @@ const filmItems = computed(() => {
       subtitle: film.description || "",
       imageSrc: film.gallery[0] || "",
       to: "/films/" + film.id,
-      variant: "tonal",
+      variant: "plain",
     };
   });
 });
@@ -94,7 +94,6 @@ const toolbarActions = [
 const toolbarOptions = {
   displayBackBtn: false,
   breadcrumbs: breadcrumbs,
-  color: "secondary",
   actions: toolbarActions,
 } as ToolbarOptions;
 

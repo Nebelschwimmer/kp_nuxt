@@ -20,7 +20,7 @@
             :height="CAROUSEL_HEIGHT"
             cycle
             width="100%"
-            show-arrows-on-hover
+          
             @update:model-value="activeFilmImg = films[activeFilm].gallery[0]"
           >
             <v-carousel-item
@@ -30,22 +30,20 @@
               :value="index"
             >
               <v-card
-                variant="text"
+                variant="elevated"
                 height="100%"
+                
                 :image="film.gallery[0] || ''"
                 @click="navigateTo('/films/' + film.id)"
               >
-                <BaseImg
-                  :img-src="film.gallery[0] || ''"
-                  :img-options="cardImgOptions"
-                >
-                </BaseImg>
 
                 <template #image>
-                  <BaseImg
-                    :img-src="film.gallery[0] || ''"
-                    :img-options="bgImgOptions"
-                  ></BaseImg>
+                  <v-parallax :height="CAROUSEL_HEIGHT * 2">
+                    <BaseImg
+                      :img-src="film.gallery[0] || ''"
+                      :img-options="bgImgOptions"
+                    ></BaseImg>
+                  </v-parallax>
                 </template>
                 <template #title>
                   <div
@@ -63,9 +61,8 @@
 
         <v-list
           rounded="lg"
-          class="card-title"
-          variant="text"
-          color="transparent"
+          variant="plain"
+        
         >
           <v-list-item
             v-for="(film, index) in films"
@@ -116,16 +113,8 @@ onMounted(async () => {
   await fetchFilteredFilms(5, 0, "", "ru");
 });
 const { t } = useI18n();
-const CAROUSEL_HEIGHT = 400;
-const cardImgOptions = {
-  shaded: false,
-  cover: false,
-  height: CAROUSEL_HEIGHT - 100,
-  placeholderOptions: {
-    displayTitle: true,
-    title: t("pages.films.no_preview"),
-  },
-} as ImgOptions;
+const CAROUSEL_HEIGHT = 300;
+
 
 const avatarImgOptions = {
   shaded: false,
@@ -140,7 +129,6 @@ const bgImgOptions = {
   shaded: true,
   height: "100%",
   cover: true,
-  class: "img-blur",
   placeholderOptions: {
     displayTitle: false,
   },

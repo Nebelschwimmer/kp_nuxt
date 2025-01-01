@@ -1,8 +1,8 @@
 <template>
-  <v-toolbar  density="compact" rounded="lg" color="grey-darken-4">
+  <v-toolbar  density="compact" class="card-title" color="grey-darken-4">
     <template #image>
       <v-img
-        gradient="45deg, rgba(0, 0, 0, .1) 0%, rgba(0, 0, 0, .1) 50%, rgba(0, 0, 0, .4)"
+        gradient="45deg, rgba(105, 153, 201, 0.1) 0%, rgb(237, 123, 73, 0.06) 50%, rgb(237, 123, 73, 0.01) 100%"
       ></v-img>
     </template>
     <template #prepend>

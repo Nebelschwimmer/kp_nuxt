@@ -157,6 +157,7 @@ export default {
 		error: "Erreur",
 		warning: "Avertissement",
 		info: "Info",
+    link_copied: "Lien copié",
 		messages: {
 			success: {
 				add: "Ajouté avec succès",

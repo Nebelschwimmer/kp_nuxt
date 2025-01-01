@@ -291,9 +291,40 @@ export const useFilmStore = defineStore("films", () => {
 		}
 	};
 
+
+
 	const clearFilmForm = (): void => {
 		filmForm.value = {} as Film;
 	};
+
+  const downloadGalleryItem = async (index: number) => {
+  try {
+    const name = film.value?.name || "";
+    const uri = film.value?.gallery[index] || "";
+    const link = document.createElement("a");
+    link.setAttribute('download', name);
+    link.href = uri;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  }
+  catch (error: any) {
+    networkError.value = error;
+  }
+  }
+
+  const shareGalleryItemLink = async (index: number) => {
+    try {
+    const clipboard = navigator.clipboard;
+    const name = film.value?.name || "";
+    const uri = film.value?.gallery[index] || "";
+    await clipboard.writeText(uri);
+    alert(`Link copied to clipboard: ${uri}`);
+    }
+    catch (error: any) {
+      networkError.value = error;
+    }
+  }
 
 	return {
 		film,
@@ -330,5 +361,7 @@ export const useFilmStore = defineStore("films", () => {
 		clearFilmForm,
 		deletePreview,
 		deleteGalleryItems,
+    downloadGalleryItem,
+    shareGalleryItemLink
 	};
 });
