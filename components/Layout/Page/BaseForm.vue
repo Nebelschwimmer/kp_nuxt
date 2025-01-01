@@ -2,6 +2,7 @@
 	<v-card
     :loading="loading"
     :disabled="disabled"
+    variant="text"
     >
 		<v-card-text>
 			<slot name="form"></slot>

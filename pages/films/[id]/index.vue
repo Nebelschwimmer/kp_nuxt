@@ -9,16 +9,37 @@
     <template #content>
       <DetailCard
         :title="film?.name + ' (' + film?.releaseYear + ')' || ''"
-        :subtitle="$t('pages.films.details_film')"
-        :rating="film?.rating || 0"
         :imgSrc="film?.preview || ''"
         :no-img-label="$t('pages.films.no_preview') || ''"
         :details="computedFilmDetails"
         :description="film?.description || ''"
+        :starring="filmActors || []"
+        :toolbar-actions="toolbarActions"
+        :bgImg="film?.gallery[0] || ''"
       >
+        <template #rating>
+          <v-chip color="primary">
+            <v-rating
+              :model-value="film?.rating || 0"
+              color="primary"
+              size="small"
+              density="compact"
+              half-increments
+              readonly
+            >
+            </v-rating>
+            <v-tooltip activator="parent" location="bottom">
+              <v-label class="text-caption"
+                >{{ $t("pages.films.rating") }}:
+                {{ film?.rating || "0.0" }}
+              </v-label>
+            </v-tooltip>
+          </v-chip>
+        </template>
         <template #gallery>
           <FilmGallery
             :gallery-content="film?.gallery || []"
+            :name="film?.name || ''"
             :no-content-label="$t('pages.films.no_gallery')"
           />
         </template>
@@ -66,6 +87,8 @@
                   v-for="actor in filmActors"
                   :key="actor.id || 0"
                   :value="actor.id"
+                  density="compact"
+                  :prepend-avatar="actor.photo"
                 >
                   <v-list-item-title>
                     <NuxtLink :to="`/persons/${actor.id}`" class="text-accent"
@@ -95,16 +118,12 @@ import BasePage from "~/components/Layout/Page/BasePage.vue";
 import DetailCard from "~/components/Containment/Cards/DetailCard.vue";
 import { useFilmStore } from "~/store/filmStore";
 import { storeToRefs } from "pinia";
-import FilmGallery from "~/components/Gallery/FilmGallery.vue";;
+import FilmGallery from "~/components/Gallery/FilmGallery.vue";
 
 const { film, loading, networkError } = storeToRefs(useFilmStore());
 const { fetchFilmById } = useFilmStore();
 const { locale, t } = useI18n();
 const filmActors = computed(() => {
-  interface ActorObj {
-    id: number;
-    name: string;
-  }
   let actorObj = <ActorObj>{};
   let actorsArr = <ActorObj[]>[];
 
@@ -112,17 +131,17 @@ const filmActors = computed(() => {
     film.value?.actorNames.forEach((name: string) => {
       const actorId =
         film.value?.actorIds[film.value?.actorNames.indexOf(name as never)];
+
       actorObj = {
         id: actorId || 0,
-        name: name,
+        name: name || "",
+        photo: "",
       };
       actorsArr.push(actorObj);
     });
   }
   return actorsArr;
 });
-
-
 
 const computedFilmDetails = computed(() => {
   return [
@@ -196,19 +215,20 @@ const breadcrumbs = ref<Breadcrumb[]>([
   },
 ]);
 
-const toolbarActions = [{
-  type: "edit",
-  icon: "mdi-pencil",
-  title: t("forms.film.edit"),
-  disabled: false,
-  to: `/films/${film.value?.id}/edit`,
-},
-{
-  type: "delete",
-  icon: "mdi-delete",
-  title: t("pages.films.remove"),
-  disabled: false,
-}
+const toolbarActions = [
+  {
+    type: "edit",
+    icon: "mdi-pencil",
+    title: t("forms.film.edit"),
+    disabled: false,
+    to: `/films/${film.value?.id}/edit`,
+  },
+  {
+    type: "delete",
+    icon: "mdi-delete",
+    title: t("pages.films.remove"),
+    disabled: false,
+  },
 ] as ToolbarAction[];
 
 const toolbarOptions = reactive({
@@ -216,14 +236,12 @@ const toolbarOptions = reactive({
   prependIcon: "",
   color: "secondary",
   breadcrumbs: breadcrumbs.value,
-  actions: toolbarActions
 });
 
 onMounted(async () => {
   const filmId = Number(useRoute().params.id);
   await fetchFilmById(filmId, locale.value);
 });
-
 
 watch(
   locale,

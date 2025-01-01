@@ -49,6 +49,12 @@ declare global {
     disabled?: boolean;
     to?: string;
   }
+
+  interface ActorObj {
+    id: number;
+    name: string;
+    photo: string;
+  }
   
 
 

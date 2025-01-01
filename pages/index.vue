@@ -36,7 +36,7 @@
                 >
                   <template #text>
                     <BaseImg
-                      :img-src="film.preview || ''"
+                      :img-src="film.gallery[0] || ''"
                       :img-options="cardImgOptions"
                     >
                     </BaseImg>
@@ -71,7 +71,6 @@
               :title="film.name || ''"
               :subtitle="film.description || ''"
               :value="film.id || 0"
-              variant="elevated"
               lines="three"
               :color="index === activeFilm ? 'secondary' : 'transparent'"
               @click="navigateTo('/films/' + film.id)"
@@ -146,5 +145,6 @@ const bgImgOptions = {
 <style lang="scss">
 .img-blur {
   filter: blur(12px);
+  opacity: 0.4;
 }
 </style>

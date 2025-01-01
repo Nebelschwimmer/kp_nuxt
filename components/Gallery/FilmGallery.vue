@@ -5,10 +5,12 @@
     @click="showGalleryDialogOnClick"
   />
   <v-dialog v-model="showGalleryDialog" max-width="1024">
-    <v-card rounded="lg" variant="elevated">
-      <v-toolbar class="px-2">
-        <v-toolbar-title class="text-body-1">
-          {{ $t("pages.film.gallery") }}</v-toolbar-title
+    <v-card rounded="lg" class="base-card">
+      <v-toolbar color="grey-darken-4">
+        <v-toolbar-title>
+          {{ name }}: 
+          <span class="text-lowercase">{{ $t("pages.films.gallery") }}</span>
+          </v-toolbar-title
         >
 
         <div class="d-flex ga-2 mr-5">
@@ -127,6 +129,7 @@ import CloseBtn from "../Containment/Btns/CloseBtn.vue";
 const props = defineProps<{
   galleryContent: string[];
   noContentLabel?: string;
+  name?: string;
 }>();
 
 const id = useRoute().params.id as string;
@@ -157,7 +160,7 @@ const next = () => {
 const posterOptions = {
   shaded: false,
   height: "100%",
-  cover: true,
+  cover: false,
   clickable: true,
   aspectRatio: "16/9",
   placeholderOptions: {
@@ -169,7 +172,7 @@ const posterOptions = {
 const galleryItemOptions = {
   shaded: false,
   height: 600,
-  cover: true,
+  cover: false,
   clickable: true,
   aspectRatio: "16/9",
   placeholderOptions: {

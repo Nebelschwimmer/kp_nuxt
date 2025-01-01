@@ -2,9 +2,9 @@
   <v-container>
     <v-row>
       <v-col>
-        <h3 class="text-h5 text-primary font-weight-bold">
+        <h5 class="text-h5 text-primary font-weight-bold">
           {{ $t("forms.film.gallery_actual") }}
-        </h3>
+        </h5>
         <v-list v-model="selected"  select-strategy="leaf">
           <v-list-item
             v-for="(img, index) in gallery"

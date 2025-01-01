@@ -68,7 +68,7 @@ $warning: #fb8c00;
 
 .base-card {
   backdrop-filter: blur(10px) !important;
-  background-color: rgba($color: #000000, $alpha: 0.3) !important;
+  background-color: rgba($color: #000000, $alpha: 0.9) !important;
 }
 .card-title {
   backdrop-filter: blur(10px) !important;

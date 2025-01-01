@@ -3,7 +3,6 @@
     :loading="loading"
     :error="networkError"
     toolbar
-    overlay
     :toolbar-options="toolbarOptions"
     @alert:close="networkError = null"
 		>
@@ -18,15 +17,6 @@
 						:color="step > 0 ? 'success' : 'primary'"
 						:title="$t('forms.film.stepper.first')"
 						value="1">
-					</v-stepper-item>
-					<v-divider></v-divider>
-					<v-stepper-item
-						:complete="step > 1"
-						:current="step === 1"
-						:color="step > 1 ? 'success' : 'primary'"
-						:title="$t('forms.film.stepper.second')"
-						value="2"
-						:subtitle="$t('forms.film.stepper.optional')">
 					</v-stepper-item>
 					<v-divider></v-divider>
 					<v-stepper-item
@@ -54,14 +44,6 @@
 							@submit="handleGeneralInfoSubmit" />
 					</v-stepper-window-item>
 					<v-stepper-window-item value="2"
-						><PosterUpload
-							:disabled="step !== 1"
-							:loading="loading"
-							dislaySkipBtn
-							@skip="nextStep"
-							@submit="handlePosterUploadSubmit"
-					/></v-stepper-window-item>
-					<v-stepper-window-item value="3"
 						><GalleryUpload @submit="handleGalleryUploadSubmit"
 					/></v-stepper-window-item>
 				</v-stepper-window>
@@ -73,10 +55,11 @@
 <script lang="ts" setup>
 	import { useFilmStore } from "~/store/filmStore";
 	import FilmForm from "~/components/FilmStorageComponents/FilmForm.vue";
-	import PosterUpload from "~/components/FilmStorageComponents/PosterUpload.vue";
 	import GalleryUpload from "~/components/FilmStorageComponents/GalleryUpload.vue";
   import BasePage from "~/components/Layout/Page/BasePage.vue";
-	const { genres, filmForm, film, actors, composers, producers, writers, directors, loading, networkError } =
+	
+  const { t } = useI18n();
+  const { genres, filmForm, film, actors, composers, producers, writers, directors, loading, networkError } =
 		storeToRefs(useFilmStore());
 	const {
 		addFilm,
@@ -132,22 +115,21 @@
 		step.value++;
 	};
 
-  const { t } = useI18n();
 
   const breadcrumbs = [
   {
     title: t("nav.home"),
-    href: "/",
+    to: "/",
     icon: "mdi-home",
   },
   {
     title: t("nav.films"),
-    href: "/films",
+    to: "/films",
     icon: "mdi-filmstrip",
   },
   {
     title: t("pages.films.add"),
-    href: "/films/add",
+    to: "/films/add",
     icon: "mdi-filmstrip",
   },
   ] as Breadcrumb[];

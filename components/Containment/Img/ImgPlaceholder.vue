@@ -3,10 +3,8 @@
     height="100%"
     width="100%"
     min-height="100%"
-    elevation="2"
-    color="grey-darken-3"
     image="https://cdn.vuetifyjs.com/docs/images/parallax/stars.jpg"
-    class="d-flex align-center justify-center flex-column w-100"
+    class="d-flex placeholder-img align-center justify-center flex-column w-100"
   >
     <v-icon icon="mdi-image-off" size="x-small"></v-icon>
     <v-label class="text-caption" v-if="displayTitle">{{
@@ -22,4 +20,8 @@ defineProps<{
 }>();
 </script>
 
-<style></style>
+<style scoped lang="scss">
+.placeholder-img{
+  background-color: rgba(77, 77, 77, 0.2);
+}
+</style>

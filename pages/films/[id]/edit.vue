@@ -7,46 +7,49 @@
     @alert:close="networkError = null"
   >
     <template #content>
-      <v-tabs v-model="activeTab" show-arrows color="primary">
-        <v-tab
-          prepend-icon="mdi-information"
-          id="general_info"
-          :text="$t('forms.film.stepper.first')"
-          value="general_info"
-        ></v-tab>
-        <v-tab
-          prepend-icon="mdi-view-gallery"
-          id="gallery_upload"
-          :text="$t('forms.film.stepper.third')"
-          value="gallery_upload"
-        ></v-tab>
-      </v-tabs>
-
-      <v-tabs-window v-model="activeTab" v-if="!dataLoading">
-        <v-tabs-window-item value="general_info" eager>
-          <FilmForm
-            :film-form="filmForm"
-            :genres="genres"
-            :actors="actors"
-            :directors="directors"
-            :producers="producers"
-            :writers="writers"
-            :composers="composers"
-            :loading="dataLoading"
-            :network-error="Boolean(networkError)"
-            @submit="handleGeneralInfoSubmit"
-            @error:validation="formError = true"
-          />
-        </v-tabs-window-item>
-        <v-tabs-window-item value="gallery_upload">
-          <GalleryUpload
-            :gallery="filmForm.gallery ?? []"
-            @submit="handleGalleryUploadSubmit"
-            @gallery-item:delete="handleDeleteGalleryItems"
-            @error:validation="galleryError = true"
-          />
-        </v-tabs-window-item>
-      </v-tabs-window>
+      <v-card variant="text">
+        <v-toolbar>
+          <v-tabs v-model="activeTab" show-arrows color="primary">
+            <v-tab
+              prepend-icon="mdi-information"
+              id="general_info"
+              :text="$t('forms.film.stepper.first')"
+              value="general_info"
+            ></v-tab>
+            <v-tab
+              prepend-icon="mdi-view-gallery"
+              id="gallery_upload"
+              :text="$t('forms.film.stepper.third')"
+              value="gallery_upload"
+            ></v-tab>
+          </v-tabs>
+        </v-toolbar>
+        <v-tabs-window v-model="activeTab" v-if="!dataLoading">
+          <v-tabs-window-item value="general_info" eager>
+            <FilmForm
+              :film-form="filmForm"
+              :genres="genres"
+              :actors="actors"
+              :directors="directors"
+              :producers="producers"
+              :writers="writers"
+              :composers="composers"
+              :loading="dataLoading"
+              :network-error="Boolean(networkError)"
+              @submit="handleGeneralInfoSubmit"
+              @error:validation="formError = true"
+            />
+          </v-tabs-window-item>
+          <v-tabs-window-item value="gallery_upload">
+            <GalleryUpload
+              :gallery="filmForm.gallery ?? []"
+              @submit="handleGalleryUploadSubmit"
+              @gallery-item:delete="handleDeleteGalleryItems"
+              @error:validation="galleryError = true"
+            />
+          </v-tabs-window-item>
+        </v-tabs-window>
+      </v-card>
     </template>
   </BasePage>
 </template>
@@ -54,8 +57,6 @@
 <script lang="ts" setup>
 import BasePage from "~/components/Layout/Page/BasePage.vue";
 import FilmForm from "~/components/FilmStorageComponents/FilmForm.vue";
-import PageToolBar from "~/components/Layout/Page/PageToolBar.vue";
-import PosterUpload from "~/components/FilmStorageComponents/PosterUpload.vue";
 import GalleryUpload from "~/components/FilmStorageComponents/GalleryUpload.vue";
 import { useFilmStore } from "~/store/filmStore";
 

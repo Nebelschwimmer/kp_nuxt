@@ -26,25 +26,6 @@
         </template>
       </v-breadcrumbs>
     </v-toolbar-title>
-    <v-menu>
-      <template v-slot:activator="{ props }">
-        <v-btn icon v-if="actions" v-bind="props">
-          <v-icon icon="mdi-dots-vertical"></v-icon>
-        </v-btn>
-      </template>
-      <v-list density="compact">
-        <v-list-item
-          v-for="action in actions"
-          :key="action.type"
-          :base-color="action.type === 'delete' ? 'error' : ''"
-          :prepend-icon="action.icon"
-          :title="action.title"
-          :to="action.to"
-          :value="action.type"
-        >
-        </v-list-item>
-      </v-list>
-    </v-menu>
     <template v-if="appendIcon" #append>
       <v-icon :icon="appendIcon"></v-icon>
     </template>

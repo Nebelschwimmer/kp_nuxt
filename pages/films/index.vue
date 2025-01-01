@@ -61,10 +61,9 @@ const filmItems = computed(() => {
         (film.releaseYear ? film.releaseYear.toString() : "") +
         ")",
       subtitle: film.description || "",
-      imageSrc: film.preview || "",
+      imageSrc: film.gallery[0] || "",
       to: "/films/" + film.id,
-      variant: "text",
-      color: "primary",
+      variant: "tonal",
     };
   });
 });
