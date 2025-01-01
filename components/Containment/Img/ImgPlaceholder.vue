@@ -6,10 +6,12 @@
     image="https://cdn.vuetifyjs.com/docs/images/parallax/stars.jpg"
     class="d-flex placeholder-img align-center justify-center flex-column w-100"
   >
-    <v-icon icon="mdi-image-off" size="x-small"></v-icon>
-    <v-label class="text-caption" v-if="displayTitle">{{
-      title ? title : $t("general.no_img")
-    }}</v-label>
+    <template  v-if="displayTitle">
+      <v-icon icon="mdi-image-off" size="x-small"></v-icon>
+      <v-label class="text-caption">{{
+        title ? title : $t("general.no_img")
+      }}</v-label>
+    </template>
   </v-card>
 </template>
 
@@ -21,7 +23,7 @@ defineProps<{
 </script>
 
 <style scoped lang="scss">
-.placeholder-img{
+.placeholder-img {
   background-color: rgba(77, 77, 77, 0.2);
 }
 </style>

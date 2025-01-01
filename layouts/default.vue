@@ -31,7 +31,7 @@ const theme = useTheme();
 <style lang="scss">
 $background: #000000;
 $surface: #313131;
-$primary: rgb(105, 153, 201);
+$primary: rgb(105, 153, 201, 0);
 $secondary: #e0974aa8;
 $accent: #ed7b49;
 $error: #f44336;
@@ -81,5 +81,9 @@ $warning: #fb8c00;
 a {
   text-decoration: none;
   color: inherit;
+}
+
+.card-info-list{
+  background-image: linear-gradient(to bottom, rgba(44, 44, 44, 0.7) 0%,  rgb(41, 41, 41) 100%) !important;
 }
 </style>

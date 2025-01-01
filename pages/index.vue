@@ -15,85 +15,89 @@
         </h4>
         <v-divider></v-divider>
         <v-card variant="text">
-          <template #text>
-            <v-carousel
-              v-model="activeFilm"
-              :height="CAROUSEL_HEIGHT"
-              cycle
-              width="100%"
-              show-arrows-on-hover
-            >
-              <v-carousel-item
-                v-for="(film, index) in films"
-                v-if="!loading"
-                :key="index"
-                :value="index"
-              >
-                <v-card
-                  variant="text"
-                  height="100%"
-                  @click="navigateTo('/films/' + film.id)"
-                >
-                  <template #text>
-                    <BaseImg
-                      :img-src="film.gallery[0] || ''"
-                      :img-options="cardImgOptions"
-                    >
-                    </BaseImg>
-                  </template>
-                  <template #image>
-                    <BaseImg
-                      :img-src="film.preview || ''"
-                      :img-options="bgImgOptions"
-                    ></BaseImg>
-                  </template>
-                  <template #title>
-                    <div
-                      class="font-bold text-white text-h4 text-center p-0 text-truncate"
-                    >
-                      {{ film.name || "" }}
-                    </div>
-                  </template>
-                </v-card>
-              </v-carousel-item>
-              <v-skeleton-loader v-else :height="CAROUSEL_HEIGHT" type="image">
-              </v-skeleton-loader>
-            </v-carousel>
-          </template>
-        </v-card>
-    
-          <v-list>
-            <v-list-item
+          <v-carousel
+            v-model="activeFilm"
+            :height="CAROUSEL_HEIGHT"
+            cycle
+            width="100%"
+            show-arrows-on-hover
+            @update:model-value="activeFilmImg = films[activeFilm].gallery[0]"
+          >
+            <v-carousel-item
               v-for="(film, index) in films"
               v-if="!loading"
-              :key="film.id || 0"
-              :active="index === activeFilm"
-              :title="film.name || ''"
-              :subtitle="film.description || ''"
-              :value="film.id || 0"
-              lines="three"
-              :color="index === activeFilm ? 'secondary' : 'transparent'"
-              @click="navigateTo('/films/' + film.id)"
+              :key="index"
+              :value="index"
             >
-              <template #prepend>
-                <v-avatar rounded="0">
+              <v-card
+                variant="text"
+                height="100%"
+                :image="film.gallery[0] || ''"
+                @click="navigateTo('/films/' + film.id)"
+              >
+                <BaseImg
+                  :img-src="film.gallery[0] || ''"
+                  :img-options="cardImgOptions"
+                >
+                </BaseImg>
+
+                <template #image>
                   <BaseImg
-                    :img-src="film.preview || ''"
-                    :img-options="avatarImgOptions"
+                    :img-src="film.gallery[0] || ''"
+                    :img-options="bgImgOptions"
+                  ></BaseImg>
+                </template>
+                <template #title>
+                  <div
+                    class="font-bold text-white text-h4 text-center p-0 text-truncate"
                   >
-                  </BaseImg>
-                </v-avatar>
-              </template>
-            </v-list-item>
-            <v-skeleton-loader
-              v-else
-              v-for="k in 5"
-              :key="k"
-              height="100"
-              type="list-item-avatar-three-line"
-            >
+                    {{ film.name || "" }}
+                  </div>
+                </template>
+              </v-card>
+            </v-carousel-item>
+            <v-skeleton-loader v-else :height="CAROUSEL_HEIGHT" type="image">
             </v-skeleton-loader>
-          </v-list>
+          </v-carousel>
+        </v-card>
+
+        <v-list
+          rounded="lg"
+          class="card-title"
+          variant="text"
+          color="transparent"
+        >
+          <v-list-item
+            v-for="(film, index) in films"
+            v-if="!loading"
+            :key="film.id || 0"
+            :active="index === activeFilm"
+            :title="film.name || ''"
+            :subtitle="film.description || ''"
+            :value="film.id || 0"
+            lines="three"
+            :color="index === activeFilm ? 'secondary' : 'transparent'"
+            @click="navigateTo('/films/' + film.id)"
+          >
+            <template #prepend>
+              <v-avatar rounded="0">
+                <BaseImg
+                  :img-src="film.gallery[0] || ''"
+                  :img-options="avatarImgOptions"
+                >
+                </BaseImg>
+              </v-avatar>
+            </template>
+          </v-list-item>
+          <v-skeleton-loader
+            v-else
+            v-for="k in 5"
+            :key="k"
+            height="100"
+            type="list-item-avatar-three-line"
+          >
+          </v-skeleton-loader>
+        </v-list>
       </section>
     </template>
   </BasePage>
@@ -103,10 +107,11 @@
 import { useFilmStore } from "~/store/filmStore";
 import BasePage from "~/components/Layout/Page/BasePage.vue";
 import BaseImg from "~/components/Containment/Img/BaseImg.vue";
-const { latestFilms, films, loading, networkError } = storeToRefs(useFilmStore());
+const { latestFilms, films, loading, networkError } =
+  storeToRefs(useFilmStore());
 const { fetchFilteredFilms } = useFilmStore();
 const activeFilm = ref(0);
-
+const activeFilmImg = ref("");
 onMounted(async () => {
   await fetchFilteredFilms(5, 0, "", "ru");
 });
@@ -146,5 +151,9 @@ const bgImgOptions = {
 .img-blur {
   filter: blur(12px);
   opacity: 0.4;
+}
+.reverted-parallax {
+  transform: rotate(180deg);
+  backdrop-filter: blur(4px);
 }
 </style>

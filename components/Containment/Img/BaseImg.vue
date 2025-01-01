@@ -4,6 +4,7 @@
         <v-img
           :src="imgSrc || ''"
           rounded="lg"
+          width="100%"
           v-bind="{
             ...imgOptions,
             ...props,

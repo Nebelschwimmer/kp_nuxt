@@ -43,63 +43,6 @@
             :no-content-label="$t('pages.films.no_gallery')"
           />
         </template>
-        <template #rating_starring>
-          <v-container>
-            <v-row no-gutters justify="center" align="center">
-              <v-col class="align-center text-center">
-                {{ $t("pages.films.rating") }}
-                :
-                <span class="text-h4 text-accent">{{
-                  film?.rating || "0.0"
-                }}</span>
-              </v-col>
-            </v-row>
-            <v-row justify="center" no-gutters>
-              <v-col class="text-caption text-center">
-                {{
-                  film?.assessments || $t("pages.films.no_assessments")
-                }}</v-col
-              >
-            </v-row>
-            <v-row>
-              <v-col>
-                <v-btn color="accent" block rounded="lg">
-                  {{ $t("pages.films.assess") }}
-                </v-btn>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col>
-                <v-list-item
-                  v-if="filmActors.length"
-                  :title="$t('pages.films.starring') + ' :'"
-                >
-                </v-list-item>
-                <v-list-item
-                  v-else
-                  :title="$t('pages.films.starring')"
-                  :subtitle="$t('pages.films.no_actors_data')"
-                >
-                </v-list-item>
-                <v-divider></v-divider>
-
-                <v-list-item
-                  v-for="actor in filmActors"
-                  :key="actor.id || 0"
-                  :value="actor.id"
-                  density="compact"
-                  :prepend-avatar="actor.photo"
-                >
-                  <v-list-item-title>
-                    <NuxtLink :to="`/persons/${actor.id}`" class="text-accent"
-                      >&#8226; {{ actor.name }}</NuxtLink
-                    >
-                  </v-list-item-title>
-                </v-list-item>
-              </v-col>
-            </v-row>
-          </v-container>
-        </template>
         <template #actions>
           <ClientOnly>
             <v-rating

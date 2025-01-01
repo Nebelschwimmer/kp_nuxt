@@ -1,18 +1,33 @@
 <template>
   <BaseImg
+    v-if="galleryContent.length"
     :img-src="galleryContent[0] || ''"
     :img-options="posterOptions"
     @click="showGalleryDialogOnClick"
   />
+  <v-sheet
+    v-else
+    height="400"
+    class="d-flex flex-column ga-2 align-center justify-center"
+  >
+    <v-chip color="secondary" prepend-icon="mdi-image-off">
+      {{ noContentLabel }}</v-chip
+    >
+    <v-btn
+      prepend-icon="mdi-plus"
+      color="primary"
+      variant="outlined"
+      :to="`/films/${id}/edit#gallery_upload`"
+      >{{ $t("actions.add_img") }}</v-btn
+    >
+  </v-sheet>
   <v-dialog v-model="showGalleryDialog" max-width="1024">
     <v-card rounded="lg" class="base-card">
       <v-toolbar color="grey-darken-4">
         <v-toolbar-title>
-          {{ name }}: 
+          {{ name }}:
           <span class="text-lowercase">{{ $t("pages.films.gallery") }}</span>
-          </v-toolbar-title
-        >
-
+        </v-toolbar-title>
         <div class="d-flex ga-2 mr-5">
           <v-btn icon :disabled="!galleryContent.length">
             <v-icon icon="mdi-download"></v-icon>
@@ -43,7 +58,7 @@
       </v-toolbar>
 
       <v-card-text>
-        <v-window v-model="activeImg" v-if="galleryContent.length" show-arrows>
+        <v-window v-model="activeImg" show-arrows>
           <v-window-item
             v-for="(item, i) in galleryContent"
             :key="i"
@@ -56,20 +71,6 @@
             ></BaseImg>
           </v-window-item>
         </v-window>
-        <v-sheet
-          v-else
-          height="600"
-          class="d-flex flex-column ga-2 align-center justify-center"
-        >
-          <v-icon icon="mdi-image-off"></v-icon>
-          <v-label>{{ noContentLabel }}</v-label>
-          <v-btn
-            prepend-icon="mdi-plus"
-            color="accent"
-            :to="`/films/${id}/edit#gallery_upload`"
-            >{{ $t("actions.add_img") }}</v-btn
-          >
-        </v-sheet>
       </v-card-text>
       <div class="d-flex align-center justify-center">
         <v-label class="text-caption">{{
@@ -160,12 +161,11 @@ const next = () => {
 const posterOptions = {
   shaded: false,
   height: "100%",
-  cover: false,
+  cover: true,
   clickable: true,
   aspectRatio: "16/9",
   placeholderOptions: {
-    displayTitle: true,
-    title: t("pages.films.no_preview"),
+    displayTitle: false,
   },
 };
 
