@@ -2,13 +2,13 @@ export const useFilmStore = defineStore("films", () => {
 	const config = useRuntimeConfig();
 	const film = ref<Film | null>(null);
 	const films = ref<Film[]>([]);
-	const currentPage = ref(1);
-	const totalPages = ref(0);
+	const currentPage = ref<number>(1);
+	const totalPages = ref<number>(0);
 	const genres = ref<Genre[]>([]);
-	const loading = ref(false);
-	const posterLoading = ref(false);
-	const galleryLoading = ref(false);
-	const total = ref(0);
+	const loading = ref<boolean>(false);
+	const posterLoading = ref<boolean>(false);
+	const galleryLoading = ref<boolean>(false);
+	const total = ref<number>(0);
 	const latestFilms = ref<Film[]>([]);
 	const networkError = ref<Error | null>(null);
 	const directors = ref<Person[]>([]);
@@ -273,11 +273,13 @@ export const useFilmStore = defineStore("films", () => {
 		try {
 			loading.value = true;
 			galleryLoading.value = true;
+     
+      
 			const response = await $fetch<FilmForm>(
 				`${config.public.apiBase}/films/${id}/gallery`,
 				{
 					method: "DELETE",
-					body: JSON.stringify(fileNames),
+					body: JSON.stringify({fileNames: fileNames}),
 				}
 			);
 			filmForm.value = response;
@@ -313,18 +315,7 @@ export const useFilmStore = defineStore("films", () => {
   }
   }
 
-  const shareGalleryItemLink = async (index: number) => {
-    try {
-    const clipboard = navigator.clipboard;
-    const name = film.value?.name || "";
-    const uri = film.value?.gallery[index] || "";
-    await clipboard.writeText(uri);
-    alert(`Link copied to clipboard: ${uri}`);
-    }
-    catch (error: any) {
-      networkError.value = error;
-    }
-  }
+
 
 	return {
 		film,
@@ -362,6 +353,5 @@ export const useFilmStore = defineStore("films", () => {
 		deletePreview,
 		deleteGalleryItems,
     downloadGalleryItem,
-    shareGalleryItemLink
 	};
 });

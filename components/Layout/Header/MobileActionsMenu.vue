@@ -1,14 +1,17 @@
 <template>
-  <v-overlay :model-value="true">
+  <v-dialog :model-value="true" fullscreen>
     <v-card width="100dvw" :title="$t('nav.menu')" :prepend-icon="'mdi-menu'">
       <template #append>
         <CloseBtn @click="$emit('close-menu')" />
       </template>
 
-      <v-list>
+      <v-list lines="one" v-model:opened="opened" subheader>
+        <v-list-subheader :title="$t('nav.title')"></v-list-subheader>
         <v-list-item
           :active="$route.name === 'index'"
-          active-color="secondary"
+          :color="$route.name === 'index' ? 'secondary' : ''"
+          exact
+          nav
           to="/"
           prepend-icon="mdi-home"
           :title="$t('nav.home')"
@@ -17,7 +20,9 @@
         </v-list-item>
         <v-list-item
           :active="$route.name === 'films'"
-          active-color="secondary"
+          :color="$route.name === 'films' ? 'secondary' : ''"
+          exact
+          nav
           to="/films"
           prepend-icon="mdi-filmstrip"
           :title="$t('nav.films')"
@@ -26,10 +31,7 @@
         </v-list-item>
         <v-list-group
           value="persons"
-          prepend-icon="mdi-account"
-          :active="$route.name === 'persons'"
-          active-color="secondary"
-          :title="$t('nav.persons')"
+          prepend-icon="mdi-account-circle"
         >
           <template v-slot:activator="{ props }">
             <v-list-item v-bind="props"> {{ $t("nav.persons") }} </v-list-item>
@@ -44,6 +46,7 @@
           <v-list-item
             to="/persons/actors"
             exact
+            nav
             prepend-icon="mdi-account"
             @click="$emit('close-menu')"
           >
@@ -70,12 +73,14 @@
         </v-list-item>
       </v-list>
     </v-card>
-  </v-overlay>
+  </v-dialog>
 </template>
 
 <script lang="ts" setup>
 import CloseBtn from "~/components/Containment/Btns/CloseBtn.vue";
 const selectedLanguage = useI18n().locale;
+
+const opened = ref(["persons"]);
 const emit = defineEmits<{
   (e: "close-menu"): void;
   (e: "change-language", value: string): void;

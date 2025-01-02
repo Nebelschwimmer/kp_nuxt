@@ -8,13 +8,12 @@ declare global {
   }
 
   interface Breadcrumb {
-		to: string;
-		title: string;
+    to: string;
+    title: string;
     icon?: string;
-		disabled?: boolean;
-	}
-  
-  
+    disabled?: boolean;
+  }
+
   interface ToolbarOptions {
     displayBackButton?: boolean;
     prependIcon?: string;
@@ -29,7 +28,7 @@ declare global {
   }
   interface ImgOptions {
     shaded?: boolean;
-    height?: number|string;
+    height?: number | string;
     cover?: boolean;
     class?: string;
     aspectRatio?: number | string;
@@ -41,8 +40,8 @@ declare global {
 
   interface ActionBtnProps {
     type: string;
-		color?: string;
-		size?: string;
+    color?: string;
+    size?: string;
     icon?: string;
     showLabel?: boolean;
     variant?: string;
@@ -55,8 +54,6 @@ declare global {
     name: string;
     photo: string;
   }
-  
-
 
   interface galleryContent {
     poster: string;

@@ -1,5 +1,5 @@
 <template>
-    <v-empty-state
+  <v-empty-state
     :title="$t('general.no_data')"
     :text="$t('empty_states.directors') + '...'"
     icon="mdi-account"
@@ -13,16 +13,10 @@
         :text="$t('pages.persons.list')"
         to="/persons"
       ></v-btn>
-
-
     </template>
   </v-empty-state>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup></script>
 
-</script>
-
-<style>
-
-</style>
+<style></style>

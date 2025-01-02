@@ -5,6 +5,10 @@
     :toolbar-options="toolbarOptions"
     :error="networkError ?? null"
     @alert:close="networkError = null"
+    @snackbar:close="showSnackbar = false"
+    :snackbar="showSnackbar"
+    :snackbar-message="$t('toast.messages.success.edit')"
+    :to="`/films/${filmForm?.id}`"
   >
     <template #content>
       <v-card variant="text">
@@ -43,9 +47,9 @@
           <v-tabs-window-item value="gallery_upload">
             <GalleryUpload
               :gallery="filmForm.gallery ?? []"
+              :is-new="false"
               @submit="handleGalleryUploadSubmit"
               @gallery-item:delete="handleDeleteGalleryItems"
-              @error:validation="galleryError = true"
             />
           </v-tabs-window-item>
         </v-tabs-window>
@@ -68,6 +72,7 @@ const dataLoading = ref(false);
 const formEditComplete = ref(false);
 const posterUploaded = ref(false);
 const poster = ref<string | null>(null);
+const showSnackbar = ref(false);
 const {
   genres,
   filmForm,
@@ -78,8 +83,6 @@ const {
   directors,
   networkError,
   loading,
-  posterLoading,
-  galleryLoading,
 } = storeToRefs(useFilmStore());
 const {
   editFilm,
@@ -100,9 +103,9 @@ const handleGeneralInfoSubmit = async () => {
   if (await editFilm()) {
     formError.value = false;
     formEditComplete.value = true;
+    showSnackbar.value = !showSnackbar.value;
   }
 };
-
 
 const handleGalleryUploadSubmit = async (files: File[]) => {
   const id = filmForm.value?.id || 0;
@@ -111,8 +114,10 @@ const handleGalleryUploadSubmit = async (files: File[]) => {
   }
 };
 
-const handleDeleteGalleryItems = async (fileNames: string[]) => {
+const handleDeleteGalleryItems = async (links: string[]) => {
   const filmId = filmForm.value?.id || 0;
+  const fileNames = links.map((link) => link.split("/").pop()?.split('.').shift() || "");
+  console.log(fileNames);
   await deleteGalleryItems(fileNames, filmId);
 };
 
@@ -181,7 +186,7 @@ onMounted(async () => {
 watch(
   filmForm as Ref<Film>,
   (newVal) => {
-    breadcrumbs.value[2].title = `${newVal?.name}: ${t("pages.films.details")} `;
+    breadcrumbs.value[2] = { title: newVal?.name, to: `/films/${newVal?.id}` } as Breadcrumb;
   },
   {
     deep: true,

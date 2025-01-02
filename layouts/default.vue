@@ -2,7 +2,6 @@
   <v-layout class="rounded-md">
     <Header />
     <v-main :class="[{ 'bg-gradient': theme.global.current.value.dark }]">
-      <NuxtLoadingIndicator color="#ff4d00" />
       <v-container fluid>
         <v-row justify="center">
           <v-col
@@ -12,7 +11,7 @@
             lg="9"
             xl="7"
             xxl="5"
-            class="content border rounded-md"
+            class="content rounded-md"
           >
             <slot />
           </v-col>
@@ -66,24 +65,16 @@ $warning: #fb8c00;
   ) !important;
 }
 
-.base-card {
-  backdrop-filter: blur(10px) !important;
-  background-color: rgba($color: #000000, $alpha: 0.9) !important;
-}
-.card-title {
-  backdrop-filter: blur(10px) !important;
-}
+
 .content {
   min-height: calc(100vh - 64px);
   backdrop-filter: blur(4px);
-  background-color: rgba($color: #000000, $alpha: 0.3) !important;
+  background-color: rgba($color: #000000, $alpha: 0.1) !important;
 }
 a {
   text-decoration: none;
   color: inherit;
 }
 
-.card-info-list{
-  background-image: linear-gradient(to bottom, rgba(44, 44, 44, 0.7) 0%,  rgb(41, 41, 41) 100%) !important;
-}
+
 </style>

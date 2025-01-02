@@ -17,7 +17,7 @@
         </v-toolbar>
       </template>
       <template v-slot:default="{ items }">
-        <v-list >
+        <v-list>
           <v-list-item
             v-for="(item, i) in items"
             lines="two"
@@ -33,17 +33,17 @@
           >
             <template v-slot:prepend>
               <v-avatar rounded="0" size="100">
-                <BaseImg :img-src="item.raw.imageSrc" :img-options="imgOptions" />
+                <BaseImg
+                  :img-src="item.raw.imageSrc"
+                  :img-options="imgOptions"
+                />
               </v-avatar>
             </template>
           </v-list-item>
         </v-list>
       </template>
       <template v-if="footer" #footer>
-        <v-footer
-          class="justify-space-between text-body-2 mt-4"
-          
-        >
+        <v-footer class="justify-space-between text-body-2 mt-4">
           {{ $t("nav.pagination.total") }}: {{ items.length }}
           <v-pagination
             v-model="currentPage"

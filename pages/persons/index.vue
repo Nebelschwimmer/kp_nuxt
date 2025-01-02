@@ -42,7 +42,7 @@ onMounted(async () => {
     limit.value,
     offset.value,
     search.value,
-    locale.value
+    locale.value,
   );
 });
 
@@ -101,7 +101,7 @@ watch(
   },
   {
     immediate: true,
-  }
+  },
 );
 </script>
 

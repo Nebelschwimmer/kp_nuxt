@@ -1,6 +1,6 @@
 declare global {
-	interface Specialty {
-		name: string;
+  interface Specialty {
+    name: string;
     value: number;
   }
 }

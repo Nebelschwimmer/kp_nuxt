@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="d-flex flex-column p-5 gap-2 align-center justify-center overlay"
-  >
+  <div class="d-flex flex-column p-5 gap-2 align-center justify-center overlay">
     <span class="text-center">{{ $t("state.loading") }}...</span>
     <span class="progress mx-auto"></span>
   </div>

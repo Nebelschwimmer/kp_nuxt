@@ -1,12 +1,12 @@
 export default defineAppConfig({
-	ui: {
+  ui: {
     primary: "orange",
     gray: "gray",
     dark: "slate",
     button: {
       default: {
-        color: 'purple'
-      }
-    }
-	},
+        color: "purple",
+      },
+    },
+  },
 });

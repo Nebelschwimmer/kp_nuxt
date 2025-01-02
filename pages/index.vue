@@ -20,11 +20,10 @@
             :height="CAROUSEL_HEIGHT"
             cycle
             width="100%"
-          
-            @update:model-value="activeFilmImg = films[activeFilm].gallery[0]"
+            @update:model-value="activeFilmImg = latestFilms[activeFilm].gallery[0]"
           >
             <v-carousel-item
-              v-for="(film, index) in films"
+              v-for="(film, index) in latestFilms"
               v-if="!loading"
               :key="index"
               :value="index"
@@ -32,11 +31,9 @@
               <v-card
                 variant="elevated"
                 height="100%"
-                
                 :image="film.gallery[0] || ''"
                 @click="navigateTo('/films/' + film.id)"
               >
-
                 <template #image>
                   <v-parallax :height="CAROUSEL_HEIGHT * 2">
                     <BaseImg
@@ -59,13 +56,9 @@
           </v-carousel>
         </v-card>
 
-        <v-list
-          rounded="lg"
-          variant="plain"
-        
-        >
+        <v-list>
           <v-list-item
-            v-for="(film, index) in films"
+            v-for="(film, index) in latestFilms"
             v-if="!loading"
             :key="film.id || 0"
             :active="index === activeFilm"
@@ -106,15 +99,14 @@ import BasePage from "~/components/Layout/Page/BasePage.vue";
 import BaseImg from "~/components/Containment/Img/BaseImg.vue";
 const { latestFilms, films, loading, networkError } =
   storeToRefs(useFilmStore());
-const { fetchFilteredFilms } = useFilmStore();
+const { fetchFilteredFilms, fetchLatestFilms } = useFilmStore();
 const activeFilm = ref(0);
 const activeFilmImg = ref("");
 onMounted(async () => {
-  await fetchFilteredFilms(5, 0, "", "ru");
+  await fetchLatestFilms();
 });
 const { t } = useI18n();
 const CAROUSEL_HEIGHT = 300;
-
 
 const avatarImgOptions = {
   shaded: false,
@@ -138,10 +130,6 @@ const bgImgOptions = {
 <style lang="scss">
 .img-blur {
   filter: blur(12px);
-  opacity: 0.4;
-}
-.reverted-parallax {
-  transform: rotate(180deg);
-  backdrop-filter: blur(4px);
+  opacity: 0.7;
 }
 </style>

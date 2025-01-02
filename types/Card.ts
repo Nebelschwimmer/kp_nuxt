@@ -1,4 +1,3 @@
-
 declare global {
   interface CardDetails {
     name: string;
@@ -6,6 +5,12 @@ declare global {
     type?: string;
     icon?: string;
     to?: string;
+    avatar?: string;
+  }
+
+  interface DetailList {
+    subheader?: string;
+    items: CardDetails[];
   }
 
   interface CardItem {
@@ -18,6 +23,4 @@ declare global {
     variant?: string;
     color?: string;
   }
-
 }
-

@@ -6,7 +6,7 @@
     image="https://cdn.vuetifyjs.com/docs/images/parallax/stars.jpg"
     class="d-flex placeholder-img align-center justify-center flex-column w-100"
   >
-    <template  v-if="displayTitle">
+    <template v-if="displayTitle">
       <v-icon icon="mdi-image-off" size="x-small"></v-icon>
       <v-label class="text-caption">{{
         title ? title : $t("general.no_img")

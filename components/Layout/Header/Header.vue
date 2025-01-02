@@ -142,29 +142,29 @@
       </v-responsive>
       <v-spacer></v-spacer>
 
-        <v-menu open-on-hover>
-          <template v-slot:activator="{ props }">
-            <v-btn icon v-bind="props" variant="tonal" slim rounded="0">
-              <v-tooltip activator="parent">{{ $t("nav.language") }}</v-tooltip>
-              <v-icon icon="mdi-translate"></v-icon>
-            </v-btn>
-          </template>
-          <v-list>
-            <v-list-item
-              v-for="(item, index) in languageOptions"
-              :key="index"
-              rounded="lg"
-              :value="item"
+      <v-menu open-on-hover>
+        <template v-slot:activator="{ props }">
+          <v-btn icon v-bind="props" variant="tonal" slim rounded="0">
+            <v-tooltip activator="parent">{{ $t("nav.language") }}</v-tooltip>
+            <v-icon icon="mdi-translate"></v-icon>
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-item
+            v-for="(item, index) in languageOptions"
+            :key="index"
+            rounded="lg"
+            :value="item"
+          >
+            <v-list-item-title
+              @click="changeLanguage(item.value)"
+              class="text-body-2"
+              >{{ item.title }}</v-list-item-title
             >
-              <v-list-item-title
-                @click="changeLanguage(item.value)"
-                class="text-body-2"
-                >{{ item.title }}</v-list-item-title
-              >
-            </v-list-item>
-          </v-list>
-        </v-menu>
-  
+          </v-list-item>
+        </v-list>
+      </v-menu>
+
       <v-spacer></v-spacer>
       <v-responsive max-width="120">
         <ProfileNav :avatar-src="''" />

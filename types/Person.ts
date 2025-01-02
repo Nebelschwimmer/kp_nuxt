@@ -14,8 +14,8 @@ declare global {
     writtenFilms: number[];
   }
   interface PersonListItem {
-		id: number;
-		fullname: string;
+    id: number;
+    fullname: string;
     photo: string;
     specialtyNames: string[];
   }

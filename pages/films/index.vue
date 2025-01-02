@@ -48,7 +48,7 @@ onMounted(async () => {
     limit.value,
     offset.value,
     search.value,
-    locale.value
+    locale.value,
   );
 });
 
@@ -63,7 +63,6 @@ const filmItems = computed(() => {
       subtitle: film.description || "",
       imageSrc: film.gallery[0] || "",
       to: "/films/" + film.id,
-      variant: "plain",
     };
   });
 });
@@ -117,7 +116,7 @@ watch(
   },
   {
     immediate: true,
-  }
+  },
 );
 </script>
 

@@ -1,8 +1,7 @@
 declare global {
-	interface Genre {
-		name: string;
-		value: number;
-	}
-
+  interface Genre {
+    name: string;
+    value: number;
+  }
 }
 export {};

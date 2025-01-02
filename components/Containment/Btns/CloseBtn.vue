@@ -1,5 +1,5 @@
 <template>
-  <v-btn icon  @click="$emit('close')" variant="plain">
+  <v-btn icon @click="$emit('close')" variant="plain">
     <v-icon icon="mdi-close"></v-icon>
     <v-tooltip activator="parent" location="bottom">
       {{ $t("actions.close") }}

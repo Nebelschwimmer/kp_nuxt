@@ -1,7 +1,7 @@
 <template>
   <BaseForm @validate="validate" :loading="loading">
     <template #form>
-      <v-form ref="formRef">
+      <v-form ref="formRef" @submit.prevent>
         <v-container>
           <v-row>
             <v-col cols="12" sm="12" md="6" lg="6" xl="6">
@@ -108,6 +108,10 @@
                 prepend-inner-icon="mdi-timer"
                 :rules="durationRules"
               />
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col>
               <v-textarea
                 :label="$t('forms.film.description')"
                 name="description"
@@ -131,14 +135,7 @@ import BaseForm from "../Layout/Page/BaseForm.vue";
 const { t } = useI18n();
 const formRef = ref<any>(null);
 const emit = defineEmits(["submit", "error:validation"]);
-const colspan = {
-  xs: 12,
-  sm: 12,
-  md: 6,
-  lg: 4,
-  xl: 3,
-  xxl: 2,
-};
+
 defineProps<{
   filmForm: FilmForm;
   genres: Genre[];
@@ -164,7 +161,7 @@ const releaseYearRules = [
 
 const yearsOfReleaseItems = Array.from(
   { length: currentYear - startYear + 1 },
-  (_, index) => startYear + index
+  (_, index) => startYear + index,
 );
 const MAX_NAME_LENGHT = 50;
 const MIN_NAME_LENGHT = 2;
@@ -201,6 +198,4 @@ const validate = async () => {
 };
 </script>
 
-<style lang="scss">
-/* Добавьте дополнительные стили при необходимости */
-</style>
+<style lang="scss"></style>
