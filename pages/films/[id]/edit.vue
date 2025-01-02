@@ -11,8 +11,8 @@
     :to="`/films/${filmForm?.id}`"
   >
     <template #content>
-      <v-card variant="text">
-        <v-toolbar>
+      <v-card>
+        <v-toolbar density="compact">
           <v-tabs v-model="activeTab" show-arrows color="primary">
             <v-tab
               prepend-icon="mdi-information"
@@ -28,8 +28,8 @@
             ></v-tab>
           </v-tabs>
         </v-toolbar>
-        <v-tabs-window v-model="activeTab" v-if="!dataLoading">
-          <v-tabs-window-item value="general_info" eager>
+        <v-tabs-window v-model="activeTab" v-if="!dataLoading" class="mt-8">
+          <v-tabs-window-item value="general_info">
             <FilmForm
               :film-form="filmForm"
               :genres="genres"
@@ -40,7 +40,6 @@
               :composers="composers"
               :loading="dataLoading"
               :network-error="Boolean(networkError)"
-              @submit="handleGeneralInfoSubmit"
               @error:validation="formError = true"
             />
           </v-tabs-window-item>
@@ -48,17 +47,41 @@
             <GalleryUpload
               :gallery="filmForm.gallery ?? []"
               :is-new="false"
+              :selected-img="selectedImg"
               @submit="handleGalleryUploadSubmit"
               @gallery-item:delete="handleDeleteGalleryItems"
             />
           </v-tabs-window-item>
         </v-tabs-window>
+        <ConfirmDialog
+          v-model="showDialog"
+          :text="$t('forms.film.gallery_item_delete_confirm')"
+          @confirm="handleDeleteGalleryItems"
+          type="warning"
+          @cancel="showDialog = false"
+        >
+        </ConfirmDialog>
       </v-card>
+      <v-fab
+        v-if="activeTab === 'general_info'"
+        class="ma-2"
+        :active="!loading"
+        icon="mdi-send"
+        color="primary"
+        absolute
+        size="64"
+        layout
+        app
+        appear
+        @click="handleGeneralInfoSubmit"
+      >
+      </v-fab>
     </template>
   </BasePage>
 </template>
 
 <script lang="ts" setup>
+import ConfirmDialog from "~/components/Dialogs/ConfirmDialog.vue";
 import BasePage from "~/components/Layout/Page/BasePage.vue";
 import FilmForm from "~/components/FilmStorageComponents/FilmForm.vue";
 import GalleryUpload from "~/components/FilmStorageComponents/GalleryUpload.vue";
@@ -66,13 +89,14 @@ import { useFilmStore } from "~/store/filmStore";
 
 const formError = ref(false);
 const posterError = ref(false);
-const galleryError = ref(false);
 const activeTab = ref("general_info");
 const dataLoading = ref(false);
 const formEditComplete = ref(false);
 const posterUploaded = ref(false);
 const poster = ref<string | null>(null);
 const showSnackbar = ref(false);
+const selectedImg = ref<string[]>([]);
+const showDialog = ref(false);
 const {
   genres,
   filmForm,
@@ -116,8 +140,9 @@ const handleGalleryUploadSubmit = async (files: File[]) => {
 
 const handleDeleteGalleryItems = async (links: string[]) => {
   const filmId = filmForm.value?.id || 0;
-  const fileNames = links.map((link) => link.split("/").pop()?.split('.').shift() || "");
-  console.log(fileNames);
+  const fileNames = links.map(
+    (link) => link.split("/").pop()?.split(".").shift() || ""
+  );
   await deleteGalleryItems(fileNames, filmId);
 };
 
@@ -186,7 +211,10 @@ onMounted(async () => {
 watch(
   filmForm as Ref<Film>,
   (newVal) => {
-    breadcrumbs.value[2] = { title: newVal?.name, to: `/films/${newVal?.id}` } as Breadcrumb;
+    breadcrumbs.value[2] = {
+      title: newVal?.name,
+      to: `/films/${newVal?.id}`,
+    } as Breadcrumb;
   },
   {
     deep: true,

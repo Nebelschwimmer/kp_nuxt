@@ -3,13 +3,12 @@
     rounded="lg"
     class="relative-position"
     variant="text"
-    height="100%"
     :image="bgImg"
   >
     <template #image>
       <v-img
         class="img-blur"
-        gradient="45deg, rgba(105, 153, 201, 0.4) 0%, rgb(237, 123, 73, 0.06) 50%, rgb(237, 123, 73, 0.4) 100%"
+        gradient="135deg, rgba(105, 153, 201, 0.1) 0%,  rgb(237, 123, 73, 0.2) 100%"
       ></v-img>
     </template>
 
@@ -125,16 +124,16 @@ defineProps<{
   groupNames?: string[];
 }>();
 
-const opened = ref(["list_one"]);
+const opened = ref(["list_one", ]);
 </script>
 
 <style lang="scss">
 
 .base-card {
-  background-color: rgba($color: #222222, $alpha: 0.6) !important;
+  background-color: rgba($color: #222222, $alpha: 0.7) !important;
 }
 
 .card-header{
-  background-color: rgba($color: #2b2b2b, $alpha: 0.7) !important;
+  background-color: rgba($color: #757575, $alpha: 0.3) !important;
 }
 </style>

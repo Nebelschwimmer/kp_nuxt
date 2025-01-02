@@ -1,22 +1,21 @@
 <template>
- 
-    <v-avatar
-      variant="tonal"
-      rounded="lg"
-      size="100"
-      class="ma-3 cursor-pointer"
-      @click="showGalleryDialogOnClick"
-    >
-      <BaseImg
-        v-if="galleryContent.length && galleryContent[0]"
-        :img-src="galleryContent[0] || ''"
-        :img-options="posterOptions"
-      />
-      <v-icon v-else icon="mdi-image-off"></v-icon>
-    </v-avatar>
- 
+  <v-avatar
+    variant="tonal"
+    rounded="lg"
+    size="100"
+    class="ma-3 cursor-pointer"
+    @click="showGalleryDialogOnClick"
+  >
+    <BaseImg
+      v-if="galleryContent.length && galleryContent[0]"
+      :img-src="galleryContent[0] || ''"
+      :img-options="posterOptions"
+    />
+    <v-icon v-else icon="mdi-image-off"></v-icon>
+  </v-avatar>
+
   <v-dialog v-model="showGalleryDialog" fullscreen>
-    <v-card>
+    <v-card class="opacity-90">
       <v-toolbar>
         <v-toolbar-title>
           {{ name }}:
@@ -66,30 +65,30 @@
           <CloseBtn @click="showGalleryDialog = false" />
         </v-toolbar-items>
       </v-toolbar>
-      <v-sheet
+      <v-empty-state
         v-if="!galleryContent.length || !galleryContent"
-        height="100%"
+        :headline="noContentLabel"
+        icon="mdi-image-off"
         class="d-flex flex-column ga-2 align-center justify-center"
       >
-        <v-chip color="secondary" prepend-icon="mdi-image-off">
-          {{ noContentLabel }}</v-chip
-        >
-        <v-btn
-          prepend-icon="mdi-plus"
-          color="primary"
-          variant="outlined"
-          :to="`/films/${id}/edit#gallery_upload`"
-          >{{ $t("actions.add_img") }}</v-btn
-        >
-      </v-sheet>
+        <template #actions>
+          <v-btn
+            prepend-icon="mdi-plus"
+            color="primary"
+            variant="outlined"
+            :to="`/films/${id}/edit#gallery_upload`"
+            >{{ $t("actions.add_img") }}</v-btn
+          >
+        </template>
+      </v-empty-state>
 
       <v-card-text v-else>
         <v-carousel
           v-model="activeImg"
           touch
           show-arrows="hover"
-          hide-delimiters
-          progress="primary"
+          color="accent"
+          progress="accent"
           height="800"
           @update:model-value="activeImg = $event"
         >

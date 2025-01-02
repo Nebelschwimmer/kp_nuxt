@@ -21,9 +21,9 @@
             :height="CAROUSEL_HEIGHT"
             cycle
             width="100%"
+            color="accent"
             @update:model-value="
-              activeFilmImg = latestFilms[activeFilm].gallery[0]
-            "
+            activeFilmImg = latestFilms[activeFilm].gallery[0]"
           >
             <v-carousel-item
               v-for="(film, index) in latestFilms"
@@ -104,14 +104,14 @@ import BasePage from "~/components/Layout/Page/BasePage.vue";
 import BaseImg from "~/components/Containment/Img/BaseImg.vue";
 const { latestFilms, films, loading, networkError } =
   storeToRefs(useFilmStore());
-const { fetchFilteredFilms, fetchLatestFilms } = useFilmStore();
+const { fetchLatestFilms } = useFilmStore();
 const activeFilm = ref(0);
 const activeFilmImg = ref("");
 onMounted(async () => {
   await fetchLatestFilms();
 });
 const { t } = useI18n();
-const CAROUSEL_HEIGHT = 600;
+const CAROUSEL_HEIGHT = 300;
 
 const avatarImgOptions = {
   shaded: false,

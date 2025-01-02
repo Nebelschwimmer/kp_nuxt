@@ -2,12 +2,12 @@
   <div>
     <v-container>
       <v-row>
-        <v-col>
-          <PageToolBar v-if="toolbar" v-bind="toolbarOptions" />
+        <v-col v-if="$vuetify.display.mdAndUp">
+          <PageToolBar v-bind="toolbarOptions" />
         </v-col>
       </v-row>
       <v-row>
-        <v-col v-if="!loading">
+        <v-col class="pa-3">
           <slot name="content"></slot>
         </v-col>
       </v-row>
@@ -60,7 +60,7 @@ watch(
     if (value) {
       setTimeout(closeSnackbar, DELAY);
     }
-  },
+  }
 );
 </script>
 

@@ -2,6 +2,7 @@
   <BaseForm @validate="validate" :loading="loading">
     <template #form>
       <v-form ref="formRef" @submit.prevent>
+        
         <v-container>
           <v-row>
             <v-col cols="12" sm="12" md="6" lg="6" xl="6">
@@ -124,7 +125,9 @@
               />
             </v-col>
           </v-row>
+          
         </v-container>
+        
       </v-form>
     </template>
   </BaseForm>

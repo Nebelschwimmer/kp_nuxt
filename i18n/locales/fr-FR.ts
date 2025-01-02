@@ -146,6 +146,7 @@ export default {
     download: "Télécharger",
     share: "Partager",
     delete_selected: "Supprimer les sélections",
+    add_more: "Ajouter plus",
   },
   state: {
     all: "Toutes",

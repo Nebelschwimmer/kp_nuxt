@@ -5,6 +5,7 @@
     color="transparent"
     density="compact"
     clearable
+    accept="image/*"
     width="100%"
     :multiple="multiple"
     :title="$t('general.drag_and_drop')"
@@ -12,9 +13,7 @@
   >
     <template v-slot:item="{ props: itemProps }">
       <v-file-upload-item v-bind="itemProps" lines="one" nav>
-        <template v-slot:prepend>
-          <v-avatar size="64" rounded></v-avatar>
-        </template>
+  
 
         <template v-slot:clear="{ props: clearProps }">
           <v-btn color="primary" v-bind="clearProps"></v-btn>

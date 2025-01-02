@@ -148,6 +148,7 @@ export default {
     download: "Download",
     share: "Share",
     delete_selected: "Delete selected",
+    add_more: "Add more",
   },
   state: {
     all: "All",

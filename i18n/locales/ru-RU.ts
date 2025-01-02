@@ -275,6 +275,7 @@ export default {
       update_poster: "Обновить постер",
       update_gallery: "Обновить галерею",
       gallery_actual: "Актуальная Галерея",
+    
       stepper: {
         first: "Основные данные",
         second: "Загрузить постер",

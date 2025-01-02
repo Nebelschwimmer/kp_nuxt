@@ -1,3 +1,4 @@
+import { Head } from './.nuxt/components';
 export default defineNuxtConfig({
   modules: [
     "@nuxtjs/i18n",
@@ -34,7 +35,7 @@ export default defineNuxtConfig({
         },
         {},
       ],
-    },
+  },
   },
   vuetify: {
     vuetifyOptions: {
