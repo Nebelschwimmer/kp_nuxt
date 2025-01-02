@@ -18,6 +18,7 @@
         :toolbar-options="toolbarOptions"
         :imgOptions="imgOptions"
         footer
+        add-link="/persons/add"
         @update:page="updateQueryParams"
       >
       </BaseDataIterator>
@@ -76,8 +77,6 @@ const breadcrumbs = ref<Breadcrumb[]>([
 
 const toolbarOptions = reactive({
   displayBackBtn: true,
-  prependIcon: "",
-  color: "secondary",
   breadcrumbs: breadcrumbs.value,
 });
 

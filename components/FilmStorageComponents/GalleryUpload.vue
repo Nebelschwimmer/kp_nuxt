@@ -1,8 +1,7 @@
 <template>
-  <v-card variant="text">
+  <v-card >
     <v-card
       v-if="!isNew"
-      variant="text"
       :title="$t('forms.film.gallery_actual')"
     >
     <v-divider></v-divider>
@@ -12,7 +11,7 @@
           v-model:selected="selectedImg"
           select-strategy="leaf"
           density="compact"
-          variant="tonal"
+        
           lines="one"
         >
           <v-list-item

@@ -2,7 +2,8 @@
   <BasePage
     :error="networkError"
     :loading="loading"
-    :toolbar="false"
+    toolbar
+    :toolbar-options="toolbarOptions"
     @alert:close="networkError = null"
   >
     <template #content>
@@ -20,7 +21,9 @@
             :height="CAROUSEL_HEIGHT"
             cycle
             width="100%"
-            @update:model-value="activeFilmImg = latestFilms[activeFilm].gallery[0]"
+            @update:model-value="
+              activeFilmImg = latestFilms[activeFilm].gallery[0]
+            "
           >
             <v-carousel-item
               v-for="(film, index) in latestFilms"
@@ -89,6 +92,8 @@
           </v-skeleton-loader>
         </v-list>
       </section>
+
+
     </template>
   </BasePage>
 </template>
@@ -106,7 +111,7 @@ onMounted(async () => {
   await fetchLatestFilms();
 });
 const { t } = useI18n();
-const CAROUSEL_HEIGHT = 300;
+const CAROUSEL_HEIGHT = 600;
 
 const avatarImgOptions = {
   shaded: false,
@@ -125,6 +130,18 @@ const bgImgOptions = {
     displayTitle: false,
   },
 };
+
+const breadcrumbs = [
+  {
+    title: t("nav.home"),
+    to: "/",
+    icon: "mdi-home",
+  },
+] as Breadcrumb[];
+const toolbarOptions = reactive({
+  displayBackBtn: false,
+  breadcrumbs: breadcrumbs,
+});
 </script>
 
 <style lang="scss">

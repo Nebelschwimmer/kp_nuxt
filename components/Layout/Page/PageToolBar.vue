@@ -1,6 +1,6 @@
 <template>
   <v-toolbar density="compact" rounded="lg">
-    <template #prepend>
+    <template #prepend v-if="displayBackBtn">
       <v-btn slim icon @click="$router.back()">
         <v-icon icon="mdi-arrow-left"></v-icon>
         <v-tooltip activator="parent" location="bottom">{{
@@ -11,7 +11,7 @@
     <v-toolbar-title>
       <v-breadcrumbs
         density="compact"
-        class="text-body-2"
+        class="text-subtitle-2"
         :items="breadcrumbs || []"
       >
         <template v-slot:item="{ item }">
@@ -40,6 +40,6 @@ defineProps<{
   appendIcon?: string;
   color?: string;
   breadcrumbs?: Breadcrumb[];
-  actions?: ToolbarAction[];
+  addLink?: string;
 }>();
 </script>

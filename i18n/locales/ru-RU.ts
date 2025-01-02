@@ -53,7 +53,7 @@ export default {
     actors: "Актеры",
     persons: "Персоны",
     persons_add: "Добавить персону",
-    all: "Все",
+    all: "Список",
     directors: "Режиссеры",
     language: "Язык",
     edit: "Редактирование",

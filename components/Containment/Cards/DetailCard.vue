@@ -13,7 +13,7 @@
       ></v-img>
     </template>
 
-    <v-toolbar extended color="transparent" height="130" extension-height="20">
+    <v-toolbar extended class="card-header" height="130" extension-height="20">
       <template #prepend>
         <slot name="gallery"></slot>
       </template>
@@ -23,13 +23,14 @@
       <template #extension>
         <v-fab
           v-if="editLink"
-          location="bottom end"
-          size="64"
-          absolute
-          offset
-          :to="editLink"
-          color="primary"
-          icon="mdi-pencil"
+          class="ma-4"
+            icon="mdi-pencil"
+            location="bottom end"
+            color="primary"
+            absolute
+            size="64"
+            :to="editLink"
+            offset
         ></v-fab>
       </template>
     </v-toolbar>
@@ -40,7 +41,7 @@
         lines="one"
         variant="text"
         rounded="lg"
-        class="base-card"
+        class="base-card mt-6"
       >
         <v-list-group value="list_one">
           <template v-slot:activator="{ props }">
@@ -128,10 +129,12 @@ const opened = ref(["list_one"]);
 </script>
 
 <style lang="scss">
+
 .base-card {
   background-color: rgba($color: #222222, $alpha: 0.6) !important;
 }
-.card-title {
-  background-color: rgba($color: #2b2b2b, $alpha: 0.2) !important;
+
+.card-header{
+  background-color: rgba($color: #2b2b2b, $alpha: 0.7) !important;
 }
 </style>

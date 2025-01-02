@@ -62,7 +62,7 @@ export default {
     persons: "Personnes",
     persons_add: "Ajouter une personne",
     actors: "Acteurs",
-    all: "Toutes",
+    all: "Liste",
     directors: "Réalisateurs",
     edit: "Modifier",
     language: "Langue",

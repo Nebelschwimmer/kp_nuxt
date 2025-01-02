@@ -65,7 +65,7 @@ export default {
     actors: "Actors",
     persons: "Persons",
     persons_add: "Add person",
-    all: "All",
+    all: "List",
     directors: "Directors",
     language: "Language",
     pagination: {

@@ -41,12 +41,12 @@ export default defineNuxtConfig({
       labComponents: true,
       defaults: {
         VTextField: {
-          variant: "outlined",
-          density: "comfortable",
+          variant: "filled",
+          rounded: 'lg',
         },
         VSelect: {
-          variant: "outlined",
-          density: "comfortable",
+          variant: "filled",
+          rounded: 'lg',
         },
       },
       theme: {
@@ -73,13 +73,6 @@ export default defineNuxtConfig({
   },
   i18n: {
     vueI18n: "./i18n.config.ts",
-  },
-
-  postcss: {
-    plugins: {
-      tailwindcss: {},
-      autoprefixer: {},
-    },
   },
   image: {
     domains: ["surland.ru"],

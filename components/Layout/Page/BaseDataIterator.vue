@@ -2,8 +2,8 @@
   <v-card variant="text">
     <v-data-iterator :items="items" :loading="loading">
       <template #header>
-        <v-toolbar class="px-2">
-          <v-spacer></v-spacer>
+        <v-toolbar class="px-2" extended>
+        
           <v-text-field
             :model-value="search"
             density="comfortable"
@@ -14,6 +14,18 @@
             clearable
             hide-details
           ></v-text-field>
+          <template v-slot:extension>
+            <v-fab
+            class="ms-4"
+            icon="mdi-plus"
+            location="bottom end"
+            color="primary"
+            absolute
+            size="64"
+            :to="addLink"
+            offset
+          ></v-fab>
+          </template>
         </v-toolbar>
       </template>
       <template v-slot:default="{ items }">
@@ -88,6 +100,7 @@ defineProps<{
   footer?: boolean;
   toolbarOptions: ToolbarOptions;
   imgOptions: ImgOptions;
+  addLink?: string;
 }>();
 
 const currentPage = ref(1);

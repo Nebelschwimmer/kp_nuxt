@@ -1,22 +1,41 @@
 <template>
-  <v-layout class="rounded-md">
-    <Header />
-    <v-main :class="[{ 'bg-gradient': theme.global.current.value.dark }]">
-      <v-container fluid>
-        <v-row justify="center">
-          <v-col
-            cols="12"
-            sm="12"
-            md="10"
-            lg="9"
-            xl="7"
-            xxl="5"
-            class="content rounded-md"
+  <v-layout class="rounded-md bg-gradient">
+    <Header @toggle:drawer="drawer = !drawer" />
+    <ClientOnly>
+      <v-navigation-drawer v-model="drawer">
+        <v-list subheader>
+          <v-list-subheader :title="$t('nav.title')"></v-list-subheader>
+          <v-list-item
+            nav
+            :active="$route.name === 'index'"
+            :color="$route.name === 'index' ? 'secondary' : ''"
+            to="/"
+            prepend-icon="mdi-home"
+            :title="$t('nav.home')"
           >
-            <slot />
-          </v-col>
-        </v-row>
-      </v-container>
+          </v-list-item>
+          <v-list-item
+            nav
+            :active="$route.name === 'films'"
+            :color="$route.name === 'films' ? 'secondary' : ''"
+            prepend-icon="mdi-filmstrip"
+            :title="$t('nav.films')"
+            to="/films"
+          >
+          </v-list-item>
+          <v-list-item
+            nav
+            to="/persons"
+            :active="$route.name === 'persons'"
+            :color="$route.name === 'persons' ? 'secondary' : ''"
+            prepend-icon="mdi-account-circle"
+            :title="$t('nav.persons')"
+          ></v-list-item>
+        </v-list>
+      </v-navigation-drawer>
+    </ClientOnly>
+    <v-main class="content">
+      <slot />
     </v-main>
   </v-layout>
 </template>
@@ -24,7 +43,6 @@
 <script lang="ts" setup>
 import Header from "~/components/Layout/Header/Header.vue";
 const drawer = ref(false);
-const theme = useTheme();
 </script>
 
 <style lang="scss">
@@ -65,7 +83,6 @@ $warning: #fb8c00;
   ) !important;
 }
 
-
 .content {
   min-height: calc(100vh - 64px);
   backdrop-filter: blur(4px);
@@ -75,6 +92,4 @@ a {
   text-decoration: none;
   color: inherit;
 }
-
-
 </style>

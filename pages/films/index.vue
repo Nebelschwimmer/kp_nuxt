@@ -20,6 +20,7 @@
               :page="currentPage"
               :toolbar-options="toolbarOptions"
               :img-options="imgOptions"
+              :add-link="'/films/add'"
               footer
               @update:page="updateQueryParams"
             >
@@ -48,7 +49,7 @@ onMounted(async () => {
     limit.value,
     offset.value,
     search.value,
-    locale.value,
+    locale.value
   );
 });
 
@@ -116,7 +117,7 @@ watch(
   },
   {
     immediate: true,
-  },
+  }
 );
 </script>
 
