@@ -47,7 +47,6 @@
             <GalleryUpload
               :gallery="filmForm.gallery ?? []"
               :is-new="false"
-              :selected-img="selectedImg"
               @submit="handleGalleryUploadSubmit"
               @gallery-item:delete="handleDeleteGalleryItems"
             />
@@ -87,16 +86,13 @@ import FilmForm from "~/components/FilmStorageComponents/FilmForm.vue";
 import GalleryUpload from "~/components/FilmStorageComponents/GalleryUpload.vue";
 import { useFilmStore } from "~/store/filmStore";
 
-const formError = ref(false);
-const posterError = ref(false);
-const activeTab = ref("general_info");
-const dataLoading = ref(false);
-const formEditComplete = ref(false);
-const posterUploaded = ref(false);
-const poster = ref<string | null>(null);
-const showSnackbar = ref(false);
-const selectedImg = ref<string[]>([]);
-const showDialog = ref(false);
+const formError = ref(<boolean>false);
+const posterError = ref<boolean>(false);
+const activeTab = ref<string>("general_info");
+const dataLoading = ref<boolean>(false);
+const formEditComplete = ref<boolean>(false);
+const showSnackbar = ref<boolean>(false);
+const showDialog = ref<boolean>(false);
 const {
   genres,
   filmForm,
@@ -160,7 +156,6 @@ async function getData() {
     fetchComposers(),
   ]);
   dataLoading.value = false;
-  poster.value = filmForm.value?.preview;
 }
 
 const { t } = useI18n();
@@ -198,7 +193,6 @@ onMounted(async () => {
   await getData();
   await nextTick();
   formEditComplete.value = false;
-  posterUploaded.value = false;
   activeTab.value = "general_info";
   posterError.value = false;
   formError.value = false;

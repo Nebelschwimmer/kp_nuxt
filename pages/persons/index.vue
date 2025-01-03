@@ -1,36 +1,25 @@
 <template>
-  <BasePage
-    :error="networkError ?? null"
+  <BaseDataIterator
+    :items="personItems"
+    :offset="offset"
+    :search="search"
     :loading="loading"
+    :totalPages="totalPages"
+    :items-per-page="limit"
+    :page="currentPage"
     :toolbar-options="toolbarOptions"
-    toolbar
-    @alert:close="networkError = null"
+    :imgOptions="imgOptions"
+    footer
+    add-link="/persons/add"
+    @update:page="updateQueryParams"
   >
-    <template #content>
-      <BaseDataIterator
-        :items="personItems"
-        :offset="offset"
-        :search="search"
-        :loading="loading"
-        :totalPages="totalPages"
-        :items-per-page="limit"
-        :page="currentPage"
-        :toolbar-options="toolbarOptions"
-        :imgOptions="imgOptions"
-        footer
-        add-link="/persons/add"
-        @update:page="updateQueryParams"
-      >
-      </BaseDataIterator>
-    </template>
-  </BasePage>
+  </BaseDataIterator>
 </template>
 
 <script lang="ts" setup>
 import { usePersonStore } from "~/store/personStore";
-import BasePage from "~/components/Layout/Page/BasePage.vue";
 import BaseDataIterator from "~/components/Layout/Page/BaseDataIterator.vue";
-const { persons, loading, totalPages, currentPage, networkError } =
+const { persons, loading, totalPages, currentPage } =
   storeToRefs(usePersonStore());
 const { fetchFilteredPersons } = usePersonStore();
 
@@ -43,7 +32,7 @@ onMounted(async () => {
     limit.value,
     offset.value,
     search.value,
-    locale.value,
+    locale.value
   );
 });
 
@@ -100,7 +89,7 @@ watch(
   },
   {
     immediate: true,
-  },
+  }
 );
 </script>
 

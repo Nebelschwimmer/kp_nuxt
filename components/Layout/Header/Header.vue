@@ -1,5 +1,10 @@
 <template>
-  <v-app-bar scroll-off-screen >
+  <v-app-bar
+    scroll-behavior="fade-image"
+    scroll-threshold="120"
+    class="opacity-90"
+    
+  >
     <template #image>
       <v-img
         gradient="45deg, rgba(105, 153, 201, 0.1) 0%, rgb(237, 123, 73, 0.06) 50%, rgb(237, 123, 73, 0.2) 100%"
@@ -10,11 +15,7 @@
     </template>
 
     <v-app-bar-title>
-      <nuxt-link to="/">
- 
-          Kinopoisk Lite
-    
-      </nuxt-link>
+      <nuxt-link to="/"> Kinopoisk Lite </nuxt-link>
     </v-app-bar-title>
 
     <v-btn stacked class="text-none">

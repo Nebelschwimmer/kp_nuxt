@@ -1,152 +1,55 @@
 <template>
-  <BasePage
-    :error="networkError"
-    :loading="loading"
-    toolbar
-    :toolbar-options="toolbarOptions"
-    @alert:close="networkError = null"
-  >
-    <template #content>
-      <section>
-        <h4
-          class="text-h6 text-md-h5 text-lg-h4 font-weight-bold mb-4"
-          id="newest"
-        >
-          #{{ $t("pages.home.newest") }}
-        </h4>
+  <section>
+    <v-card variant="text">
+      <v-card-title>
+        <span class="text-h5">{{ $t("pages.home.newest") }}</span>
         <v-divider></v-divider>
-        <v-card variant="text">
-          <v-carousel
-            v-model="activeFilm"
-            :height="CAROUSEL_HEIGHT"
-            cycle
-            width="100%"
-            color="accent"
-            @update:model-value="
-            activeFilmImg = latestFilms[activeFilm].gallery[0]"
-          >
-            <v-carousel-item
-              v-for="(film, index) in latestFilms"
-              v-if="!loading"
-              :key="index"
-              :value="index"
-            >
-              <v-card
-                variant="elevated"
-                height="100%"
-                :image="film.gallery[0] || ''"
-                @click="navigateTo('/films/' + film.id)"
-              >
-                <template #image>
-                  <v-parallax :height="CAROUSEL_HEIGHT * 2">
-                    <BaseImg
-                      :img-src="film.gallery[0] || ''"
-                      :img-options="bgImgOptions"
-                    ></BaseImg>
-                  </v-parallax>
-                </template>
-                <template #title>
-                  <div
-                    class="font-bold text-white text-h4 text-center p-0 text-truncate"
-                  >
-                    {{ film.name || "" }}
-                  </div>
-                </template>
-              </v-card>
-            </v-carousel-item>
-            <v-skeleton-loader v-else :height="CAROUSEL_HEIGHT" type="image">
-            </v-skeleton-loader>
-          </v-carousel>
-        </v-card>
-
-        <v-list>
-          <v-list-item
+      </v-card-title>
+      <v-card-text>
+        <v-slide-group>
+          <v-slide-group-item
             v-for="(film, index) in latestFilms"
-            v-if="!loading"
-            :key="film.id || 0"
-            :active="index === activeFilm"
-            :title="film.name || ''"
-            :subtitle="film.description || ''"
-            :value="film.id || 0"
-            lines="three"
-            :color="index === activeFilm ? 'secondary' : 'transparent'"
-            @click="navigateTo('/films/' + film.id)"
+            :key="index"
+            :value="index"
           >
-            <template #prepend>
-              <v-avatar rounded="0">
+            <v-card
+              variant="text"
+              :height="$vuetify.display.smAndDown ? 200 : 340"
+              :width="$vuetify.display.smAndDown ? 160 : 300"
+              class="ma-2"
+              @click="navigateTo('/films/' + film.id)"
+            >
+              <template #image>
                 <BaseImg
-                  :img-src="film.gallery[0] || ''"
-                  :img-options="avatarImgOptions"
-                >
-                </BaseImg>
-              </v-avatar>
-            </template>
-          </v-list-item>
-          <v-skeleton-loader
-            v-else
-            v-for="k in 5"
-            :key="k"
-            height="100"
-            type="list-item-avatar-three-line"
-          >
-          </v-skeleton-loader>
-        </v-list>
-      </section>
-
-
-    </template>
-  </BasePage>
+                :img-src="film.gallery[0] || ''"
+                :img-options="bgImgOptions"
+                ></BaseImg>
+              </template>
+            </v-card>
+          </v-slide-group-item>
+        </v-slide-group>
+      </v-card-text>
+    </v-card>
+  </section>
 </template>
 
 <script lang="ts" setup>
 import { useFilmStore } from "~/store/filmStore";
-import BasePage from "~/components/Layout/Page/BasePage.vue";
 import BaseImg from "~/components/Containment/Img/BaseImg.vue";
-const { latestFilms, films, loading, networkError } =
-  storeToRefs(useFilmStore());
-const { fetchLatestFilms } = useFilmStore();
-const activeFilm = ref(0);
-const activeFilmImg = ref("");
-onMounted(async () => {
-  await fetchLatestFilms();
-});
-const { t } = useI18n();
-const CAROUSEL_HEIGHT = 300;
 
-const avatarImgOptions = {
-  shaded: false,
-  height: 50,
-  cover: true,
-  placeholderOptions: {
-    displayTitle: false,
-  },
-};
+const { latestFilms } = storeToRefs(useFilmStore());
+const { fetchLatestFilms } = useFilmStore();
+
 
 const bgImgOptions = {
-  shaded: true,
+  shaded: false,
   height: "100%",
   cover: true,
   placeholderOptions: {
-    displayTitle: false,
+    displayTitle: true,
   },
 };
-
-const breadcrumbs = [
-  {
-    title: t("nav.home"),
-    to: "/",
-    icon: "mdi-home",
-  },
-] as Breadcrumb[];
-const toolbarOptions = reactive({
-  displayBackBtn: false,
-  breadcrumbs: breadcrumbs,
+onMounted(async () => {
+  await fetchLatestFilms();
 });
 </script>
-
-<style lang="scss">
-.img-blur {
-  filter: blur(12px);
-  opacity: 0.7;
-}
-</style>

@@ -22,6 +22,12 @@
         <template #placeholder>
           <ImgPlaceholder v-bind="imgOptions.placeholderOptions" />
         </template>
+        <template #error>
+          <v-sheet class="d-flex flex-column align-center justify-center fill-height">
+            <v-icon icon="mdi-image-off" color="error" size="small"></v-icon>
+  
+          </v-sheet>
+        </template>
         <v-expand-transition v-if="imgOptions.removable">
           <div
             v-if="isHovering"
@@ -52,9 +58,9 @@ defineProps<{
   imgOptions: ImgOptions;
 }>();
 
-const FIRST_COLOR = "rgba(0, 0, 0, 0.2)";
-const SECOND_COLOR = "rgb(55, 70, 85)";
-const gradientStr = `to top right, ${FIRST_COLOR}, ${SECOND_COLOR}`;
+const FIRST_COLOR = "rgba(0, 0, 0, 0.4)";
+const SECOND_COLOR = "rgb(45, 45, 45, 0.5)";
+const gradientStr = `to bottom, ${FIRST_COLOR}, ${SECOND_COLOR}`;
 </script>
 
 <style lang="scss" scoped>

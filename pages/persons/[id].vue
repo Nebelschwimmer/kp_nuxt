@@ -1,41 +1,21 @@
 <template>
-  <BasePage
-    :loading="loading"
-    :error="networkError"
-    :toolbar-options="toolbarOptions"
-    toolbar
-    @alert:close="networkError = null"
+  <DetailCard
+    :title="person?.firstname + ' ' + person?.lastname || ''"
+    :no-img-label="$t('pages.persons.no_photo') || ''"
+    :details="computedPersonDetails"
+    :bg-img="person?.photo || ''"
+    :edit-link="`/persons/${person?.id}/edit`"
+    :avatar="person?.photo || ''"
+    :gallery-content="[]"
   >
-    <template #content>
-      <DetailCard
-        :title="person?.firstname + ' ' + person?.lastname || ''"
-        :no-img-label="$t('pages.persons.no_photo') || ''"
-        :details="computedPersonDetails"
-        :bg-img="person?.photo || ''"
-        :edit-link="`/persons/${person?.id}/edit`"
-      >
-        <template #gallery>
-          <PhotoGallery
-            :gallery-content="person?.photo || ''"
-            :name="person?.firstname + ' ' + person?.lastname || ''"
-            :no-content-label="$t('pages.films.no_gallery')"
-            @img:edit=""
-            @img:share=""
-            @img:download=""
-          />
-        </template>
-      </DetailCard>
-    </template>
-  </BasePage>
+  </DetailCard>
 </template>
 
 <script lang="ts" setup>
-import BasePage from "~/components/Layout/Page/BasePage.vue";
 import DetailCard from "~/components/Containment/Cards/DetailCard.vue";
 import { usePersonStore } from "~/store/personStore";
 import { storeToRefs } from "pinia";
-import PhotoGallery from "~/components/Gallery/PhotoGallery.vue";
-const { person, loading, networkError } = storeToRefs(usePersonStore());
+const { person } = storeToRefs(usePersonStore());
 const { fetchPersonById } = usePersonStore();
 const { locale, t } = useI18n();
 
@@ -78,8 +58,7 @@ const computedPersonDetails = computed(() => {
       icon: "mdi-account",
     },
   ];
-})
-
+});
 
 const toolbarOptions = reactive({
   displayBackBtn: true,
@@ -99,7 +78,7 @@ watch(
       to: "/persons",
     };
   },
-  { immediate: true },
+  { immediate: true }
 );
 </script>
 

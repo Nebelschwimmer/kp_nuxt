@@ -24,6 +24,6 @@ defineProps<{
 
 <style scoped lang="scss">
 .placeholder-img {
-  background-color: rgba(77, 77, 77, 0.2);
+  background-color: rgba(104, 104, 104, 0.2) !important;
 }
 </style>

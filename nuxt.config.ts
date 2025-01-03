@@ -43,12 +43,24 @@ export default defineNuxtConfig({
       defaults: {
         VTextField: {
           variant: "filled",
-          rounded: 'lg',
+          density: 'comfortable',
         },
         VSelect: {
           variant: "filled",
-          rounded: 'lg',
+          density: 'comfortable',
         },
+        VCombobox: {
+          variant: "filled",
+          density: 'comfortable',
+        },
+        VList:{
+          variant: "text",
+          class: "base-card",
+        },
+        VCard:{
+          variant: "text",
+          class: "base-card",
+        }
       },
       theme: {
         defaultTheme: "dark",
@@ -57,6 +69,7 @@ export default defineNuxtConfig({
             dark: true,
             colors: {
               primary: "#e0974a",
+              surface: "#1616167e",
               secondary: "#6999c9",
               accent: "#ed7b49",
               error: "#f44336",

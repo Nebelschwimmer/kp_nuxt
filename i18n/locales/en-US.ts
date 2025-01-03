@@ -23,6 +23,7 @@ export default {
     uploaded: "File uploaded",
     available_for_upload: "Available for upload",
     img: "Image",
+    img_error: "Error loading image",
     uploaded_img: "Uploaded image",
     drag_and_drop: "Drag and drop files here",
     browse_files: "Browse files",

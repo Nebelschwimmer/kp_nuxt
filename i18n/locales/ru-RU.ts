@@ -23,6 +23,7 @@ export default {
     uploaded: "Файл загружен",
     available_for_upload: "Доступно для загрузки",
     img: "Изображение",
+    img_error: "Ошибка загрузки изображения",
     uploaded_img: "Загруженное изображение",
     drag_and_drop: "Перетащите файл(ы) изображения сюда",
     browse_files: "Просмотреть файлы",

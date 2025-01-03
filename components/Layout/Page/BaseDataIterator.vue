@@ -3,7 +3,6 @@
     <v-data-iterator :items="items" :loading="loading">
       <template #header>
         <v-toolbar class="px-2" extended>
-        
           <v-text-field
             :model-value="search"
             density="comfortable"
@@ -16,20 +15,20 @@
           ></v-text-field>
           <template v-slot:extension>
             <v-fab
-            class="ms-4"
-            icon="mdi-plus"
-            location="bottom end"
-            color="primary"
-            absolute
-            size="64"
-            :to="addLink"
-            offset
-          ></v-fab>
+              class="ms-4"
+              icon="mdi-plus"
+              location="bottom end"
+              color="primary"
+              absolute
+              size="64"
+              :to="addLink"
+              offset
+            ></v-fab>
           </template>
         </v-toolbar>
       </template>
       <template v-slot:default="{ items }">
-        <v-list>
+        <v-list variant="text" class="base-card">
           <v-list-item
             v-for="(item, i) in items"
             lines="two"
@@ -37,7 +36,6 @@
             :key="i"
             :variant="item.raw.variant"
             class="my-2"
-            rounded="lg"
             :to="item.raw.to"
             :title="item.raw.title"
             :subtitle="item.raw.subtitle"
@@ -85,7 +83,6 @@
 </template>
 
 <script lang="ts" setup>
-import PageToolBar from "./PageToolBar.vue";
 import BaseImg from "~/components/Containment/Img/BaseImg.vue";
 const emit = defineEmits(["update:page"]);
 defineProps<{

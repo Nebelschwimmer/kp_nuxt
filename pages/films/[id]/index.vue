@@ -1,47 +1,26 @@
 <template>
-  <BasePage
-    :loading="loading"
-    :error="networkError"
-    :toolbar-options="toolbarOptions"
-    toolbar
-    @alert:close="networkError = null"
+  <DetailCard
+    :title="film?.name + ' (' + film?.releaseYear + ')' || ''"
+    :subtitle="film?.slogan || ''"
+    :details="computedFilmDetails"
+    :description="film?.description || ''"
+    :list-two="computedFilmPersons || []"
+    :list-three="filmActors || []"
+    :bg-img="film?.gallery[0] || ''"
+    :rating="film?.rating || 0"
+    :group-names="groupNames || []"
+    :avatar="film?.gallery[0] || ''"
+    :gallery-content="film?.gallery || []"
   >
-    <template #content>
-      <DetailCard
-        :title="film?.name + ' (' + film?.releaseYear + ')' || ''"
-        :no-img-label="$t('pages.films.no_preview') || ''"
-        :details="computedFilmDetails"
-        :description="film?.description || ''"
-        :list-two="computedFilmPersons || []"
-        :list-three="filmActors || []"
-        :bg-img="film?.gallery[0] || ''"
-        :rating="film?.rating || 0"
-        :edit-link="`/films/${film?.id}/edit`"
-        :group-names="groupNames || []"
-      >
-        <template #gallery>
-          <PhotoGallery
-            :gallery-content="film?.gallery || []"
-            :name="film?.name || ''"
-            :no-content-label="$t('pages.films.no_gallery')"
-            @img:edit="goToEditPage"
-            @img:share="copyGalleryItemLinkOnClick"
-            @img:download="downloadGalleryItem"
-          />
-        </template>
-      </DetailCard>
-    </template>
-  </BasePage>
+  </DetailCard>
 </template>
 
 <script lang="ts" setup>
-import BasePage from "~/components/Layout/Page/BasePage.vue";
 import DetailCard from "~/components/Containment/Cards/DetailCard.vue";
 import { useFilmStore } from "~/store/filmStore";
 import { storeToRefs } from "pinia";
-import PhotoGallery from "~/components/Gallery/PhotoGallery.vue";
 const showSnackbar = ref(false);
-const { film, loading, networkError } = storeToRefs(useFilmStore());
+const { film } = storeToRefs(useFilmStore());
 const { fetchFilmById, downloadGalleryItem } = useFilmStore();
 const { locale, t } = useI18n();
 const filmActors = computed(() => {
@@ -66,19 +45,13 @@ const filmActors = computed(() => {
 });
 
 const groupNames = [
-  t('pages.general_info'),
-  t('pages.films.team'),
-  t('pages.films.starring'),
+  t("pages.general_info"),
+  t("pages.films.team"),
+  t("pages.films.starring"),
 ];
 
 const computedFilmDetails = computed(() => {
   return [
-    {
-      name: "forms.film.slogan",
-      value: film.value?.slogan || "",
-      type: "info",
-      icon: "mdi-format-quote-close",
-    },
     {
       name: "forms.film.release_year",
       value: film.value?.releaseYear || "",
@@ -106,8 +79,8 @@ const computedFilmDetails = computed(() => {
   ];
 }) as ComputedRef<Array<CardDetails>>;
 
-  const computedFilmPersons = computed(() => {
-    return [
+const computedFilmPersons = computed(() => {
+  return [
     {
       name: "forms.film.director",
       value: film.value?.directorName || "",
@@ -132,8 +105,8 @@ const computedFilmDetails = computed(() => {
       to: film.value?.composerId ? `/persons/${film.value?.composerId}` : "",
       icon: "mdi-account-tie",
     },
-    ];
-  }) as ComputedRef<Array<CardDetails>>;
+  ];
+}) as ComputedRef<Array<CardDetails>>;
 
 const actionBtnProps = reactive({
   type: "edit",
@@ -160,7 +133,6 @@ const breadcrumbs = ref<Breadcrumb[]>([
   },
 ]);
 
-
 const toolbarOptions = reactive({
   displayBackBtn: true,
   breadcrumbs: breadcrumbs.value,
@@ -177,7 +149,7 @@ watch(
     const filmId = Number(useRoute().params.id);
     await fetchFilmById(filmId, newVal);
   },
-  { immediate: true },
+  { immediate: true }
 );
 
 watch(
@@ -189,12 +161,12 @@ watch(
       to: "/films",
     };
   },
-  { immediate: true },
+  { immediate: true }
 );
 
 const copyGalleryItemLinkOnClick = async (fileName: string) => {
   await navigator.clipboard.writeText(
-    window.location.origin + "/films/" + film.value?.id + "/" + fileName,
+    window.location.origin + "/films/" + film.value?.id + "/" + fileName
   );
   showSnackbar.value = true;
 };

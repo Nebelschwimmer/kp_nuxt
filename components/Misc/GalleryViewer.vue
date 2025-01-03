@@ -1,21 +1,6 @@
 <template>
-  <v-avatar
-    variant="tonal"
-    rounded="lg"
-    size="100"
-    class="ma-3 cursor-pointer"
-    @click="showGalleryDialogOnClick"
-  >
-    <BaseImg
-      v-if="galleryContent.length && galleryContent[0]"
-      :img-src="galleryContent[0] || ''"
-      :img-options="posterOptions"
-    />
-    <v-icon v-else icon="mdi-image-off"></v-icon>
-  </v-avatar>
-
-  <v-dialog v-model="showGalleryDialog" fullscreen>
-    <v-card class="opacity-90">
+  <v-dialog :model-value="showGallery" fullscreen>
+    <v-card variant="tonal" color="black">
       <v-toolbar>
         <v-toolbar-title>
           {{ name }}:
@@ -62,7 +47,7 @@
               {{ $t("actions.remove") }}
             </v-tooltip>
           </v-btn>
-          <CloseBtn @click="showGalleryDialog = false" />
+          <CloseBtn @click="$emit('close')" />
         </v-toolbar-items>
       </v-toolbar>
       <v-empty-state
@@ -86,7 +71,7 @@
         <v-carousel
           v-model="activeImg"
           touch
-          show-arrows="hover"
+          
           color="accent"
           progress="accent"
           height="800"
@@ -106,10 +91,10 @@
 </template>
 
 <script lang="ts" setup>
-import BaseImg from "../Containment/Img/BaseImg.vue";
 import CloseBtn from "../Containment/Btns/CloseBtn.vue";
-defineEmits(["img:download", "img:share", "img:edit", "img:delete"]);
-const props = defineProps<{
+defineEmits(["img:download", "img:share", "img:edit", "img:delete", "close"]);
+defineProps<{
+  showGallery: boolean;
   galleryContent: string[] | string;
   noContentLabel?: string;
   name?: string;
@@ -117,33 +102,8 @@ const props = defineProps<{
 
 const id = useRoute().params.id as string;
 
-const showGalleryDialog = ref(false);
-const activeImg = ref(0);
-const showGalleryDialogOnClick = () => {
-  showGalleryDialog.value = true;
-};
-
-const posterOptions = {
-  shaded: false,
-  height: "100%",
-  cover: true,
-  clickable: true,
-  aspectRatio: "16/9",
-  placeholderOptions: {
-    displayTitle: false,
-  },
-};
-
-const galleryItemOptions = {
-  shaded: false,
-  height: 600,
-  cover: false,
-  clickable: true,
-  aspectRatio: "16/9",
-  placeholderOptions: {
-    displayTitle: false,
-  },
-};
+const showGalleryDialog = ref<boolean>(false);
+const activeImg = ref<number>(0);
 </script>
 
 <style></style>

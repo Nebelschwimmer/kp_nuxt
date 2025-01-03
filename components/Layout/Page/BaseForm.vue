@@ -1,5 +1,5 @@
 <template>
-  <v-card :loading="loading" :disabled="disabled">
+  <v-card :loading="loading" :disabled="disabled" variant="text">
     <slot name="form"></slot>
     <v-snackbar v-model="snackbar">
       {{ $t("toast.messages.succes.add") }}

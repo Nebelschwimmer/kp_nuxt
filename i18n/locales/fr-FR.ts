@@ -23,6 +23,7 @@ export default {
     uploaded: "Fichier téléchargé",
     available_for_upload: "Disponible pour le telechargement",
     img: "Image",
+    img_error: "Erreur chargement de l'image",
     uploaded_img: "Image telechargée",
     drag_and_drop: "Déposez vos fichiers d'images ici",
     browse_files: "Parcourir les fichiers",

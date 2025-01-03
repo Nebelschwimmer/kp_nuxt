@@ -133,7 +133,6 @@ defineProps<{
   loading?: boolean;
   gallery?: string[];
   isNew?: boolean;
-  selectedImg?: string[];
 }>();
 const galleryFiles = ref<File[]>([]);
 const showDialog = ref(false);

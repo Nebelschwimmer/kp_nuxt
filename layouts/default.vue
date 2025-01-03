@@ -1,12 +1,10 @@
 <template>
-  <v-layout class="rounded-md bg-gradient">
-    <Header @toggle:drawer="drawer = !drawer" />
+  <v-layout class="rounded rounded-md">
+    <Header @toggle:drawer="drawer = !drawer"></Header>
     <ClientOnly>
-      <v-navigation-drawer v-model="drawer">
-        <v-list subheader>
-          <v-list-subheader :title="$t('nav.title')"></v-list-subheader>
+      <v-navigation-drawer v-model="drawer" :rail="$vuetify.display.mdAndDown">
+        <v-list nav height="100%" class="bg-gradient">
           <v-list-item
-            nav
             :active="$route.name === 'index'"
             :color="$route.name === 'index' ? 'secondary' : ''"
             to="/"
@@ -15,7 +13,6 @@
           >
           </v-list-item>
           <v-list-item
-            nav
             :active="$route.name === 'films'"
             :color="$route.name === 'films' ? 'secondary' : ''"
             prepend-icon="mdi-filmstrip"
@@ -24,7 +21,6 @@
           >
           </v-list-item>
           <v-list-item
-            nav
             to="/persons"
             :active="$route.name === 'persons'"
             :color="$route.name === 'persons' ? 'secondary' : ''"
@@ -33,63 +29,100 @@
           ></v-list-item>
         </v-list>
       </v-navigation-drawer>
+      <v-navigation-drawer
+        v-if="$vuetify.display.mdAndUp"
+        location="right"
+        class="bg-gradient"
+      >
+      </v-navigation-drawer>
     </ClientOnly>
-    <v-main class="content">
-      <slot />
+    <v-main v-scroll="onScroll" style="min-height: 100dvh" class="bg-gradient">
+      <div class="pa-2">
+        <v-toolbar density="compact" class="mb-2" rounded="lg">
+          <template #prepend>
+            <v-btn icon="mdi-arrow-left" @click="$router.back()"></v-btn>
+          </template>
+        </v-toolbar>
+        <slot />
+      </div>
     </v-main>
+    <ClientOnly>
+      <v-bottom-navigation v-if="$vuetify.display.smAndDown" grow mode="shift">
+        <v-btn
+          :active="$route.name === 'index'"
+          :color="$route.name === 'index' ? 'secondary' : ''"
+          to="/"
+          icon="mdi-home"
+        ></v-btn>
+        <v-btn
+          :active="$route.name === 'films'"
+          :color="$route.name === 'films' ? 'secondary' : ''"
+          to="/films"
+          icon="mdi-filmstrip"
+        ></v-btn>
+        <v-btn
+          :active="$route.name === 'persons'"
+          :color="$route.name === 'persons' ? 'secondary' : ''"
+          to="/persons"
+          icon="mdi-account-circle"
+        ></v-btn>
+      </v-bottom-navigation>
+    </ClientOnly>
+    <GlobalError
+      :show="Boolean(filmNetworkError || personNetworkError)"
+      type="error"
+      :text="filmNetworkError?.message || personNetworkError?.message || ''"
+      :title="$t('pages.network_error')"
+      @close="handleErrorAlertClose"
+    />
+    <v-fab
+      v-if="$vuetify.display.mdAndUp"
+      :active="showScrollFab"
+      class="mr-6"
+      icon="mdi-arrow-up"
+      color="secondary"
+      location="bottom end"
+      size="64"
+      layout
+      app
+      appear
+      @click="scrollToTop"
+    ></v-fab>
   </v-layout>
 </template>
 
 <script lang="ts" setup>
 import Header from "~/components/Layout/Header/Header.vue";
-const drawer = ref(false);
+import GlobalError from "~/components/Global/GlobalError.vue";
+
+import { useFilmStore } from "~/store/filmStore";
+import { usePersonStore } from "~/store/personStore";
+import { storeToRefs } from "pinia";
+const { networkError: filmNetworkError } = storeToRefs(useFilmStore());
+const { networkError: personNetworkError } = storeToRefs(usePersonStore());
+
+const drawer = ref(true);
+const showScrollFab = ref(false);
+const offsetTop = ref(0);
+
+const onScroll = () => {
+  offsetTop.value = window.scrollY;
+  showScrollFab.value = offsetTop.value > 30;
+};
+
+const handleErrorAlertClose = () => {
+  if (filmNetworkError.value) {
+    filmNetworkError.value = null;
+  }
+  if (personNetworkError.value) {
+    personNetworkError.value = null;
+  }
+};
+
+const scrollToTop = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+};
 </script>
-
-<style lang="scss">
-$background: #000000;
-$surface: #313131;
-$primary: rgb(105, 153, 201, 0);
-$secondary: #e0974aa8;
-$accent: #ed7b49;
-$error: #f44336;
-$info: #ffbd69;
-$success: #4caf50;
-$warning: #fb8c00;
-
-.page-enter-active,
-.page-leave-active {
-  transition: all 0.4s;
-}
-.page-enter-from,
-.page-leave-to {
-  filter: opacity(0);
-}
-
-.layout-enter-active,
-.layout-leave-active {
-  transition: all 0.4s;
-}
-.layout-enter-from,
-.layout-leave-to {
-  filter: opacity(0);
-}
-
-.bg-gradient {
-  background-image: linear-gradient(
-    68deg,
-    rgba(105, 153, 201, 0.1) 0%,
-    rgb(237, 123, 73, 0.06) 50%,
-    rgb(237, 123, 73, 0.1) 100%
-  ) !important;
-}
-
-.content {
-  min-height: calc(100vh - 64px);
-  backdrop-filter: blur(4px);
-  background-color: rgba($color: #000000, $alpha: 0.1) !important;
-}
-a {
-  text-decoration: none;
-  color: inherit;
-}
-</style>

@@ -1,12 +1,4 @@
 <template>
-  <BasePage
-    :loading="loading"
-    :error="networkError"
-    :toolbar-options="toolbarOptions"
-    toolbar
-    @alert:close="networkError = null"
-  >
-    <template #content>
       <v-container>
         <v-row>
           <v-col>
@@ -28,13 +20,11 @@
           </v-col>
         </v-row>
       </v-container>
-    </template>
-  </BasePage>
 </template>
 
 <script lang="ts" setup>
 import { useFilmStore } from "~/store/filmStore";
-import BasePage from "~/components/Layout/Page/BasePage.vue";
+
 import BaseDataIterator from "~/components/Layout/Page/BaseDataIterator.vue";
 const { films, loading, totalPages, currentPage, networkError } =
   storeToRefs(useFilmStore());
