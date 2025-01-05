@@ -105,7 +105,7 @@
 
 <script lang="ts" setup>
 import Header from "~/components/Layout/Header/Header.vue";
-import GlobalError from "~/components/Global/GlobalError.vue";
+import GlobalError from "~/components/global/GlobalError.vue";
 
 import { useFilmStore } from "~/store/filmStore";
 import { usePersonStore } from "~/store/personStore";

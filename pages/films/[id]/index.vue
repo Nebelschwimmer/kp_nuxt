@@ -1,6 +1,7 @@
 <template>
-  <div>
+  <div v-if="film">
     <DetailCard
+    
       :title="film?.name + ' (' + film?.releaseYear + ')' || ''"
       :subtitle="film?.slogan || ''"
       :bg-img="film?.gallery[0] || ''"
@@ -66,16 +67,16 @@
                         :edit-mode="editGalleryMode"
                         @toggle:edit-mode="editGalleryMode = !editGalleryMode"
                       />
-                    
-                        <v-card-text>
-                          <FilmGallery
-                            v-model:selected="selectedImagesIndices"
-                            :film="film"
-                            :edit-mode="editGalleryMode"
-                            @update:selected="selectedImagesIndices = $event"
-                            @delete:selected="showConfirmDialog = true"
-                          />
-                        </v-card-text>
+
+                      <v-card-text>
+                        <FilmGallery
+                          v-model:selected="selectedImagesIndices"
+                          :film="film"
+                          :edit-mode="editGalleryMode"
+                          @update:selected="selectedImagesIndices = $event"
+                          @delete:selected="showConfirmDialog = true"
+                        />
+                      </v-card-text>
                     </v-card>
                   </v-col>
                 </v-row>
@@ -86,7 +87,9 @@
                         :title="$t('pages.films.description')"
                         icon="mdi-text"
                         :edit-mode="editDescriptionMode"
-                        @toggle:edit-mode="editDescriptionMode = !editDescriptionMode"
+                        @toggle:edit-mode="
+                          editDescriptionMode = !editDescriptionMode
+                        "
                       />
                       <v-card-text>
                         <v-sheet
@@ -97,15 +100,17 @@
                         >
                           <div
                             v-if="filmForm.description"
-                            v-for="(paragraph, index) in filmForm.description.split(
-                              '\n'
-                            )"
+                            v-for="(
+                              paragraph, index
+                            ) in filmForm.description.split('\n')"
                             :key="index"
                           >
                             <p>{{ paragraph }}</p>
                           </div>
                           <div v-else>
-                            <v-progress-circular indeterminate></v-progress-circular>
+                            <v-progress-circular
+                              indeterminate
+                            ></v-progress-circular>
                           </div>
                         </v-sheet>
                         <v-confirm-edit
@@ -146,47 +151,6 @@
       </template>
     </DetailCard>
 
-    <v-dialog v-model="showEditDialog" max-width="1000">
-      <v-sheet rounded="lg">
-        <v-card :loading="loading" variant="tonal">
-          <v-toolbar :image="film?.gallery[0]" class="px-3" color="transparent">
-            <template #image>
-              <v-img
-                gradient="135deg, rgba(0, 0, 0, 0.7) 0%,  rgb(0, 0, 0, 0.9) 100%"
-              ></v-img>
-            </template>
-            <template #prepend>
-              <v-icon icon="mdi-pencil"></v-icon>
-            </template>
-            <v-toolbar-title class="text-h5">
-              {{ $t("pages.films.edit") + " " + film?.name }}
-            </v-toolbar-title>
-            <CloseBtn @click="showEditDialog = false" />
-          </v-toolbar>
-          <v-card-text>
-            <FilmForm
-              :film-form="filmForm"
-              :genres="genres"
-              :actors="actors"
-              :directors="directors"
-              :producers="producers"
-              :writers="writers"
-              :loading="loading"
-              :composers="composers"
-              :network-error="Boolean(networkError)"
-            ></FilmForm>
-          </v-card-text>
-          <v-card-actions>
-            <v-btn
-              prepend-icon="mdi-check"
-              color="primary"
-              @click="sumbitEdit"
-              >{{ $t("actions.submit") }}</v-btn
-            >
-          </v-card-actions>
-        </v-card>
-      </v-sheet>
-    </v-dialog>
     <v-snackbar
       v-model="showSnackbar"
       color="success"
@@ -278,7 +242,7 @@ const filmActors = computed(() => {
   let actorObj = <CardDetails>{};
   let actorsArr = <CardDetails[]>[];
 
-  if (film.value?.actorNames.length) {
+  if (film.value?.actorNames && film.value?.actorNames.length) {
     film.value?.actorNames.forEach((name: string) => {
       const actorId =
         film.value?.actorIds[film.value?.actorNames.indexOf(name as never)];
@@ -314,7 +278,7 @@ const computedFilmDetails = computed(() => {
       },
       {
         name: "forms.film.genres",
-        value: film.value?.genreNames.join(", ") || "",
+        value: film.value?.genreNames ? film.value?.genreNames.join(", ") : "",
         icon: "mdi-filmstrip",
       },
       {

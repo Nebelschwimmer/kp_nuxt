@@ -1,19 +1,17 @@
 import { title } from 'process';
 <template>
-  <v-toolbar density="comfortable" class="px-2"   color="transparent">
+  <v-toolbar density="comfortable" class="px-2" color="transparent">
     <template #prepend>
       <v-icon :icon="icon"></v-icon>
     </template>
     <v-toolbar-title>
-     {{
-        !editMode ? $t(title) : ($t(title) + " (" + $t("actions.editing") + ")")
+      {{
+        !editMode ? $t(title) : $t(title) + " (" + $t("actions.editing") + ")"
       }}
     </v-toolbar-title>
 
     <v-btn
-      
-    icon
-
+      icon
       :color="editMode ? 'warning' : 'secondary'"
       @click="$emit('toggle:editMode')"
     >

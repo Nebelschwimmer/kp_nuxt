@@ -1,33 +1,33 @@
 <template>
   <div>
     <v-card rounded="lg" class="pa-2 mb-3" max-width="100%">
-        <v-banner
+      <v-banner
         v-if="editMode"
-          rounded="lg"
-          elevation="2"
-          :color="computedGalleryEmptyCondition ? 'secondary' : 'error'"
-          :icon="
-            !computedGalleryEmptyCondition ? 'mdi-image-off' : 'mdi-information'
-          "
-          :text="
-            !computedGalleryEmptyCondition
-              ? $t('pages.films.no_gallery')
-              : $t('pages.films.gallery_banner')
-          "
-        >
-          <template #actions>
-            <v-btn
-              v-if="computedGalleryEmptyCondition"
-              :disabled="!selected.length"
-              color="error"
-              prepend-icon="mdi-delete"
-              @click="$emit('delete:selected')"
-            >
-              {{ $t("actions.remove") }}</v-btn
-            >
-          </template>
-        </v-banner>
-    
+        rounded="lg"
+        elevation="2"
+        :color="computedGalleryEmptyCondition ? 'secondary' : 'error'"
+        :icon="
+          !computedGalleryEmptyCondition ? 'mdi-image-off' : 'mdi-information'
+        "
+        :text="
+          !computedGalleryEmptyCondition
+            ? $t('pages.films.no_gallery')
+            : $t('pages.films.gallery_banner')
+        "
+      >
+        <template #actions>
+          <v-btn
+            v-if="computedGalleryEmptyCondition"
+            :disabled="!selected.length"
+            color="error"
+            prepend-icon="mdi-delete"
+            @click="$emit('delete:selected')"
+          >
+            {{ $t("actions.remove") }}</v-btn
+          >
+        </template>
+      </v-banner>
+
       <v-card-text>
         <v-slide-group v-if="!editMode">
           <v-slide-group-item
@@ -37,12 +37,16 @@
           >
             <v-card
               :height="SLIDER_HEIGHT"
-              :width="SLIDER_HEIGHT - 50"
+              :width="CARD_WIDTH"
               class="ma-2"
               @click="openGalleryOnClick(index)"
             >
               <template #image>
-                <BaseImg v-if="img" :img-src="img" :img-options="galleryImgOptions">
+                <BaseImg
+                  v-if="img"
+                  :img-src="img"
+                  :img-options="galleryImgOptions"
+                >
                 </BaseImg>
                 <v-sheet
                   v-else
@@ -80,7 +84,10 @@
                     :variant="isSelected ? 'tonal' : 'outlined'"
                     rounded="lg"
                     :color="isSelected ? 'error' : ''"
-                    :class="['d-flex align-center justify-center', selectedClass]"
+                    :class="[
+                      'd-flex align-center justify-center',
+                      selectedClass,
+                    ]"
                     :height="SLIDER_HEIGHT"
                     :width="CARD_WIDTH"
                     :image="img"
@@ -152,15 +159,15 @@ const props = defineProps<{
   editMode: boolean;
   selected: number[];
 }>();
-const showUploader = ref(false);
+const showUploader = ref<boolean>(false);
 const SLIDER_HEIGHT = 220;
 const CARD_WIDTH = 180;
 
-const computedGalleryEmptyCondition = computed(() => {
-  return sliderGalleryArr.value.filter((item) => item !== "").length;
+const computedGalleryEmptyCondition = computed((): number => {
+  return sliderGalleryArr.value.filter((item: string) => item !== "").length;
 });
 
-const fileInputRef = ref();
+
 const GALLERY_SIZE = 8;
 const showGallery = ref(false);
 const activeImg = ref(0);

@@ -9,7 +9,6 @@
 
         <CloseBtn @click="$emit('close')" />
       </v-toolbar>
-
       <v-card-text>
         <v-carousel
           :model-value="activeImg"
@@ -42,10 +41,6 @@ defineProps<{
   name?: string;
   activeImg: number;
 }>();
-
-const id = useRoute().params.id as string;
-
-const showGalleryDialog = ref<boolean>(false);
 </script>
 
 <style></style>
