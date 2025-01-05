@@ -16,12 +16,13 @@ onMounted(async () => {
 
 <style lang="scss">
 $background: #000000;
-$surface: #1616167e;
+
+
 $primary: rgb(105, 153, 201, 0);
 $secondary: #e0974aa8;
 $accent: #ed7b49;
 $error: #f44336;
-$info: #ffbd69;
+$info: #9450a5;
 $success: #4caf50;
 $warning: #fb8c00;
 
@@ -45,10 +46,10 @@ $warning: #fb8c00;
 
 .bg-gradient {
   background-image: linear-gradient(
-    0deg,
-    rgba(105, 153, 201, 0.05) 0%,
-    rgb(237, 123, 73, 0.06) 50%,
-    rgb(237, 123, 73, 0.04) 100%
+    145deg,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.05) 50%,
+    rgba(0, 0, 0, 0.2) 100%
   ) !important;
 }
 
@@ -56,28 +57,15 @@ a {
   text-decoration: none;
   color: inherit;
 }
-aside {
-  background-color: rgba($color: #535353, $alpha: 0.1) !important;
+.base-card{
+  background-color: rgba(0, 0, 0, 0.1) !important;
 }
 
-.card-header {
-  background-color: rgba($color: #363636, $alpha: 0.5) !important;
-}
-section {
-  background-image: linear-gradient(
-    45deg,
-    rgba(105, 153, 201, 0.1) 0%,
-    rgb(237, 123, 73, 0.06) 50%,
-    rgb(237, 123, 73, 0.2) 100%
-  ) !important;
-}
 .img-blur {
-  filter: blur(12px);
-  opacity: 0.7;
+  filter: grayscale(0.5) blur(12px);
 }
 p {
   margin-top: 1rem;
-  text-indent: 3rem !important;
-  line-height: 2rem !important;
+  text-indent: 2rem !important;
 }
 </style>

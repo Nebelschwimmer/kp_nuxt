@@ -112,10 +112,12 @@ export default {
   },
   actions: {
     title: "Actions",
+    view: "Voir",
     submit: "Soumettre",
     add: "Ajouter",
     upload: "Télécharger",
     edit: "Modifier",
+    editing: "Mdification",
     back: "Retour",
     remove: "Supprimer",
     cancel: "Annuler",
@@ -232,6 +234,7 @@ export default {
       no_actors_data: "Aucune information sur les acteurs",
       assess: "Evaluer",
       team: "Equipe",
+      gallery_banner: "Choississez les images à effacer ou ajouter de nouvelles si disponible",
     },
     persons: {
       title: "Personnes",

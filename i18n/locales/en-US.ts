@@ -116,6 +116,7 @@ export default {
   actions: {
     title: "Actions",
     submit: "Submit",
+    view: "View",
     upload: "Upload",
     add: "Add",
     edit: "Edit",
@@ -206,6 +207,7 @@ export default {
       title: "Films",
       edit_description: "Edit description",
       edit_gallery: "Edit gallery",
+      editing: "Editing",
       list: "Films list",
       details: "details",
       details_film: "Film details",
@@ -236,6 +238,7 @@ export default {
       no_actors_data: "No actors data",
       assess: "Assess",
       team: "Team",
+      gallery_banner: "Choose files to delete or add new ones if available",
     },
     persons: {
       firstname: "Firstname",

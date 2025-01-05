@@ -28,10 +28,10 @@
         </v-toolbar>
       </template>
       <template v-slot:default="{ items }">
-        <v-list variant="text" class="base-card" tag="section">
+        <v-list variant="text"  lines="one" tag="section">
           <v-list-item
             v-for="(item, i) in items"
-            lines="two"
+           
             v-bind="item.raw"
             :key="i"
             :variant="item.raw.variant"

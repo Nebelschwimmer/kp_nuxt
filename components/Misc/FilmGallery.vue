@@ -1,132 +1,165 @@
 <template>
   <div>
-    <v-card :title="$t('pages.films.gallery')" >
-      <v-divider></v-divider>
-      <template #append>
-        <v-btn
-          size="small"
-          icon
-          :variant="editGalleryMode ? 'outlined' : 'tonal'"
-          :color="editGalleryMode ? 'error' : 'primary'"
-          @click="editGalleryMode = !editGalleryMode"
+    <v-card rounded="lg" class="pa-2 mb-3" max-width="100%">
+        <v-banner
+        v-if="editMode"
+          rounded="lg"
+          elevation="2"
+          :color="computedGalleryEmptyCondition ? 'secondary' : 'error'"
+          :icon="
+            !computedGalleryEmptyCondition ? 'mdi-image-off' : 'mdi-information'
+          "
+          :text="
+            !computedGalleryEmptyCondition
+              ? $t('pages.films.no_gallery')
+              : $t('pages.films.gallery_banner')
+          "
         >
-        <v-icon>{{ editGalleryMode ? 'mdi-close' : 'mdi-pencil' }}</v-icon>
-        </v-btn>
-      </template>
-      <v-card-text>
-        <v-sheet rounded="lg" color="transparent" max-width="100%">
-          <v-slide-group v-if="!editGalleryMode">
-            <v-slide-group-item
-              v-for="(img, index) in sliderGalleryArr"
-              :key="index"
-              :value="index"
+          <template #actions>
+            <v-btn
+              v-if="computedGalleryEmptyCondition"
+              :disabled="!selected.length"
+              color="error"
+              prepend-icon="mdi-delete"
+              @click="$emit('delete:selected')"
             >
-              <v-card
-                variant="plain"
-                :height="SLIDER_HEIGHT"
-                :width="SLIDER_HEIGHT - 50"
-                class="ma-2"
-                @click="openGalleryOnClick(index)"
+              {{ $t("actions.remove") }}</v-btn
+            >
+          </template>
+        </v-banner>
+    
+      <v-card-text>
+        <v-slide-group v-if="!editMode">
+          <v-slide-group-item
+            v-for="(img, index) in sliderGalleryArr"
+            :key="index"
+            :value="index"
+          >
+            <v-card
+              :height="SLIDER_HEIGHT"
+              :width="SLIDER_HEIGHT - 50"
+              class="ma-2"
+              @click="openGalleryOnClick(index)"
+            >
+              <template #image>
+                <BaseImg v-if="img" :img-src="img" :img-options="galleryImgOptions">
+                </BaseImg>
+                <v-sheet
+                  v-else
+                  rounded="lg"
+                  color="transparent"
+                  class="placeholder-img cursor-pointer"
+                  width="100%"
+                  height="100%"
+                >
+                  <ImgPlaceholder
+                    display-title
+                    :title="$t('general.available_for_upload')"
+                  />
+                </v-sheet>
+              </template>
+            </v-card>
+          </v-slide-group-item>
+        </v-slide-group>
+        <v-item-group
+          v-else
+          multiple
+          :model-value="selected"
+          @update:model-value="$emit('update:selected', $event)"
+        >
+          <v-container>
+            <v-row>
+              <v-col
+                cols="auto"
+                v-for="(img, index) in sliderGalleryArr"
+                :key="index"
               >
-                <template #image>
-                  <BaseImg
+                <v-item v-slot="{ isSelected, selectedClass, toggle }">
+                  <v-card
                     v-if="img"
-                    :img-src="img"
-                    :img-options="galleryImgOptions"
+                    :variant="isSelected ? 'tonal' : 'outlined'"
+                    rounded="lg"
+                    :color="isSelected ? 'error' : ''"
+                    :class="['d-flex align-center justify-center', selectedClass]"
+                    :height="SLIDER_HEIGHT"
+                    :width="CARD_WIDTH"
+                    :image="img"
+                    @click="toggle"
                   >
-                  </BaseImg>
+                    <v-scroll-y-transition>
+                      <div
+                        v-if="isSelected"
+                        :class="[
+                          'd-flex fill-height w-100 flex-column align-center justify-center position-relative',
+                          { 'bg-selected': isSelected },
+                        ]"
+                      >
+                        <v-btn icon variant="tonal" color="white">
+                          <v-icon size="x-large" class="position-absolute"
+                            >mdi-close</v-icon
+                          >
+                        </v-btn>
+                      </div>
+                    </v-scroll-y-transition>
+                  </v-card>
                   <v-sheet
                     v-else
                     rounded="lg"
                     color="transparent"
                     class="placeholder-img cursor-pointer"
-                    width="100%"
-                    height="100%"
-                    @click="editGalleryMode = true"
+                    :height="SLIDER_HEIGHT"
+                    :width="CARD_WIDTH"
                   >
-                    <ImgPlaceholder
-                      display-title
-                      :title="$t('general.available_for_upload')"
-                    />
-                  </v-sheet>
-                </template>
-              </v-card>
-            </v-slide-group-item>
-          </v-slide-group>
-          <v-item-group v-else>
-            <v-container>
-              <v-row align-content="center">
-                <v-col v-for="(img, index) in sliderGalleryArr" :key="index">
-                  <v-item v-slot="{ isSelected, toggle }">
-                    <v-card
-                      v-if="img"
-                      variant="plain"
-                      rounded="lg"
-                      :color="isSelected ? 'error' : ''"
-                      class="d-flex align-center"
-                      :height="SLIDER_HEIGHT"
-                      :width="SLIDER_HEIGHT - 50"
-                      :image="img"
-                      @click="toggle"
+                    <div
+                      class="fill-height position-relative d-flex flex-column align-end justify-end"
                     >
-                      <v-scroll-y-transition> </v-scroll-y-transition>
-                    </v-card>
-                    <v-sheet
-                      v-else
-                      rounded="lg"
-                      color="transparent"
-                      class="placeholder-img cursor-pointer"
-                      :height="SLIDER_HEIGHT"
-                      :width="SLIDER_HEIGHT - 50"
-                    >
-                      <div
-                        class="fill-height position-relative d-flex flex-column align-end justify-end"
+                      <v-btn
+                        block
+                        prepend-icon="mdi-image-plus"
+                        variant="tonal"
+                        color="secondary"
+                        @click="showUploader = true"
                       >
-                        <v-btn
-                          block
-                          variant="tonal"
-                          color="secondary"
-                          @click="showUploader = true"
-                        >
-                          <v-file-input
-                            ref="fileInputRef"
-                            hide-input
-                            prepend-icon="mdi-image-plus"
-                            :label="$t('general.available_for_upload')"
-                          >
-                          </v-file-input>
-                        </v-btn>
-                      </div>
-                    </v-sheet>
-                  </v-item>
-                </v-col>
-              </v-row>
-            </v-container>
-          </v-item-group>
-        </v-sheet>
+                        {{ $t("actions.upload") }}
+                      </v-btn>
+                    </div>
+                  </v-sheet>
+                </v-item>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-item-group>
       </v-card-text>
     </v-card>
     <GalleryViewer
-        v-model:show-gallery="showGallery"
-        v-model:active-img="activeImg"
-        :gallery-content="film?.gallery || []"
-        :name="film?.name"
-        :no-content-label="$t('pages.films.no_gallery')"
-        @close="showGallery = false"
-      />
+      v-model:show-gallery="showGallery"
+      v-model:active-img="activeImg"
+      :gallery-content="film?.gallery || []"
+      :name="film?.name"
+      :no-content-label="$t('pages.films.no_gallery')"
+      @close="showGallery = false"
+    />
   </div>
 </template>
 
 <script lang="ts" setup>
-import ImgPlaceholder from '../Containment/Img/ImgPlaceholder.vue';
-import BaseImg from '../Containment/Img/BaseImg.vue';
-import GalleryViewer from '../Misc/GalleryViewer.vue';
+import ImgPlaceholder from "../Containment/Img/ImgPlaceholder.vue";
+import BaseImg from "../Containment/Img/BaseImg.vue";
+import GalleryViewer from "../Misc/GalleryViewer.vue";
+defineEmits(["update:selected", "delete:selected", "uploader:open"]);
 const props = defineProps<{
   film: Film | null;
+  editMode: boolean;
+  selected: number[];
 }>();
 const showUploader = ref(false);
-const SLIDER_HEIGHT = 200;
-const editGalleryMode = ref(false);
+const SLIDER_HEIGHT = 220;
+const CARD_WIDTH = 180;
+
+const computedGalleryEmptyCondition = computed(() => {
+  return sliderGalleryArr.value.filter((item) => item !== "").length;
+});
+
 const fileInputRef = ref();
 const GALLERY_SIZE = 8;
 const showGallery = ref(false);
@@ -158,4 +191,8 @@ const sliderGalleryArr = computed(() => {
 });
 </script>
 
-<style></style>
+<style scoped lang="scss">
+.bg-selected {
+  background-color: rgba(255, 0, 0, 0.2) !important;
+}
+</style>

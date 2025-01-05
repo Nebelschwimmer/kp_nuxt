@@ -2,11 +2,11 @@
   <v-app-bar
     scroll-behavior="fade-image"
     scroll-threshold="120"
-    class="opacity-90"
+    color="primary"
   >
     <template #image>
       <v-img
-        gradient="45deg, rgba(105, 153, 201, 0.1) 0%, rgb(237, 123, 73, 0.06) 50%, rgb(237, 123, 73, 0.2) 100%"
+        gradient="45deg, rgba(0, 0, 0, 0.3) 0%, rgb(0, 0, 0, 0.1) 50%, rgb(0, 0, 0, 0.2) 100%"
       ></v-img>
     </template>
     <template #prepend>
@@ -16,7 +16,10 @@
     <v-app-bar-title>
       <nuxt-link to="/"> Kinopoisk Lite </nuxt-link>
     </v-app-bar-title>
-
+    
+    <v-btn stacked   @click="toggleDark">
+      <v-icon>mdi-weather-sunny</v-icon>
+    </v-btn>
     <v-btn stacked class="text-none">
       <v-badge
         color="transparent"
@@ -45,7 +48,7 @@
 </template>
 
 <script lang="ts" setup>
-import ProfileNav from "~/components/Navigation/ProfileNav.vue";
+const theme = useTheme();
 defineEmits(["toggle:drawer"]);
 const changeLanguage = (lang: string) => {
   setLocale(lang);
@@ -74,4 +77,9 @@ const languageOptions = [
 const computedBadgeFlag = computed(() => {
   return languageOptions.find((item) => item.value === locale.value)?.flag;
 });
+const toggleDark = () => {
+  theme.global.name.value = theme.global.current.value.dark
+    ? "light"
+    : "dark";
+}
 </script>

@@ -17,7 +17,6 @@
           ></v-rating>
         </ClientOnly>
       </template>
-      <template #gallery> </template>
       <template #text>
         <v-container class="rounded-lg pa-2">
           <v-row>
@@ -43,56 +42,74 @@
                 <v-list-item
                   v-for="(detail, index) in filmActors.list"
                   :key="index"
+                  :title="detail.name"
+                  :value="detail.name"
+                  :to="detail.to"
                   rounded="lg"
                   density="compact"
                   prepend-icon="mdi-account"
-                  :title="detail.name"
                   lines="one"
                   base-color="primary"
-                  :value="detail.name"
-                  :to="detail.to"
                 >
                 </v-list-item>
               </v-card>
             </v-col>
-            <v-divider v-if="$vuetify.display.mdAndUp" vertical></v-divider>
+
             <v-col v-bind="{ ...secondColumnParams }" tag="section">
-              <v-row>
-                <v-col>
-                  <v-card :title="$t('pages.films.description')">
-                    <template #append>
-                      <v-btn
-                        size="small"
-                        icon
-                        :variant="editDescriptionMode ? 'outlined' : 'tonal'"
-                        :color="editDescriptionMode ? 'error' : 'primary'"
-                        @click="editDescriptionMode = !editDescriptionMode"
-                      >
-                        <v-icon>{{
-                          editDescriptionMode ? "mdi-close" : "mdi-pencil"
-                        }}</v-icon>
-                      </v-btn>
-                    </template>
-                    <v-divider></v-divider>
-                    <v-card-text>
-                      <v-sheet
-                        v-if="!editDescriptionMode"
-                        color="transparent"
-                        class="text-body-1 overflow-y-auto"
-                      >
-                        <div
-                          v-for="(paragraph, index) in film?.description.split(
-                            '\n'
-                          )"
-                          :key="index"
+              <v-container>
+                <v-row>
+                  <v-col>
+                    <v-card variant="elevated" class="base-card">
+                      <EditToolBar
+                        :title="$t('pages.films.gallery')"
+                        icon="mdi-view-gallery"
+                        :edit-mode="editGalleryMode"
+                        @toggle:edit-mode="editGalleryMode = !editGalleryMode"
+                      />
+                    
+                        <v-card-text>
+                          <FilmGallery
+                            v-model:selected="selectedImagesIndices"
+                            :film="film"
+                            :edit-mode="editGalleryMode"
+                            @update:selected="selectedImagesIndices = $event"
+                            @delete:selected="showConfirmDialog = true"
+                          />
+                        </v-card-text>
+                    </v-card>
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col>
+                    <v-card class="base-card">
+                      <EditToolBar
+                        :title="$t('pages.films.description')"
+                        icon="mdi-text"
+                        :edit-mode="editDescriptionMode"
+                        @toggle:edit-mode="editDescriptionMode = !editDescriptionMode"
+                      />
+                      <v-card-text>
+                        <v-sheet
+                          v-if="!editDescriptionMode"
+                          color="transparent"
+                          class="text-body-1 overflow-y-auto"
+                          min-height="100px"
                         >
-                          <p>
-                            {{ paragraph }}
-                          </p>
-                        </div>
-                      </v-sheet>
-                      <template v-else>
+                          <div
+                            v-if="filmForm.description"
+                            v-for="(paragraph, index) in filmForm.description.split(
+                              '\n'
+                            )"
+                            :key="index"
+                          >
+                            <p>{{ paragraph }}</p>
+                          </div>
+                          <div v-else>
+                            <v-progress-circular indeterminate></v-progress-circular>
+                          </div>
+                        </v-sheet>
                         <v-confirm-edit
+                          v-else
                           v-model="filmForm.description"
                           @save="sumbitEdit"
                         >
@@ -113,16 +130,11 @@
                             </v-card>
                           </template>
                         </v-confirm-edit>
-                      </template>
-                    </v-card-text>
-                  </v-card>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col>
-                  <FilmGallery :film="film" />
-                </v-col>
-              </v-row>
+                      </v-card-text>
+                    </v-card>
+                  </v-col>
+                </v-row>
+              </v-container>
             </v-col>
           </v-row>
           <v-row>
@@ -184,6 +196,13 @@
     >
       {{ $t("toast.messages.success.edit") }}
     </v-snackbar>
+    <ConfirmDialog
+      v-model="showConfirmDialog"
+      type="error"
+      :text="$t('forms.film.gallery_item_delete_confirm')"
+      :loading="loading"
+      @confirm="handleGalleryItemsDelete"
+    ></ConfirmDialog>
   </div>
 </template>
 
@@ -194,9 +213,14 @@ import { storeToRefs } from "pinia";
 import FilmForm from "~/components/FilmStorageComponents/FilmForm.vue";
 import CloseBtn from "~/components/Containment/Btns/CloseBtn.vue";
 import FilmGallery from "~/components/Misc/FilmGallery.vue";
-
+import ConfirmDialog from "~/components/Dialogs/ConfirmDialog.vue";
+import EditToolBar from "~/components/Layout/Toolbars/EditToolBar.vue";
 const TIMEOUT = 2000;
+
 const editDescriptionMode = ref(false);
+const selectedImagesIndices = ref<number[]>([]);
+const showConfirmDialog = ref(false);
+const editGalleryMode = ref(false);
 const firstColumnParams = {
   cols: 12,
   sm: 12,
@@ -237,9 +261,19 @@ const {
   fetchComposers,
   uploadGallery,
   clearFilmForm,
+  deleteGalleryItems,
 } = useFilmStore();
 const { locale, t } = useI18n();
 const showEditDialog = ref(false);
+const imagesToDelete = computed(() => {
+  return film.value?.gallery
+    .filter((_, index: number) => selectedImagesIndices.value.includes(index))
+    .map((imageName: string) => {
+      const fileName = imageName ? imageName.split("/").at(-1) : "";
+
+      return fileName ? fileName.split(".")[0] : "";
+    });
+}) as ComputedRef<string[]>;
 const filmActors = computed(() => {
   let actorObj = <CardDetails>{};
   let actorsArr = <CardDetails[]>[];
@@ -316,15 +350,37 @@ const computedFilmDetails = computed(() => {
   };
 }) as ComputedRef<DetailList>;
 
-const sumbitEdit = async () => {
-  if (await editFilm()) {
-    await fetchData();
-    await nextTick();
-    showEditDialog.value = false;
-    showSnackbar.value = true;
+const fetchData = async () => {
+  const filmId = Number(useRoute().params.id);
+  await Promise.allSettled([
+    fetchGenres(locale.value),
+    fetchActors(),
+    fetchDirectors(),
+    fetchProducers(),
+    fetchWriters(),
+    fetchComposers(),
+    fetchFilmById(filmId, locale.value),
+    fetchFilmForm(filmId, locale.value),
+  ]);
+};
 
+const sumbitEdit = async () => {
+  await editFilm();
+  await fetchData();
+  await nextTick(() => {
+    showSnackbar.value = true;
     editDescriptionMode.value = !editDescriptionMode.value;
-  }
+    showEditDialog.value = false;
+  });
+};
+
+const handleGalleryItemsDelete = async () => {
+  await deleteGalleryItems(imagesToDelete.value);
+  await fetchData();
+  await nextTick(() => {
+    showSnackbar.value = true;
+    showConfirmDialog.value = false;
+  });
 };
 
 watch(
@@ -336,23 +392,8 @@ watch(
   { immediate: true }
 );
 
-const fetchData = async () => {
-  const filmId = Number(useRoute().params.id);
-  await Promise.allSettled([
-    fetchFilmById(filmId, locale.value),
-    fetchFilmForm(filmId, locale.value),
-    fetchGenres(locale.value),
-    fetchActors(),
-    fetchDirectors(),
-    fetchProducers(),
-    fetchWriters(),
-    fetchComposers(),
-  ]);
-};
-
 onMounted(async () => {
   clearFilmForm();
-  const filmId = Number(useRoute().params.id);
   await fetchData();
 });
 

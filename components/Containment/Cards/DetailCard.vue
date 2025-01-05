@@ -1,18 +1,11 @@
 <template>
-  <v-card variant="elevated" :image="bgImg" :loading="loading">
-    <template #image>
-      <v-img
-        class="img-blur"
-        gradient="135deg, rgba(0, 0, 0, 0.6) 0%,  rgb(0, 0, 0, 0.8) 100%"
-      ></v-img>
+  <v-card variant="elevated" :loading="loading" height="100%" elevation="10">
+    <v-toolbar :height="200" :image="bgImg" class="pa-2" >
+      <template #image>
+      <v-img class="img-blur opacity-30"></v-img>
     </template>
-    <v-toolbar
-      :height="100"
-      class="card-header pa-2"
-      @click="$emit('edit')"
-    >
       <template #prepend>
-        <v-avatar size="100" variant="tonal">
+        <v-avatar size="150">
           <BaseImg
             :img-src="avatar || ''"
             :img-options="avatarImgOptions"
@@ -22,10 +15,10 @@
       <template #title>
         <div class="d-flex flex-column ga-1">
           <span
-            class="text-h5 text-md-h4 text-lg-h4 text-xl-h4 font-weight-bold"
+            class="text-body-1 text-md-h4 text-lg-h4 text-xl-h4 font-weight-bold"
             >{{ title }}</span
           >
-          <span class="text-subtitle-1">
+          <span class="text-caption text-truncated text-lg-subtitle-1">
             {{ subtitle }}
           </span>
         </div>

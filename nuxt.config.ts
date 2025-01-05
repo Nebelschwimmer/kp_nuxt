@@ -55,7 +55,6 @@ export default defineNuxtConfig({
         },
         VList:{
           variant: "text",
-          class: "base-card",
         },
         VCard:{
           variant: "text",
@@ -68,15 +67,26 @@ export default defineNuxtConfig({
             dark: true,
             colors: {
               primary: "#e0974a",
-              surface: "#1616167e",
               secondary: "#6999c9",
               accent: "#ed7b49",
               error: "#f44336",
-              info: "#FFBD69",
+              info: "#9450a5",
               success: "#4caf50",
               warning: "#fb8c00",
             },
           },
+          light:{
+            dark: false,
+            colors: {
+              primary: "#e0974a",
+              secondary: "#6999c9",
+              accent: "#ed7b49",
+              error: "#f44336",
+              info: "#9450a5",
+              success: "#4caf50",
+              warning: "#fb8c00",
+            },
+          }
         },
       },
     },
