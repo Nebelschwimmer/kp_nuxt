@@ -56,15 +56,28 @@ a {
   text-decoration: none;
   color: inherit;
 }
-.base-card {
-  background-color: rgba($color: #222222, $alpha: 0.6) !important;
+aside {
+  background-color: rgba($color: #535353, $alpha: 0.1) !important;
 }
 
 .card-header {
   background-color: rgba($color: #363636, $alpha: 0.5) !important;
 }
+section {
+  background-image: linear-gradient(
+    45deg,
+    rgba(105, 153, 201, 0.1) 0%,
+    rgb(237, 123, 73, 0.06) 50%,
+    rgb(237, 123, 73, 0.2) 100%
+  ) !important;
+}
 .img-blur {
   filter: blur(12px);
   opacity: 0.7;
+}
+p {
+  margin-top: 1rem;
+  text-indent: 3rem !important;
+  line-height: 2rem !important;
 }
 </style>

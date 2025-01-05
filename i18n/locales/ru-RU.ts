@@ -202,6 +202,8 @@ export default {
     films: {
       title: "Фильмы",
       List: "Список фильмов",
+      edit_description: "Редактировать описание",
+      edit_gallery: "Редактировать галерею",
       details: "подробности",
       details_film: "Подробности о фильме",
       name: "Название",

@@ -204,6 +204,8 @@ export default {
     },
     films: {
       title: "Films",
+      edit_description: "Edit description",
+      edit_gallery: "Edit gallery",
       list: "Films list",
       details: "details",
       details_film: "Film details",

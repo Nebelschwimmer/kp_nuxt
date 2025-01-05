@@ -1,6 +1,6 @@
 <template>
   <v-dialog :model-value="showGallery" fullscreen>
-    <v-card variant="tonal" color="black">
+    <v-sheet>
       <v-toolbar>
         <v-toolbar-title>
           {{ name }}:
@@ -50,32 +50,16 @@
           <CloseBtn @click="$emit('close')" />
         </v-toolbar-items>
       </v-toolbar>
-      <v-empty-state
-        v-if="!galleryContent.length || !galleryContent"
-        :headline="noContentLabel"
-        icon="mdi-image-off"
-        class="d-flex flex-column ga-2 align-center justify-center"
-      >
-        <template #actions>
-          <v-btn
-            prepend-icon="mdi-plus"
-            color="primary"
-            variant="outlined"
-            :to="`/films/${id}/edit#gallery_upload`"
-            >{{ $t("actions.add_img") }}</v-btn
-          >
-        </template>
-      </v-empty-state>
 
-      <v-card-text v-else>
+
+      <v-card-text>
         <v-carousel
-          v-model="activeImg"
+          :model-value="activeImg"
           touch
-          
           color="accent"
           progress="accent"
           height="800"
-          @update:model-value="activeImg = $event"
+        
         >
           <v-carousel-item
             v-for="(item, i) in galleryContent"
@@ -86,7 +70,7 @@
           </v-carousel-item>
         </v-carousel>
       </v-card-text>
-    </v-card>
+    </v-sheet>
   </v-dialog>
 </template>
 
@@ -98,12 +82,13 @@ defineProps<{
   galleryContent: string[] | string;
   noContentLabel?: string;
   name?: string;
+  activeImg: number;
 }>();
 
 const id = useRoute().params.id as string;
 
 const showGalleryDialog = ref<boolean>(false);
-const activeImg = ref<number>(0);
+
 </script>
 
 <style></style>

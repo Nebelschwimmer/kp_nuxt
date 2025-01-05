@@ -1,5 +1,5 @@
 <template>
-      <v-container>
+      <v-container tag="section">
         <v-row>
           <v-col>
             <BaseDataIterator

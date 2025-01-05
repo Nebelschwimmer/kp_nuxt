@@ -59,7 +59,6 @@ export default defineNuxtConfig({
         },
         VCard:{
           variant: "text",
-          class: "base-card",
         }
       },
       theme: {

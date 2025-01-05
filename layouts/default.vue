@@ -34,6 +34,19 @@
         location="right"
         class="bg-gradient"
       >
+        <v-fab
+          v-if="$vuetify.display.mdAndUp"
+          :active="showScrollFab"
+          class="mr-6"
+          icon="mdi-arrow-up"
+          color="secondary"
+          location="bottom end"
+          size="64"
+          layout
+          app
+          appear
+          @click="scrollToTop"
+        ></v-fab>
       </v-navigation-drawer>
     </ClientOnly>
     <v-main v-scroll="onScroll" style="min-height: 100dvh" class="bg-gradient">
@@ -75,19 +88,6 @@
       :title="$t('pages.network_error')"
       @close="handleErrorAlertClose"
     />
-    <v-fab
-      v-if="$vuetify.display.mdAndUp"
-      :active="showScrollFab"
-      class="mr-6"
-      icon="mdi-arrow-up"
-      color="secondary"
-      location="bottom end"
-      size="64"
-      layout
-      app
-      appear
-      @click="scrollToTop"
-    ></v-fab>
   </v-layout>
 </template>
 

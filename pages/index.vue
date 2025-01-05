@@ -14,7 +14,7 @@
           >
             <v-card
               variant="text"
-              :height="$vuetify.display.smAndDown ? 200 : 340"
+              :height="$vuetify.display.smAndDown ? 240 : 340"
               :width="$vuetify.display.smAndDown ? 160 : 300"
               class="ma-2"
               @click="navigateTo('/films/' + film.id)"

@@ -3,7 +3,6 @@
     scroll-behavior="fade-image"
     scroll-threshold="120"
     class="opacity-90"
-    
   >
     <template #image>
       <v-img

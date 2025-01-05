@@ -20,12 +20,14 @@
         @click="$emit('click')"
       >
         <template #placeholder>
-          <ImgPlaceholder v-bind="imgOptions.placeholderOptions" />
+          <ImgPlaceholder v-bind="imgOptions.placeholderOptions"/>
+    
         </template>
         <template #error>
-          <v-sheet class="d-flex flex-column align-center justify-center fill-height">
+          <v-sheet
+            class="d-flex flex-column align-center justify-center fill-height"
+          >
             <v-icon icon="mdi-image-off" color="error" size="small"></v-icon>
-  
           </v-sheet>
         </template>
         <v-expand-transition v-if="imgOptions.removable">
@@ -51,7 +53,7 @@
 </template>
 
 <script lang="ts" setup>
-defineEmits(["remove", "click"]);
+defineEmits(["remove", "click", "uploader:open"]);
 import ImgPlaceholder from "./ImgPlaceholder.vue";
 defineProps<{
   imgSrc: string;

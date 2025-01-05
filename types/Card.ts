@@ -10,7 +10,7 @@ declare global {
 
   interface DetailList {
     subheader?: string;
-    items: CardDetails[];
+    list: CardDetails[];
   }
 
   interface CardItem {

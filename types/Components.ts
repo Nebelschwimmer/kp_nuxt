@@ -36,6 +36,7 @@ declare global {
     removable?: boolean;
     uploaded?: boolean;
     placeholderOptions?: ImgPlaceholderOptions;
+    uploader?: boolean;
   }
 
   interface ActionBtnProps {
