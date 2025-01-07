@@ -1,15 +1,27 @@
 <template>
   <v-app id="inspire">
-    <v-layout class="rounded rounded-md">
-      <Header @toggle:drawer="drawer = !drawer"></Header>
-    
+    <v-layout class="rounded rounded-lg">
       <ClientOnly>
-        <v-navigation-drawer v-model="drawer" :rail="$vuetify.display.mdAndDown">
-          <v-list nav height="100%" class="bg-gradient">
+        <v-navigation-drawer
+          v-model="drawer"
+          order="0"
+          v-if="$vuetify.display.mdAndUp"
+          location="left"
+          border="0"
+        >
+        </v-navigation-drawer>
+        <v-navigation-drawer
+          v-model="drawer"
+          :rail="$vuetify.display.mdAndDown"
+          order="1"
+          border="0"
+        >
+          <v-list nav class="pt-0" >
             <v-list-item
               :active="$route.name === 'index'"
               :color="$route.name === 'index' ? 'secondary' : ''"
               to="/"
+              rounded="lg"
               prepend-icon="mdi-home"
               :title="$t('nav.home')"
             >
@@ -18,6 +30,7 @@
               :active="$route.name === 'films'"
               :color="$route.name === 'films' ? 'secondary' : ''"
               prepend-icon="mdi-filmstrip"
+              rounded="lg"
               :title="$t('nav.films')"
               to="/films"
             >
@@ -27,6 +40,7 @@
               :active="$route.name === 'persons'"
               :color="$route.name === 'persons' ? 'secondary' : ''"
               prepend-icon="mdi-account-circle"
+              rounded="lg"
               :title="$t('nav.persons')"
             ></v-list-item>
           </v-list>
@@ -35,71 +49,56 @@
           v-model="drawer"
           v-if="$vuetify.display.mdAndUp"
           location="right"
-          class="bg-gradient"
+          border="0"
         >
-         
         </v-navigation-drawer>
+        <Header @toggle:drawer="drawer = !drawer" :order="0"></Header>
       </ClientOnly>
-    
-      <v-main
-        style="min-height: calc(100vh - 64px)"
-        v-scroll="onScroll"
-      >
-      <v-card class="rounded rounded-md " height="100%">
-        <v-toolbar density="compact" class="mt-2" >
-            <template #prepend>
-              <v-btn stacked  @click="$router.back()">
-                <v-icon>mdi-arrow-left</v-icon>
-              </v-btn>
-            </template>
-          </v-toolbar>
-          <v-card-text>
-            <slot />
-          </v-card-text>
-      </v-card>
-      <ClientOnly>
-        <v-bottom-navigation v-if="$vuetify.display.smAndDown" grow mode="shift">
-          <v-btn
-            :active="$route.name === 'index'"
-            :color="$route.name === 'index' ? 'secondary' : ''"
-            to="/"
-            icon="mdi-home"
-          ></v-btn>
-          <v-btn
-            :active="$route.name === 'filmDetails'"
-            :color="$route.name === 'films' ? 'secondary' : ''"
-            to="/films"
-            icon="mdi-filmstrip"
-          ></v-btn>
-          <v-btn
-            :active="$route.name === 'persons'"
-            :color="$route.name === 'persons' ? 'secondary' : ''"
-            to="/persons"
-            icon="mdi-account-circle"
-          ></v-btn>
-        </v-bottom-navigation>
-      </ClientOnly>
-      <GlobalError
-        :show="Boolean(filmNetworkError || personNetworkError)"
-        type="error"
-        :text="filmNetworkError?.message || personNetworkError?.message || ''"
-        :title="$t('pages.network_error')"
-        @close="handleErrorAlertClose"
-      />
-    </v-main>
-  </v-layout>
-  <v-fab
-        v-if="$vuetify.display.mdAndUp"
-        :active="showScrollFab"
-        icon="mdi-arrow-up"
-        color="secondary"
-        location="bottom end"
-        size="64"
-        layout
-        app
-        appear
-        @click="scrollToTop"s
-      ></v-fab>
+
+      <v-main style="min-height: calc(100vh - 64px)" v-scroll="onScroll">
+        <slot />
+
+        <GlobalError
+          :show="Boolean(filmNetworkError || personNetworkError)"
+          type="error"
+          :text="filmNetworkError?.message || personNetworkError?.message || ''"
+          :title="$t('pages.network_error')"
+          @close="handleErrorAlertClose"
+        />
+      </v-main>
+    </v-layout>
+    <v-bottom-navigation v-if="$vuetify.display.smAndDown" grow mode="shift">
+      <v-btn
+        :active="$route.name === 'index'"
+        :color="$route.name === 'index' ? 'secondary' : ''"
+        to="/"
+        icon="mdi-home"
+      ></v-btn>
+      <v-btn
+        :active="$route.name === 'filmDetails'"
+        :color="$route.name === 'films' ? 'secondary' : ''"
+        to="/films"
+        icon="mdi-filmstrip"
+      ></v-btn>
+      <v-btn
+        :active="$route.name === 'persons'"
+        :color="$route.name === 'persons' ? 'secondary' : ''"
+        to="/persons"
+        icon="mdi-account-circle"
+      ></v-btn>
+    </v-bottom-navigation>
+    <v-fab
+      v-if="$vuetify.display.mdAndUp"
+      :active="showScrollFab"
+      icon="mdi-arrow-up"
+      color="secondary"
+      location="bottom end"
+      size="64"
+      layout
+      app
+      appear
+      @click="scrollToTop"
+    ></v-fab>
   </v-app>
 </template>
 
@@ -138,3 +137,5 @@ const scrollToTop = () => {
   });
 };
 </script>
+
+<style></style>

@@ -24,7 +24,7 @@
         </div>
       </template>
     </v-toolbar>
-    <v-card-text v-if="!loading">
+    <v-card-text>
       <slot name="text"></slot>
     </v-card-text>
   </v-card>

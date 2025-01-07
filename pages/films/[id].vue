@@ -1,7 +1,6 @@
 <template>
-  <div v-if="film">
+  <div>
     <DetailCard
-    
       :title="film?.name + ' (' + film?.releaseYear + ')' || ''"
       :subtitle="film?.slogan || ''"
       :bg-img="film?.gallery[0] || ''"
@@ -21,7 +20,7 @@
       <template #text>
         <v-container class="rounded-lg pa-2">
           <v-row>
-            <v-col v-bind="{ ...firstColumnParams }" tag="aside">
+            <v-col cols="12" sm="12" md="6" lg="4" xl="1"    tag="aside">
               <v-card :title="computedFilmDetails.subheader">
                 <v-list-item
                   v-for="(detail, index) in computedFilmDetails.list"
@@ -56,11 +55,11 @@
               </v-card>
             </v-col>
 
-            <v-col v-bind="{ ...secondColumnParams }" tag="section">
+            <v-col cols="12" sm="12" md="6" lg="8" xl="11" tag="section">
               <v-container>
                 <v-row>
                   <v-col>
-                    <v-card variant="elevated" class="base-card">
+                    <v-card variant="elevated">
                       <EditToolBar
                         :title="$t('pages.films.gallery')"
                         icon="mdi-view-gallery"
@@ -82,7 +81,7 @@
                 </v-row>
                 <v-row>
                   <v-col>
-                    <v-card class="base-card">
+                    <v-card variant="elevated">
                       <EditToolBar
                         :title="$t('pages.films.description')"
                         icon="mdi-text"
@@ -96,7 +95,7 @@
                           v-if="!editDescriptionMode"
                           color="transparent"
                           class="text-body-1 overflow-y-auto"
-                          min-height="100px"
+                          min-height="100"
                         >
                           <div
                             v-if="filmForm.description"
@@ -174,8 +173,6 @@
 import DetailCard from "~/components/Containment/Cards/DetailCard.vue";
 import { useFilmStore } from "~/store/filmStore";
 import { storeToRefs } from "pinia";
-import FilmForm from "~/components/FilmStorageComponents/FilmForm.vue";
-import CloseBtn from "~/components/Containment/Btns/CloseBtn.vue";
 import FilmGallery from "~/components/Misc/FilmGallery.vue";
 import ConfirmDialog from "~/components/Dialogs/ConfirmDialog.vue";
 import EditToolBar from "~/components/Layout/Toolbars/EditToolBar.vue";
@@ -197,7 +194,7 @@ const secondColumnParams = {
   sm: 12,
   md: 8,
   lg: 7,
-  xl: 9,
+  xl: 8,
 };
 const showSnackbar = ref(false);
 
@@ -233,11 +230,12 @@ const imagesToDelete = computed(() => {
   return film.value?.gallery
     .filter((_, index: number) => selectedImagesIndices.value.includes(index))
     .map((imageName: string) => {
-      const fileName = imageName ? imageName.split("/").at(-1) : "";
+      let fileName = imageName ? imageName.split("/").at(-1) : "";
 
       return fileName ? fileName.split(".")[0] : "";
     });
 }) as ComputedRef<string[]>;
+
 const filmActors = computed(() => {
   let actorObj = <CardDetails>{};
   let actorsArr = <CardDetails[]>[];
@@ -356,20 +354,20 @@ watch(
   { immediate: true }
 );
 
-onMounted(async () => {
-  clearFilmForm();
-  await fetchData();
-});
-
 setTimeout(() => {
   if (showSnackbar.value) {
     showSnackbar.value = false;
   }
 }, TIMEOUT);
 
+onMounted(async () => {
+  clearFilmForm();
+  await fetchData();
+});
+
 definePageMeta({
   key: (route) => route.params.id as string,
-  title: "Film Details",
+  title: "filmDetails",
 });
 </script>
 

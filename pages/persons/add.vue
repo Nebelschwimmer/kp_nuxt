@@ -1,62 +1,50 @@
 <template>
-  <BasePage
-    :loading="loading"
-    :error="networkError ?? null"
-    @alert:close="networkError = null"
-    toolbar
-    :toolbar-options="toolbarOptions"
-    overlay
-  >
-    <template #content>
-      <v-stepper v-model="step" class="border p-2 bg-transparent">
-        <v-stepper-header>
-          <v-stepper-item
-            :complete="step > 0"
-            :current="step === 0"
-            :color="step > 0 ? 'success' : 'primary'"
-            :title="$t('forms.person.stepper.first')"
-            value="1"
-          >
-          </v-stepper-item>
-          <v-divider></v-divider>
-          <v-stepper-item
-            :complete="step > 1"
-            :current="step === 1"
-            :color="step > 1 ? 'success' : 'primary'"
-            :title="$t('forms.person.stepper.second')"
-            value="2"
-            :subtitle="$t('forms.person.stepper.optional')"
-          >
-          </v-stepper-item>
-        </v-stepper-header>
-        <v-stepper-window>
-          <v-stepper-window-item value="1">
-            <PersonForm
-              :person-form="personForm"
-              :genders="genders"
-              :specialties="specialties"
-              :loading="loading"
-              @submit="handleGeneralInfoSubmit"
-            />
-          </v-stepper-window-item>
-          <v-stepper-window-item value="2"
-            ><PhotoUpload
-              :disabled="step !== 1"
-              @skip="navigateTo('/persons')"
-              @submit="handlePhotoUploadSubmit"
-          /></v-stepper-window-item>
-        </v-stepper-window>
-      </v-stepper>
-    </template>
-  </BasePage>
+  <v-stepper v-model="step" class="border p-2 bg-transparent">
+    <v-stepper-header>
+      <v-stepper-item
+        :complete="step > 0"
+        :current="step === 0"
+        :color="step > 0 ? 'success' : 'primary'"
+        :title="$t('forms.person.stepper.first')"
+        value="1"
+      >
+      </v-stepper-item>
+      <v-divider></v-divider>
+      <v-stepper-item
+        :complete="step > 1"
+        :current="step === 1"
+        :color="step > 1 ? 'success' : 'primary'"
+        :title="$t('forms.person.stepper.second')"
+        value="2"
+        :subtitle="$t('forms.person.stepper.optional')"
+      >
+      </v-stepper-item>
+    </v-stepper-header>
+    <v-stepper-window>
+      <v-stepper-window-item value="1">
+        <PersonForm
+          :person-form="personForm"
+          :genders="genders"
+          :specialties="specialties"
+          :loading="loading"
+          @submit="handleGeneralInfoSubmit"
+        />
+      </v-stepper-window-item>
+      <v-stepper-window-item value="2"
+        ><PhotoUpload
+          :disabled="step !== 1"
+          @skip="navigateTo('/persons')"
+          @submit="handlePhotoUploadSubmit"
+      /></v-stepper-window-item>
+    </v-stepper-window>
+  </v-stepper>
 </template>
 
 <script lang="ts" setup>
-import BasePage from "~/components/Layout/Page/BasePage.vue";
 import PersonForm from "~/components/PersonStorageComponents/PersonForm.vue";
 import PhotoUpload from "~/components/PersonStorageComponents/PhotoUpload.vue";
 import { usePersonStore } from "~/store/personStore";
-const { networkError, personForm, genders, specialties, loading, person } =
+const {  personForm, genders, specialties, loading, person } =
   storeToRefs(usePersonStore());
 const { fetchGenders, fetchSpecialties, addPerson, uploadPhoto } =
   usePersonStore();
@@ -113,8 +101,6 @@ const breadcrumbs = [
 
 const toolbarOptions = reactive({
   displayBackBtn: true,
-  prependIcon: "",
-  color: "secondary",
   breadcrumbs: breadcrumbs,
 });
 </script>
