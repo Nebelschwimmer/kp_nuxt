@@ -1,6 +1,10 @@
 <template>
-  <v-card variant="elevated" :loading="loading" height="100%" elevation="10">
-    <v-toolbar :height="200" :image="bgImg" class="pa-2" >
+  <v-card variant="text"   :loading="loading" height="100%" elevation="10">
+    <template #image>
+      <v-parallax :src="bgImg" height="1000" class="img-blur"></v-parallax>
+    </template>
+
+    <v-toolbar :height="200"  class="pa-2 stained-glass" color="transparent">
       <template #image>
       <v-img class="img-blur opacity-30"></v-img>
     </template>

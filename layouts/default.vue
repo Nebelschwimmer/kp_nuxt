@@ -1,12 +1,14 @@
 <template>
   <v-app id="inspire">
     <v-layout class="rounded rounded-lg">
+      <Header @toggle:drawer="drawer = !drawer" :order="1"></Header>
       <ClientOnly>
         <v-navigation-drawer
           v-model="drawer"
           order="0"
           v-if="$vuetify.display.mdAndUp"
           location="left"
+          color="transparent"
           border="0"
         >
         </v-navigation-drawer>
@@ -16,7 +18,7 @@
           order="1"
           border="0"
         >
-          <v-list nav class="pt-0" >
+          <v-list nav class="pt-0">
             <v-list-item
               :active="$route.name === 'index'"
               :color="$route.name === 'index' ? 'secondary' : ''"
@@ -52,11 +54,12 @@
           border="0"
         >
         </v-navigation-drawer>
-        <Header @toggle:drawer="drawer = !drawer" :order="0"></Header>
       </ClientOnly>
 
       <v-main style="min-height: calc(100vh - 64px)" v-scroll="onScroll">
-        <slot />
+        <v-container>
+          <slot />
+        </v-container>
 
         <GlobalError
           :show="Boolean(filmNetworkError || personNetworkError)"

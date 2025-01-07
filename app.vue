@@ -45,12 +45,8 @@ $warning: #fb8c00;
 }
 
 .bg-gradient {
-  background-image: linear-gradient(
-    145deg,
-    rgba(0, 0, 0, 0) 0%,
-    rgba(0, 0, 0, 0.05) 50%,
-    rgba(0, 0, 0, 0.2) 100%
-  ) !important;
+
+  background-image: -moz-linear-gradient(top, rgb(78, 78, 78), black) !important;
 }
 
 a {
@@ -62,10 +58,21 @@ a {
 }
 
 .img-blur {
-  filter: grayscale(0.5) blur(12px);
+  filter: grayscale(0.5);
 }
+
 p {
   margin-top: 1rem;
   text-indent: 2rem !important;
+}
+.stained-glass{
+background: rgba(27, 27, 27, 0.322) !important;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2) !important;
+backdrop-filter: blur(9.8px) !important;
+-webkit-backdrop-filter: blur(9.8px) !important;
+
+}
+html{ 
+  height:100% !important 
 }
 </style>

@@ -7,143 +7,128 @@
       :avatar="film?.gallery[0] || ''"
       :loading="loading"
     >
-      <template #rating>
-        <ClientOnly>
-          <v-rating
-            :model-value="film?.rating || 0"
-            color="yellow-darken-3"
-            half-increments
-            readonly
-          ></v-rating>
-        </ClientOnly>
-      </template>
       <template #text>
-        <v-container class="rounded-lg pa-2">
-          <v-row>
-            <v-col cols="12" sm="12" md="6" lg="4" xl="1"    tag="aside">
-              <v-card :title="computedFilmDetails.subheader">
-                <v-list-item
-                  v-for="(detail, index) in computedFilmDetails.list"
-                  :key="index"
-                  rounded="lg"
-                  :subtitle="$t(detail.name)"
-                  :value="index"
-                  lines="one"
-                  :prepend-icon="detail.icon"
-                  density="compact"
-                  :to="detail.to"
-                >
-                  <v-list-item-title :class="{ 'text-primary': detail.to }">
-                    {{ detail.value || $t("general.no_data") }}
-                  </v-list-item-title>
-                </v-list-item>
-              </v-card>
-              <v-card :title="filmActors.subheader">
-                <v-list-item
-                  v-for="(detail, index) in filmActors.list"
-                  :key="index"
-                  :title="detail.name"
-                  :value="detail.name"
-                  :to="detail.to"
-                  rounded="lg"
-                  density="compact"
-                  prepend-icon="mdi-account"
-                  lines="one"
-                  base-color="primary"
-                >
-                </v-list-item>
-              </v-card>
-            </v-col>
-
-            <v-col cols="12" sm="12" md="6" lg="8" xl="11" tag="section">
-              <v-container>
-                <v-row>
-                  <v-col>
-                    <v-card variant="elevated">
-                      <EditToolBar
-                        :title="$t('pages.films.gallery')"
-                        icon="mdi-view-gallery"
-                        :edit-mode="editGalleryMode"
-                        @toggle:edit-mode="editGalleryMode = !editGalleryMode"
-                      />
-
-                      <v-card-text>
-                        <FilmGallery
-                          v-model:selected="selectedImagesIndices"
-                          :film="film"
-                          :edit-mode="editGalleryMode"
-                          @update:selected="selectedImagesIndices = $event"
-                          @delete:selected="showConfirmDialog = true"
-                        />
-                      </v-card-text>
-                    </v-card>
-                  </v-col>
-                </v-row>
-                <v-row>
-                  <v-col>
-                    <v-card variant="elevated">
-                      <EditToolBar
-                        :title="$t('pages.films.description')"
-                        icon="mdi-text"
-                        :edit-mode="editDescriptionMode"
-                        @toggle:edit-mode="
-                          editDescriptionMode = !editDescriptionMode
-                        "
-                      />
-                      <v-card-text>
-                        <v-sheet
-                          v-if="!editDescriptionMode"
-                          color="transparent"
-                          class="text-body-1 overflow-y-auto"
-                          min-height="100"
-                        >
-                          <div
-                            v-if="filmForm.description"
-                            v-for="(
-                              paragraph, index
-                            ) in filmForm.description.split('\n')"
-                            :key="index"
-                          >
-                            <p>{{ paragraph }}</p>
-                          </div>
-                          <div v-else>
-                            <v-progress-circular
-                              indeterminate
-                            ></v-progress-circular>
-                          </div>
-                        </v-sheet>
-                        <v-confirm-edit
-                          v-else
-                          v-model="filmForm.description"
-                          @save="sumbitEdit"
-                        >
-                          <template #default="{ model: proxyModel, actions }">
-                            <v-card variant="outlined">
-                              <template #text>
-                                <v-textarea
-                                  v-model="proxyModel.value"
-                                  :messages="$t('pages.films.edit_description')"
-                                  auto-grow
-                                  rows="5"
-                                ></v-textarea>
-                              </template>
-                              <template #actions>
-                                <v-spacer></v-spacer>
-                                <component :is="actions"></component>
-                              </template>
-                            </v-card>
-                          </template>
-                        </v-confirm-edit>
-                      </v-card-text>
-                    </v-card>
-                  </v-col>
-                </v-row>
-              </v-container>
-            </v-col>
-          </v-row>
+        <v-container>
           <v-row>
             <v-col>
-              <slot name="rating"></slot>
+              <v-card :title="$t('pages.general_info')"  class="stained-glass" prepend-icon="mdi-information">
+                <v-list lines="one" class="stained-glass" density="compact">
+                  <v-list-item
+                    v-for="(detail, index) in computedFilmDetails.list"
+                    :key="index"
+                    rounded="lg"
+                    :subtitle="$t(detail.name)"
+                    :value="index"
+                    :prepend-icon="detail.icon"
+                    :to="detail.to"
+                  >
+                    <v-list-item-title :class="{ 'text-primary': detail.to }">
+                      {{ detail.value || $t("general.no_data") }}
+                    </v-list-item-title>
+                  </v-list-item>
+                  <v-list-item
+                    v-for="(detail, index) in filmActors.list"
+                    :key="index"
+                    :title="detail.name"
+                    :value="detail.name"
+                    :to="detail.to"
+                    rounded="lg"
+                    prepend-icon="mdi-account"
+                    base-color="primary"
+                  >
+                  </v-list-item>
+                  <v-list-item
+                    v-for="(detail, index) in computedTeamDetails.list"
+                    :key="index"
+                    rounded="lg"
+                    :subtitle="$t(detail.name)"
+                    :title="detail.value"
+                    :value="index"
+                    :prepend-icon="detail.icon"
+                    :to="detail.to"
+                    base-color="primary"
+                  >
+                  </v-list-item>
+                </v-list>
+              </v-card>
+            </v-col>
+          </v-row>
+
+          <v-row>
+            <v-col>
+              <v-card class="stained-glass" rounded="lg" border>
+                <EditToolBar
+                  :title="$t('pages.films.gallery')"
+                  icon="mdi-view-gallery"
+                  :edit-mode="editGalleryMode"
+                  @toggle:edit-mode="editGalleryMode = !editGalleryMode"
+                />
+                <v-card-text>
+                  <FilmGallery
+                    v-model:selected="selectedImagesIndices"
+                    :film="film"
+                    :edit-mode="editGalleryMode"
+                    @update:selected="selectedImagesIndices = $event"
+                    @delete:selected="showConfirmDialog = true"
+                  />
+                </v-card-text>
+              </v-card>
+            </v-col>
+          </v-row>
+
+          <v-row>
+            <v-col>
+              <v-card class="stained-glass" rounded="lg" border>
+                <EditToolBar
+                  :title="$t('pages.films.description')"
+                  icon="mdi-text"
+                  :edit-mode="editDescriptionMode"
+                  @toggle:edit-mode="editDescriptionMode = !editDescriptionMode"
+                />
+                <v-card-text>
+                  <v-sheet
+                    v-if="!editDescriptionMode"
+                    color="transparent"
+                    class="text-body-1 overflow-y-auto"
+                    min-height="100"
+                  >
+                    <div
+                      v-if="filmForm.description"
+                      v-for="(paragraph, index) in filmForm.description.split(
+                        '\n'
+                      )"
+                      :key="index"
+                    >
+                      <p>{{ paragraph }}</p>
+                    </div>
+                    <div v-else>
+                      <v-progress-circular indeterminate></v-progress-circular>
+                    </div>
+                  </v-sheet>
+                  <v-confirm-edit
+                    v-else
+                    v-model="filmForm.description"
+                    @save="sumbitEdit"
+                  >
+                    <template #default="{ model: proxyModel, actions }">
+                      <v-card variant="outlined">
+                        <template #text>
+                          <v-textarea
+                            v-model="proxyModel.value"
+                            :messages="$t('pages.films.edit_description')"
+                            auto-grow
+                            rows="5"
+                          ></v-textarea>
+                        </template>
+                        <template #actions>
+                          <v-spacer></v-spacer>
+                          <component :is="actions"></component>
+                        </template>
+                      </v-card>
+                    </template>
+                  </v-confirm-edit>
+                </v-card-text>
+              </v-card>
             </v-col>
           </v-row>
         </v-container>
@@ -284,6 +269,14 @@ const computedFilmDetails = computed(() => {
         value: film.value?.age + "+" || "",
         icon: "mdi-account-supervisor",
       },
+    ],
+  };
+}) as ComputedRef<DetailList>;
+
+const computedTeamDetails = computed(() => {
+  return {
+    subheader: t("pages.films.team"),
+    list: [
       {
         name: "forms.film.director",
         value: film.value?.directorName || "",
